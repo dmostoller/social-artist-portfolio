@@ -2,7 +2,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request
+from flask import request, make_response, jsonify, request, session 
 from flask_restful import Resource
 
 # Local imports
@@ -28,7 +28,10 @@ api.add_resource(UsersById, '/users/<int:id>')
 
 
 class Paintings(Resource):
-    pass
+    def get(self):
+        paintings = [painting.to_dict() for painting in Painting.query.all()]
+        return make_response(paintings, )
+
 
 class PaintingsById(Resource):
     pass
@@ -69,4 +72,3 @@ api.add_resource(EventsById, '/events/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-    
