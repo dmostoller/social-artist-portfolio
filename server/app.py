@@ -2,7 +2,7 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, make_response, jsonify, request, session 
+from flask import request, abort, make_response, jsonify, request, session 
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
@@ -138,6 +138,14 @@ class PostsById(Resource):
             response = make_response(post.to_dict(), 200)
         else:
             response = make_response({"error": "Post not found"}, 404)
+        return response
+    def delete(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            abort(404, "The post you were looking for was not found")
+        db.session.delete(post)
+        db.session.commit()
+        response = make_response("", 204)
         return response
     
 class AddPost(Resource):
