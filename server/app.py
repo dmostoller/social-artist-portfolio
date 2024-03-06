@@ -26,7 +26,6 @@ class Signup(Resource):
                 new_user = User(
                     username=form_json['username'],
                     password_hash=form_json['password'],
-                    name=form_json['name'],
                     email=form_json['email'],
                     is_admin=False
                 )
@@ -90,6 +89,7 @@ class PaintingsById(Resource):
 class AddPainting(Resource):
     def post(self):
         try:
+            sold_response = eval(request.get_json()['sold'])
             form_json = request.get_json()
             new_painting = Painting(
                 title=form_json['title'],
@@ -97,10 +97,9 @@ class AddPainting(Resource):
                 width=form_json['width'],
                 height=form_json['height'],
                 price=form_json['price'],
-                fullsize=form_json['width'],
-                image=form_json['width'],
-                sold=form_json['sold']
-                # user_id=session.get('user_id')
+                fullsize=form_json['fullsize'],
+                image=form_json['image'],
+                sold=sold_response,
             )
             db.session.add(new_painting)
             db.session.commit()
@@ -150,7 +149,6 @@ class AddPost(Resource):
                 content=form_json['content'],
                 image_url=form_json['image_url'],
                 date_added=form_json['date_added'],
-                # user_id=session.get('user_id')
             )
             db.session.add(new_post)
             db.session.commit()
@@ -174,8 +172,30 @@ class Events(Resource):
 class EventsById(Resource):
     pass
 
+class AddEvent(Resource):
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_event = Event(
+                name=form_json['name'],
+                venue=form_json['venue'],
+                location=form_json['location'],
+                details=form_json['details'],
+                image_url=form_json['image_url'],
+                event_date=form_json['event_date'],
+                event_link=form_json['event_link']
+            )
+            db.session.add(new_event)
+            db.session.commit()
+            response = make_response(new_event.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
+
 api.add_resource(Events, '/events')
 api.add_resource(EventsById, '/events/<int:id>')
+api.add_resource(AddEvent, '/events/new')
 
 
 if __name__ == '__main__':

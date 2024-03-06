@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
         print("Seeding users...")
         users = [
-            User(username="Kaba", name="Dave Mostoller", email="dmostoller@gmail.com", password_hash="bass", is_admin=True),
-            User(username="Yasi", name="Yasmin Mostoller", email="yasmin.nunsy@gmail.com", password_hash="lily", is_admin=True)
+            User(username="Dave", email="dmostoller@gmail.com", password_hash="bass", is_admin=True),
+            User(username="Yasi", email="yasmin.nunsy@gmail.com", password_hash="lily", is_admin=True)
         ]
 
         db.session.add_all(users)
@@ -206,7 +206,7 @@ if __name__ == '__main__':
                   location="1714 N. Mascher St, Philadelphia, PA",
                   details="!Special Announcement Coming in Hot! Excited to announce our road to lucid dream festival “Dream Gallery” first Friday weekend event! We will be featuring artists involved with lucid dream festival directly supporting and from the Philadelphia area! Come check out so amazing art installations and a special interactive gallery show with special musical guests followed by a intimate music show on Saturday featuring some of Philadelphia's staples in the dance music community!",
                   image_url = "./images/illuminate-1.jpeg",
-                  event_date="March 1st, 2024",
+                  event_date="03/01/2024",
                   event_link="https://www.instagram.com/illuminate_collective_phl/"
             ),
             Event(name="Dream Gallery 2",
@@ -214,7 +214,7 @@ if __name__ == '__main__':
                   location="1714 N. Mascher St, Philadelphia, PA",
                   details="!Special Announcement Coming in Hot! Excited to announce our road to lucid dream festival “Dream Gallery” first Friday weekend event! We will be featuring artists involved with lucid dream festival directly supporting and from the Philadelphia area! Come check out so amazing art installations and a special interactive gallery show with special musical guests followed by a intimate music show on Saturday featuring some of Philadelphia's staples in the dance music community!",
                   image_url = "./images/illuminate-2.jpeg",
-                  event_date="March 2nd, 2024",
+                  event_date="03/02/2024",
                   event_link="https://www.instagram.com/illuminate_collective_phl/"
             )
         ]
