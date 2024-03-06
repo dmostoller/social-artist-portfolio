@@ -2,7 +2,7 @@
 
 # Standard library imports
 from random import randint, choice as rc
-
+import datetime 
 # Remote library imports
 from faker import Faker
 
@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
         print("Seeding users...")
         users = [
-            User(username="Kaba", name="Dave Mostoller", email="dmostoller@gmail.com", password="bass", is_admin="True"),
-            User(username="Yasi", name="Yasmin Mostoller", email="yasmin.nunsy@gmail.com", password="lily", is_admin="True")
+            User(username="Kaba", name="Dave Mostoller", email="dmostoller@gmail.com", password_hash="bass", is_admin=True),
+            User(username="Yasi", name="Yasmin Mostoller", email="yasmin.nunsy@gmail.com", password_hash="lily", is_admin=True)
         ]
 
         db.session.add_all(users)
@@ -173,10 +173,54 @@ if __name__ == '__main__':
                      price="contact for price", 
                      fullsize="https://previews.dropbox.com/p/thumb/ACLGCXxZOPe_wjy4PgXKfwJlmnmhwvyNW4GQ0wikwLhWBIUmuQJbMa0wr_lvt-7TxRH_MD11KjL1Zwe_dn9XtFzy7qFrT3DVlW-AsADE-ccQoNISYMOnaroFut9N39j1odjuHwYDV9rknaiuxegdzNZyTO_uWxwYIumo4nE3JqPSg9izqqFgzVl96KYroR9w7E1XZakEdASvLHYN9KtXfkgxHMpdannwyQ78kV-FvK9VFDqbMFFVKPwlKakN3DUuDND3uTk8Sktehj5XKADuFQJ8jechBN5L1df-5hIYKAa6FC3et3i4VbL1Ln066zu14gQY4LDz_13XMl-K5OE4hA0C6hhhdEoOSue-gN8FzgYVXRn-MJQ_70QWa-TLzs3iuALwUKk1HErpcGCrWveEgxx3/p.jpeg", 
                      image="https://static.wixstatic.com/media/1d469b_51aab7836d6e4315ac3f01b31117cd88~mv2.jpg/v1/fill/w_328,h_440,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/Series%20A-35.jpg", 
-                     sold=False),
+                     sold=False)
         ]
 
         db.session.add_all(paintings)
+        
+        print("Seeding posts")
+        posts = [
+            Post(title="My first post", 
+                 content=fake.text(), 
+                 image_url="./images/YASI_PAINTINGS_WEB-3.jpg", 
+                 date_added=datetime.datetime.now()
+                 ),
+            Post(title="My second post", 
+                 content=fake.text(), 
+                 image_url="./images/slider-4.jpg", 
+                 date_added=datetime.datetime.now()
+                 ),
+            Post(title="My third post", 
+                 content=fake.text(), 
+                 image_url="./images/slider-3.jpg", 
+                 date_added=datetime.datetime.now()
+                 )
+        ]
+        
+        db.session.add_all(posts)
+
+        print("Seeding events")
+        events = [
+            Event(name="Dream Gallery",
+                  venue="Illuminate Collective",
+                  location="1714 N. Mascher St, Philadelphia, PA",
+                  details="!Special Announcement Coming in Hot! Excited to announce our road to lucid dream festival “Dream Gallery” first Friday weekend event! We will be featuring artists involved with lucid dream festival directly supporting and from the Philadelphia area! Come check out so amazing art installations and a special interactive gallery show with special musical guests followed by a intimate music show on Saturday featuring some of Philadelphia's staples in the dance music community!",
+                  image_url = "./images/illuminate-1.jpeg",
+                  event_date="March 1st, 2024",
+                  event_link="https://www.instagram.com/illuminate_collective_phl/"
+            ),
+            Event(name="Dream Gallery 2",
+                  venue="Illuminate Collective",
+                  location="1714 N. Mascher St, Philadelphia, PA",
+                  details="!Special Announcement Coming in Hot! Excited to announce our road to lucid dream festival “Dream Gallery” first Friday weekend event! We will be featuring artists involved with lucid dream festival directly supporting and from the Philadelphia area! Come check out so amazing art installations and a special interactive gallery show with special musical guests followed by a intimate music show on Saturday featuring some of Philadelphia's staples in the dance music community!",
+                  image_url = "./images/illuminate-2.jpeg",
+                  event_date="March 2nd, 2024",
+                  event_link="https://www.instagram.com/illuminate_collective_phl/"
+            )
+        ]
+        
+        db.session.add_all(events)
+        
         db.session.commit()
 
         print("Done seeding.")

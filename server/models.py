@@ -52,9 +52,9 @@ class Painting(db.Model, SerializerMixin):
     price = db.Column(db.String)
     fullsize = db.Column(db.String)
     image = db.Column(db.String)
-    sold = db.Integer(db.Boolean)
+    sold = db.Column(db.Boolean)
 
-    comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
+    comments = db.relationship('Comment', back_populates='painting', cascade='all, delete')
 
     serialize_rules = ('-comments.painting', )
 
@@ -102,6 +102,7 @@ class Event(db.Model, SerializerMixin):
     details = db.Column(db.String)
     image_url = db.Column(db.String)
     event_date = db.Column(db.String)
+    event_link = db.Column(db.String)
 
     def __repr__(self):
         return f'<Event {self.id}>'
