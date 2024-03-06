@@ -4,6 +4,8 @@
 # Remote library imports
 from flask import request, make_response, jsonify, request, session 
 from flask_restful import Resource
+from sqlalchemy.exc import IntegrityError
+
 
 # Local imports
 from config import app, db, api
@@ -16,15 +18,58 @@ from models import User, Painting, Comment, Post, Event
 def index():
     return '<h1>Project Server</h1>'
 
+class Signup(Resource):
+    def post(self):
+        try:
+            form_json = request.get_json()
+            if form_json['password'] == form_json['password_confirmation']:
+                new_user = User(
+                    username=form_json['username'],
+                    password_hash=form_json['password'],
+                    name=form_json['name'],
+                    email=form_json['email'],
+                    is_admin=False
+                )
+                db.session.add(new_user)
+                db.session.commit()
+                session['user_id'] = new_user.id 
+                response = make_response(new_user.to_dict(rules = ('-_password_hash', )), 201)
+            else:
+                raise AttributeError("Passwords must match")
+        except IntegrityError:
+            response = make_response({'errors': ['validation errors']}, 422)
+        
+        return response
 
-class Users(Resource):
-    pass
+class CheckSession(Resource):
+    def get(self):
+        user_id = session.get('user_id')
+        if user_id:
+            user = User.query.filter(User.id == user_id).first()
+            return user.to_dict(rules = ('-_password_hash', )), 200
+        return make_response({'errors': 'You must be logged in'}, 401)
 
-class UsersById(Resource):
-    pass
+class Login(Resource):
+    def post(self):
+        username = request.get_json()['username']
+        password = request.get_json()['password']
+        user = User.query.filter(User.username == username).first()
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
+        return make_response({'errors': 'Invalid username or password'}, 401)
 
-api.add_resource(Users, '/users')
-api.add_resource(UsersById, '/users/<int:id>')
+class Logout(Resource):
+    def delete(self):
+        if session['user_id'] == None:
+            return {'error': 'No user found'}, 401
+        session['user_id'] = None
+        return {}, 204
+
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 
 class Paintings(Resource):
