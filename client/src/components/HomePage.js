@@ -1,5 +1,4 @@
 import React from "react";
-import CarouselContainer from './CarouselContainer.js';
 import Slider from './Slider.js';
 import PostsList from "./PostsList.js";
 

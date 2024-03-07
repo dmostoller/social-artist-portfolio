@@ -12,7 +12,7 @@ function AddPost() {
             .required("Must enter a title")
             .min(2, 'name must be more than two characters'),
         content: yup.string().required("Must enter content for your post"),
-        image_url: yup.string().link().required("Must add an image link"),
+        image_url: yup.string().required("Must add an image link"),
       })
 
     const formik = useFormik({

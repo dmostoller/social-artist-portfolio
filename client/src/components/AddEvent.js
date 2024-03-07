@@ -12,9 +12,9 @@ function AddEvent() {
         venue: yup.string().required("Must enter a venue"),
         location: yup.string().required("Must enter a location"),
         details: yup.string().required("Must enter event details"),
-        image_url: yup.string().link().required("Must enter an image link"),
+        image_url: yup.string().required("Must enter an image link"),
         event_date: yup.date().required("Must enter a date"),
-        event_link: yup.string().link().required("Must enter an event link"),
+        event_link: yup.string().required("Must enter an event link"),
     })
     const formik = useFormik({
         initialValues: {

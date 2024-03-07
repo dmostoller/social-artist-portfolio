@@ -44,7 +44,7 @@ function LoginForm({ onLogin }) {
                 </input>
             </div>
             <div className="field">
-                <input type="text" 
+                <input type="password" 
                   id="password" 
                   name="password" 
                   value={password} 

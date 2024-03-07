@@ -8,7 +8,7 @@ import ContactPage from './components/ContactPage.js';
 import EventsPage from './components/EventsPage.js';
 import AboutPage from './components/AboutPage.js';
 import Footer from './components/Footer.js';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import PaintingDetail from './components/PaintingDetail.js';
 import PostDetail from './components/PostDetail.js';
 import AddPost from './components/AddPost.js'
@@ -21,6 +21,7 @@ export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // auto-login
@@ -40,6 +41,7 @@ export default function App() {
   function handleLogout() {
     setUser(null);
     setIsAdmin(false)
+    navigate('/')
   }
 
   return (

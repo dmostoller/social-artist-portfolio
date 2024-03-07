@@ -36,7 +36,7 @@ function PaintingsPage ({ user, isAdmin}) {
 
     return (
         <div className="ui container fluid">
-            <div className="ui container">
+            <div className="ui container fluid">
                 <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy}/>
                 {(user && isAdmin) ? 
                     <div style={{ textAlign: "right"}} className="ui container">   
@@ -45,7 +45,7 @@ function PaintingsPage ({ user, isAdmin}) {
                     : <></>
                 }
             </div>
-            <div className="ui container fluid" style={{paddingTop:"40px"}}>
+            <div className="ui three column grid" style={{paddingTop:"40px"}}>
                 <PaintingsList paintings={searchResults} user={user} isAdmin={isAdmin} deletePainting={deletePainting}/>
             </div>
         </div>

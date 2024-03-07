@@ -19,7 +19,7 @@ function PaintingsList ({paintings, user, isAdmin, deletePainting}) {
         />
     })
     return ( 
-        <div className="ui grid fluid">{gallery}</div>
+        <div className="ui grid">{gallery}</div>
     )
 }
 

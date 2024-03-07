@@ -20,7 +20,7 @@ export default function Event ({id, name, venue, location, details, image_url, e
         })
         .then(() => {
           deleteEvent(event)
-          navigate('/events')
+        //   navigate('/events')
         })
       }
     }

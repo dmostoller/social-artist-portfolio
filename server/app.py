@@ -116,10 +116,37 @@ api.add_resource(PaintingsById, '/paintings/<int:id>')
 api.add_resource(AddPainting, '/paintings/new')
 
 class Comments(Resource):
-    pass
+    def get(self):
+        comments = [comment.to_dict() for comment in Comment.query.all()]
+        reponse = make_response(comments, 200)
+        return reponse
+    
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_comment = Comment(
+                comment=form_json['comment'],
+                date_added=form_json['date_added'],
+                painting_id=form_json['painting_id'],
+                user_id=form_json['user_id'],
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            response = make_response(new_comment.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors" : ["validation errors"]}, 422)
+        
+        return response
 
 class CommentsById(Resource):
-    pass
+    def delete(self, id):
+        comment = Comment.query.filter_by(id=id).first()
+        if not comment:
+            abort(404, "The comment was not found")
+        db.session.delete(comment)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
 
 api.add_resource(Comments, '/comments')
 api.add_resource(CommentsById, '/comments/<int:id>')

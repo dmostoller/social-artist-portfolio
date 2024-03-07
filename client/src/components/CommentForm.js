@@ -1,48 +1,47 @@
 import React, {useState} from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
-function CommentForm({onAddComment, paintingId, onChangeIsComFormVis}){
-    const initialState = {
-        painting_id: parseInt(paintingId),
-        name: "",
-        comment: "",
-        date: new Date().toLocaleDateString('en-US'),
-    }
-    
-    const [formData, setFormData] = useState(initialState)
+function CommentForm({onAddComment, paintingId, onChangeIsComFormVis, user}){
+    const [error, setError] = useState(null);
 
-    function handleChange(e) {
-        //console.log(e.target.value)
-        setFormData({...formData, [e.target.name]: e.target.value})
-    }
+    const formSchema = yup.object().shape({
+        comment: yup.string().required("Must enter a comment"),
+      })
 
-    function handleAddNewComment(e){
-        e.preventDefault()
-        if(window.confirm("Are you sure you're ready to post your comment? You will not be able to make changes once submitted")) {
-        setFormData({...formData, painting_id: paintingId, date: new Date().toLocaleDateString('en-US')})
-        fetch("http://localhost:3004/comments", {
+    const formik = useFormik({
+        initialValues: {
+          comment:'',
+          date_added: `${new Date().toLocaleDateString('en-US')} ${new Date().toLocaleTimeString('en-US')}`,
+          painting_id: parseInt(paintingId),
+          user_id: user.id,
+        },
+        validationSchema: formSchema,
+        onSubmit: (values) => {
+          fetch("/comments", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify({...formData})
-        })
-            .then((res) => res.json())
-            .then((newComment) => {
+            body: JSON.stringify(values),
+          }).then((res) => {
+            if(res.ok) {
+              res.json().then(newComment => {
                 onAddComment(newComment)
-            })
-        setFormData(initialState)
-        }
-    }
+              })
+            } else {
+                res.json().then(error => setError(error.message))
+            }
+          })
+        },
+      })
 
     return (
         <div className="ui container">
-        <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={handleAddNewComment}>
+        <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>  
             <div className="field">
-                <label>Add Comment</label>
-                <input type="text" id="name" name="name" value={formData.name} placeholder="Your name here" onChange={handleChange}></input>
-            </div>    
-            <div className="field">
-                <textarea type="text" id="comment" name="comment" value={formData.comment} placeholder="Your comment here" onChange={handleChange}></textarea>               
+            <label>Add Comment</label>
+                <textarea type="text" id="comment" name="comment" value={formik.values.comment} placeholder="Your comment here" onChange={formik.handleChange}></textarea>               
             </div>
             <div className="field"></div>
             <button onClick={onChangeIsComFormVis} style={{float: "left"}} className="ui button small teal" type="button">Hide Form</button>

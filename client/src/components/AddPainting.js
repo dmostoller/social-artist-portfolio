@@ -13,8 +13,8 @@ function AddPainting() {
         width: yup.number().integer().required("Must enter a width"),
         height: yup.number().integer().required("Must enter a height"),
         price: yup.string().required("Must enter an price"),
-        fullsize: yup.string().link().required("Must enter a fullzise image link"),
-        image: yup.string().link().required("Must enter an image link"),
+        fullsize: yup.string().required("Must enter a fullzise image link"),
+        image: yup.string().required("Must enter an image link"),
         sold: yup.string().required("Must enter True or False"),
     })
     const formik = useFormik({

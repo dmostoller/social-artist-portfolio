@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {Link} from "react-router-dom";
 import CommentsList from "./CommentsList";
 
-function PaintingDetail(){
+function PaintingDetail({user}){
     const [painting, setPainting] = useState({})
     const {id} = useParams();
     
@@ -20,7 +20,7 @@ function PaintingDetail(){
             <div className="ui container" style={{width:"90%"}}>
                 <div>
                     <div className="image">
-                        <img src={painting.fullsize} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>
+                        <img src={painting.image} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>
                     </div>
                     <div className="content">
                             <div className="header"><h2>{painting.title}</h2></div>
@@ -38,7 +38,7 @@ function PaintingDetail(){
             
             <div style={{width:"90%"}} className="ui container">
                     <h1 className="ui dividing header">Comments</h1>  
-                    <div><CommentsList /></div>          
+                    <div><CommentsList user={user} painting_id={painting.id}/></div>          
             </div>
             
         </div>
