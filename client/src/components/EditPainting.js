@@ -29,26 +29,11 @@ function EditPainting({}) {
         sold: yup.string()
         .required("Must enter True or False")
     })
-
+    const initValues = painting
+    
     const formik = useFormik({
-        initialValues: {
-            title:'',
-            materials:'',
-            width:'',
-            height:'',
-            price:'',
-            image:'',
-            sold:'',
-        },
-        // initialValues: {
-        //     title: painting.title,
-        //     materials:painting.materials,
-        //     width: painting.width,
-        //     height: painting.height,
-        //     price: painting.price,
-        //     image: painting.image,
-        //     sold: painting.sold,
-        // },
+    enableReinitialize: true,   
+    initialValues: initValues,
     validationSchema: formSchema,
     onSubmit: (values) => {
       fetch(`/paintings/${id}`, {
