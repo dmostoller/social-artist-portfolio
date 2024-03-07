@@ -6,7 +6,6 @@ from flask import request, abort, make_response, jsonify, request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
-
 # Local imports
 from config import app, db, api
 # Add your model imports
@@ -76,17 +75,7 @@ class Paintings(Resource):
         paintings = [painting.to_dict() for painting in Painting.query.all()]
         reponse = make_response(paintings, 200)
         return reponse
-
-class PaintingsById(Resource):
-    def get(self, id):
-        painting = Painting.query.filter_by(id=id).first()
-        if painting:
-            response = make_response(painting.to_dict(), 200)
-        else:
-            response = make_response({"error": "Painting not found"}, 404)
-        return response
-
-class AddPainting(Resource):
+    
     def post(self):
         try:
             sold_response = eval(request.get_json()['sold'])
@@ -97,7 +86,6 @@ class AddPainting(Resource):
                 width=form_json['width'],
                 height=form_json['height'],
                 price=form_json['price'],
-                fullsize=form_json['fullsize'],
                 image=form_json['image'],
                 sold=sold_response,
             )
@@ -109,11 +97,49 @@ class AddPainting(Resource):
         
         return response
 
+class PaintingsById(Resource):
+    def get(self, id):
+        painting = Painting.query.filter_by(id=id).first()
+        if painting:
+            response = make_response(painting.to_dict(), 200)
+        else:
+            response = make_response({"error": "Painting not found"}, 404)
+        return response
+    
+    def patch(self, id):
+        painting = Painting.query.filter_by(id=id).first()
+        if painting:
+            try:
+                sold_response = eval(request.get_json()['sold'])
+                setattr(painting, "title", request.get_json()['title'])
+                setattr(painting, "materials", request.get_json()['materials'])
+                setattr(painting, "width", request.get_json()['width'])
+                setattr(painting, "height", request.get_json()['height'])
+                setattr(painting, "price", request.get_json()['price'])
+                setattr(painting, "image", request.get_json()['image'])
+                setattr(painting, "sold", sold_response)
+
+                db.session.commit()
+                response = make_response(painting.to_dict(), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            response = make_response({"error": "Power not found"}, 404) 
+        
+        return response
+    
+    def delete(self, id):
+        painting = Painting.query.filter_by(id=id).first()
+        if not painting:
+            abort(404, "The painting you were looking for was not found")
+        db.session.delete(painting)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
 
 
 api.add_resource(Paintings, '/paintings')
 api.add_resource(PaintingsById, '/paintings/<int:id>')
-api.add_resource(AddPainting, '/paintings/new')
 
 class Comments(Resource):
     def get(self):
@@ -157,25 +183,7 @@ class Posts(Resource):
         posts = [post.to_dict() for post in Post.query.all()]
         reponse = make_response(posts, 200)
         return reponse
-
-class PostsById(Resource):
-    def get(self, id):
-        post = Post.query.filter_by(id=id).first()
-        if post:
-            response = make_response(post.to_dict(), 200)
-        else:
-            response = make_response({"error": "Post not found"}, 404)
-        return response
-    def delete(self, id):
-        post = Post.query.filter_by(id=id).first()
-        if not post:
-            abort(404, "The post you were looking for was not found")
-        db.session.delete(post)
-        db.session.commit()
-        response = make_response("", 204)
-        return response
     
-class AddPost(Resource):
     def post(self):
         try:
             form_json = request.get_json()
@@ -193,10 +201,26 @@ class AddPost(Resource):
         
         return response
 
+class PostsById(Resource):
+    def get(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if post:
+            response = make_response(post.to_dict(), 200)
+        else:
+            response = make_response({"error": "Post not found"}, 404)
+        return response
+    
+    def delete(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if not post:
+            abort(404, "The post you were looking for was not found")
+        db.session.delete(post)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
 
 api.add_resource(Posts, '/posts')
 api.add_resource(PostsById, '/posts/<int:id>')
-api.add_resource(AddPost, '/posts/new')
 
 class Events(Resource):
     def get(self):
@@ -204,10 +228,6 @@ class Events(Resource):
         reponse = make_response(events, 200)
         return reponse
 
-class EventsById(Resource):
-    pass
-
-class AddEvent(Resource):
     def post(self):
         try:
             form_json = request.get_json()
@@ -228,9 +248,28 @@ class AddEvent(Resource):
         
         return response
 
+class EventsById(Resource):
+    def get(self, id):
+        event = Event.query.filter_by(id=id).first()
+        if event:
+            response = make_response(event.to_dict(), 200)
+        else:
+            response = make_response({"error": "Post not found"}, 404)
+        return response
+    
+    def delete(self, id):
+        event = Event.query.filter_by(id=id).first()
+        if not event:
+            abort(404, "The event you were looking for was not found")
+        db.session.delete(event)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+
+
 api.add_resource(Events, '/events')
 api.add_resource(EventsById, '/events/<int:id>')
-api.add_resource(AddEvent, '/events/new')
+
 
 
 if __name__ == '__main__':

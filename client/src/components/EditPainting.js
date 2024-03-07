@@ -1,11 +1,19 @@
-import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function AddPainting() {
+function EditPainting({}) {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [painting, setPainting] = useState({})
+    const {id} = useParams();
+
+    useEffect(() => {
+        fetch(`/paintings/${id}`)
+        .then((res) => res.json())
+        .then((painting) => setPainting(painting))
+    }, [id]);
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title"),
@@ -21,6 +29,7 @@ function AddPainting() {
         sold: yup.string()
         .required("Must enter True or False")
     })
+
     const formik = useFormik({
         initialValues: {
             title:'',
@@ -31,10 +40,19 @@ function AddPainting() {
             image:'',
             sold:'',
         },
+        // initialValues: {
+        //     title: painting.title,
+        //     materials:painting.materials,
+        //     width: painting.width,
+        //     height: painting.height,
+        //     price: painting.price,
+        //     image: painting.image,
+        //     sold: painting.sold,
+        // },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch("/paintings", {
-        method: "POST",
+      fetch(`/paintings/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -42,8 +60,7 @@ function AddPainting() {
       }).then((res) => {
         if(res.ok) {
           res.json().then(painting => {
-            // onAddPainting(painting)
-            navigate(`/paintings`)
+            navigate(`/paintings/${id}`)
           })
         } else {
             res.json().then(error => setError(error.message))
@@ -58,7 +75,7 @@ function AddPainting() {
         <div className="ui container">
             <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
                 <div className="field">
-                    <label>Add Painting</label>
+                    <label>Edit Painting</label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -88,7 +105,7 @@ function AddPainting() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.sold}</p>}
                 </div>
                 <div className="field">
-                <Link to="/paintings" className="ui button small teal" >Back</Link>
+                <Link to={`/paintings/${id}`} className="ui button small teal" >Back</Link>
                 <button style={{float: "right"}} className="ui button small teal" type="submit">Submit</button>
                 </div>
             </form> 
@@ -97,4 +114,4 @@ function AddPainting() {
     )
 }
 
-export default AddPainting
+export default EditPainting

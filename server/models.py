@@ -49,7 +49,6 @@ class Painting(db.Model, SerializerMixin):
     width = db.Column(db.Integer)
     height = db.Column(db.Integer)
     price = db.Column(db.String)
-    fullsize = db.Column(db.String)
     image = db.Column(db.String)
     sold = db.Column(db.Boolean)
 

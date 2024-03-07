@@ -3,19 +3,19 @@ import {Link, useNavigate } from "react-router-dom";
 
 
 export default function Post ({id, title, content, image_url, date_added, isAdmin, deletePost}) {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
-    const handleDeletePost = (post) => {
-        if (window.confirm("Are you sure you want to delete this post?")) {
-        fetch(`/posts/${id}`, {
-            method: "DELETE"
-            })
-            .then(() => {
-                deletePost(post)
-                navigate('/') 
-            })
-        }
-    }    
+    // const handleDeletePost = (post) => {
+    //     if (window.confirm("Are you sure you want to delete this post?")) {
+    //     fetch(`/posts/${id}`, {
+    //         method: "DELETE"
+    //         })
+    //         .then(() => {
+    //             deletePost(post)
+    //             navigate('/') 
+    //         })
+    //     }
+    // }    
 
 
     return (
@@ -31,7 +31,7 @@ export default function Post ({id, title, content, image_url, date_added, isAdmi
                     <div style={{paddingTop: "25px", float: "left"}}> 
                         <Link to={`/posts/${id}`}  className="ui button small teal">Read More</Link>
                     </div>
-                    { isAdmin ? (
+                    {/* { isAdmin ? (
                         <div style={{paddingTop: "25px", float: "left"}}> 
                             <button className="ui icon button small teal" onClick={handleDeletePost}>
                             <i class="trash icon" style={{visibility: "visible"}}></i>
@@ -39,7 +39,7 @@ export default function Post ({id, title, content, image_url, date_added, isAdmi
                         </div>
                     )
                     : <></>    
-                }
+                } */}
                 </div>
             </div>
         </div>

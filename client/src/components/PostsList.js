@@ -11,7 +11,6 @@ function PostsList ({user, isAdmin}) {
       .then((posts) => {setPosts(posts)})
     }, []);
 
-    const deletePost = (deleted_post) => setPosts(posts => posts.filter((post) => post.id !== deleted_post.id))
     const sortedPosts = posts.sort((a, b) => (a.date_added) > (b.date_added) ? -1 : 1)
 
     const blog = sortedPosts.map((post) => {
@@ -23,12 +22,12 @@ function PostsList ({user, isAdmin}) {
         image_url={post.image_url}
         date_added={post.date_added}
         isAdmin={isAdmin}
-        deletePost={deletePost}
         />
     })
 
     return (
         <div className="ui container fluid">
+        <h2 className="ui dividing header" style={{textAlign: "left", padding: "10px"}}>My Blog</h2>    
         {(user && isAdmin) ?  
             <div style={{paddingBottom:"25px", textAlign: "right"}} className="ui container">   
                 <Link to={`/posts/new`} className="ui button small teal">Add Post</Link>

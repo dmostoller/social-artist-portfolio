@@ -2,14 +2,13 @@ import React from "react";
 
 function Comment({username, comment,key, id, date_added, comment_user_id, user, onDeleteComment}){
 
-    const handleDeleteComment = (comment) => {
+    const handleDeleteComment = (e) => {
         fetch(`/comments/${id}`,{
           method:"DELETE"
         })
         .then(() => {
-          onDeleteComment(comment)
+          onDeleteComment(id)
         })
-    //   }
     }
 
     return (
@@ -19,9 +18,8 @@ function Comment({username, comment,key, id, date_added, comment_user_id, user, 
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>
                 <div className="text">{comment}</div>
 
-            {user.id == comment_user_id ? 
+            {user && user.id == comment_user_id ? 
                 <div className="actions">
-                <a className="edit">Edit</a>
                 <a onClick={handleDeleteComment} className="delete">Delete</a>
             </div>
             : <></>

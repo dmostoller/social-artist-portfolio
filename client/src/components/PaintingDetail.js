@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import CommentsList from "./CommentsList";
 
-function PaintingDetail({user}){
+function PaintingDetail({user, isAdmin}){
     const [painting, setPainting] = useState({})
     const {id} = useParams();
+    const navigate = useNavigate()
     
     useEffect(() => {
         fetch(`/paintings/${id}`)
@@ -13,8 +14,16 @@ function PaintingDetail({user}){
         .then((painting) => setPainting(painting))
     }, [id]);
 
-    if (!painting) {return <div>Loading...</div>}
-
+    const handleDeletePainting = (e) => {
+        if (window.confirm("Are you sure you want to delete this painting?")) {
+        fetch(`/paintings/${id}`, {
+            method: "DELETE"
+            })
+            .then(() => {
+                navigate('/paintings') 
+            })
+        }
+    }    
     return (
         <div className="ui container">
             <div className="ui container" style={{width:"90%"}}>
@@ -31,13 +40,27 @@ function PaintingDetail({user}){
                             </div>
                             <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
                                 <Link to="/paintings" className="ui button small teal" >Back</Link>
+                                { isAdmin ? (
+                                    <>
+                                        <button style={{float: "right"}} className="right attached ui icon button small teal" onClick={handleDeletePainting}>
+                                            <i class="trash icon" style={{visibility: "visible"}}></i>
+                                            Delete Painting
+                                        </button>
+                                        <Link to={`/paintings/${id}/edit`} style={{float: "right"}} className="ui left attached button small teal">
+                                            <i className="edit icon" style={{visibility: "visible"}}></i>
+                                            Edit Painting
+                                        </Link>
+                                    </>
+                                    )
+                                    : <></>    
+                                }
                             </div>
                     </div>
                 </div> 
             </div>
             
             <div style={{width:"90%"}} className="ui container">
-                    <h1 className="ui dividing header">Comments</h1>  
+                    <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
                     <div><CommentsList user={user} painting_id={painting.id}/></div>          
             </div>
             

@@ -1,7 +1,7 @@
 import React from "react";
 import Painting from "./Painting";
 
-function PaintingsList ({paintings, user, isAdmin, deletePainting}) {
+function PaintingsList ({paintings}) {
     const gallery = paintings.map((painting) => {
         return <Painting 
         key={painting.id}
@@ -13,9 +13,6 @@ function PaintingsList ({paintings, user, isAdmin, deletePainting}) {
         width={painting.width}
         materials={painting.materials}
         sold={painting.sold}
-        user={user}
-        isAdmin={isAdmin}
-        deletePainting={deletePainting}
         />
     })
     return ( 

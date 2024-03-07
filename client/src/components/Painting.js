@@ -1,20 +1,8 @@
 import React from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 
-export default function Painting ({image, title, sold, width, height, materials, price, id, isAdmin, deletePainting}) {
-    const navigate = useNavigate()
+export default function Painting ({image, title, sold, width, height, materials, price, id}) {
 
-    const handleDeletePainting = (painting) => {
-        if (window.confirm("Are you sure you want to delete this painting?")) {
-        fetch(`/paintings/${id}`, {
-            method: "DELETE"
-            })
-            .then(() => {
-                deletePainting(painting)
-                navigate('/paintings') 
-            })
-        }
-    }    
     return (
         <div className="three wide columns fluid">
             <div className="ui card" style={{marginBottom: "15px"}}>
@@ -30,13 +18,6 @@ export default function Painting ({image, title, sold, width, height, materials,
                     </div>
                     <div style={{paddingBottom: "5px", float: "right"}}> 
                         <Link to={`/paintings/${id}`} className="ui button small teal">View Details</Link>
-                        { isAdmin ? (
-                            <button className="ui icon button small teal" onClick={handleDeletePainting}>
-                            <i class="trash icon" style={{visibility: "visible"}}></i>
-                            </button>
-                        )
-                        : <></>    
-                    }
                     </div>
 
                 </div>

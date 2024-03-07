@@ -16,6 +16,8 @@ import LoginForm from './components/Login.js';
 import SignUp from './components/SignUp.js';
 import AddEvent from './components/AddEvent.js';
 import AddPainting from './components/AddPainting.js';
+import EventDetail from './components/EventDetail.js';
+import EditPainting from './components/EditPainting.js';
 
 export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
@@ -24,18 +26,22 @@ export default function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // auto-login
     fetch("/check_session").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
-        user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
-      }
+        r.json().then((user) => {
+          setUser(user)
+          checkAdminStatus(user);
+        }
+    )}
     });
   }, []);
+  
+  function checkAdminStatus(user) {
+    user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
+  }
 
   function handleLogin(user) {
     setUser(user);
-    // console.log(user.is_admin)   
     user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
   }
   function handleLogout() {
@@ -52,11 +58,13 @@ export default function App() {
           <Route path="/" element={<HomePage user={user} isAdmin={isAdmin}/>} />
           <Route path="/about" element={<AboutPage/>} />
           <Route path="/paintings" element={<PaintingsPage user={user} isAdmin={isAdmin}/>} />
-          <Route path="/paintings/:id" element={<PaintingDetail user={user}/>} />
+          <Route path="/paintings/:id" element={<PaintingDetail user={user} isAdmin={isAdmin}/>} />
           <Route path="/paintings/new" element={<AddPainting/>}/>
+          <Route path="/paintings/:id/edit" element={<EditPainting/>}/>
           <Route path="/events" element={<EventsPage user={user} isAdmin={isAdmin}/>} />
           <Route path="/events/new" element={<AddEvent/>} />
-          <Route path="/posts/:id" element={<PostDetail />} /> 
+          <Route path="/posts/:id" element={<PostDetail user={user} isAdmin={isAdmin}/>} />
+          <Route path="/events/:id" element={<EventDetail user={user} isAdmin={isAdmin}/>} /> 
           <Route path="/contact" element={<ContactPage/>} />
           <Route path="/posts/new" element={<AddPost/>} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>} />

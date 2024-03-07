@@ -1,29 +1,7 @@
 import React from "react";
-// import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Event ({id, name, venue, location, details, image_url, event_date, event_link, isAdmin, deleteEvent}) {
-    // const [event, setEvent] = useState();
-    const params = useParams()
-    const navigate = useNavigate()
-
-    // useEffect(()=>{
-    //     fetch(`/events/${params.id}`)
-    //     .then(res => res.json())
-    //     .then(setEvent)
-    //   },[])
-    
-      const handleDeleteEvent = (event) => {
-        if (window.confirm("Are you sure you want to delete this event?")) {
-        fetch(`/events/${id}`,{
-          method:"DELETE"
-        })
-        .then(() => {
-          deleteEvent(event)
-        //   navigate('/events')
-        })
-      }
-    }
+export default function Event ({id, name, venue, location, details, image_url, event_date}) {
     return (
         <div className="ui container fluid">
             <div className="ui horizontal card fluid" style={{marginBottom: "15px"}}>
@@ -37,17 +15,8 @@ export default function Event ({id, name, venue, location, details, image_url, e
                     <div className="description">{location}</div>                                   
                     <div className="description">{details}</div>
                     <div style={{paddingTop: "25px", float: "left"}}> 
-                        <a href={event_link} className="ui button small teal" target="_blank" rel="noopener noreferrer">View Event</a>
+                        <Link to={`/events/${id}`}  className="ui button small teal">View Event</Link>
                     </div>
-                    { isAdmin ? (
-                        <div style={{paddingTop: "25px", float: "left"}}> 
-                            <button className="ui icon button small teal" onClick={handleDeleteEvent}>
-                            <i class="trash icon" style={{visibility: "visible"}}></i>
-                            </button>
-                        </div>
-                    )
-                    : <></>    
-                }
                 </div>
             </div>
         </div>

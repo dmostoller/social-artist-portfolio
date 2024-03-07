@@ -31,7 +31,7 @@ const ContactForm = () => {
      </div>   
      <div className='field'>
         <label>Message</label>
-        <textarea type="text" name="message" />
+        <textarea rows="6" type="text" name="message" />
      </div>
      <button className="ui button teal" type="submit">Submit</button>
    </form>

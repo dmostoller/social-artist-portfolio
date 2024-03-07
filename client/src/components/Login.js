@@ -1,57 +1,69 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Error from "../styles/Error.js"
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 function LoginForm({ onLogin }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
+  const formSchema = yup.object().shape({
+    username: yup.string().required("Must enter a username"),
+    password: yup.string().required("Must enter a password"),
+})
+  const formik = useFormik({
+    initialValues: {
+        username:'',
+        password:'',
+    },
+  validationSchema: formSchema,
+  onSubmit: (values) => {
     fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify(values),
     }).then((r) => {
-      setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
-        navigate('/');
+        r.json().then(user => {
+          onLogin(user)
+          navigate('/')
+      })
       } else {
-        // r.json().then((err) => setErrors(err.errors));
+          r.json().then(errors => setErrors(errors.message))
       }
-    });
-  }
+    })
+  },
+  })
 
   return (
     <div className="ui container">
-        <form style={{width:"50%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={handleSubmit}>
+        <form style={{width:"50%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
             <div className="field">
                 <label>Login</label>
                 <input type="text" 
                   id="username" 
                   name="username" 
-                  value={username} 
+                  value={formik.values.username} 
                   placeholder="Username..." 
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={formik.handleChange}
                   >    
                 </input>
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}    
             </div>
             <div className="field">
                 <input type="password" 
                   id="password" 
                   name="password" 
-                  value={password} 
+                  value={formik.values.password} 
                   placeholder="Password..." 
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={formik.handleChange}
                   >
-                </input>               
+                </input>
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}               
             </div>    
             <div className="field">
                 <Link to="/" className="ui button small teal">Back</Link>

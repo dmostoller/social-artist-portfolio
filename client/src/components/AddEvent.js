@@ -28,7 +28,7 @@ function AddEvent() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("/events/new", {
+          fetch("/events", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -55,24 +55,31 @@ function AddEvent() {
                 <div className="field">
                     <label>Add Event</label>
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.name}</p>}
                 </div>
                 <div className="field">
                     <input type="text"  name="venue" value={formik.values.venue} placeholder="Venue..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.venue}</p>}
                 </div>    
                 <div className="field">
                     <input type="text" name="location" value={formik.values.location} placeholder="Location address..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>    
                 <div className="field">
                     <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
                 </div>    
                 <div className="field">
                     <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}
                 </div>  
                 <div className="field">
                     <input type="text"  name="event_link" value={formik.values.event_link} placeholder="Link to Event..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_link}</p>}
                 </div>      
                 <div className="field">
-                    <textarea type="text" name="details" value={formik.values.details} placeholder="Event Details..." onChange={formik.handleChange}></textarea>               
+                    <textarea type="text" rows="6" name="details" value={formik.values.details} placeholder="Event Details..." onChange={formik.handleChange}></textarea>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">
                 <Link to="/" className="ui button small teal" >Back</Link>

@@ -5,19 +5,22 @@ import * as yup from "yup";
 
 
 function SignUp({ setUser }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [email, setEmail] = useState("");
-
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const formSchema = yup.object().shape({
-    username: yup.string().required("Must enter a username"),
-    password: yup.string().required("Must enter a password"),
-    password_confirmation: yup.string().required("Must enter password again"),
-    email: yup.string().email().required("Must enter an email"),
+    username: yup.string()
+    .min(2, 'Name must be minimum 2 characters')
+    .max(100, 'Name must not be more than 100 characters')
+    .required("Username is required"),
+    password: yup.string()
+    .min(4, 'Password must be at least 4 characters')
+    .required("Password is required"),
+    password_confirmation: yup.string()
+    .oneOf([yup.ref('password')], 'Passwords must match')
+    .required("Confirm password is required"),
+    email: yup.string().email()
+    .required("Must enter an email address"),
 })
 const formik = useFormik({
   initialValues: {
@@ -59,7 +62,8 @@ onSubmit: (values) => {
                   placeholder="Username..." 
                   onChange={formik.handleChange}
                   >    
-                </input>
+                </input>                    
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
             </div>
             <div className="field">
                 <input type="password" 
@@ -70,16 +74,18 @@ onSubmit: (values) => {
                   onChange={formik.handleChange}
                   >
                 </input>
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}
              </div>   
               <div className="field">
                 <input type="password" 
                   id="password" 
                   name="password_confirmation" 
-                  value={formik.values.passwordConfirmation} 
+                  value={formik.values.password_confirmation} 
                   placeholder="Password Confirmation..." 
                   onChange={formik.handleChange}
                   >
-                </input>                
+                </input>
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
             </div>
             <div className="field">
                 <input type="text" 
@@ -90,6 +96,7 @@ onSubmit: (values) => {
                   onChange={formik.handleChange}
                   >
                 </input>                
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
             </div>    
             <div className="field">
                 <Link to="/" className="ui button small teal">Back</Link>

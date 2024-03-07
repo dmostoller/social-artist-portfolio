@@ -10,13 +10,17 @@ function CommentsList({user, painting_id}){
         setIsComFormVis(!isComFormVis)
     }
 
+
     useEffect(() => {
         fetch(`/comments`)
        .then((res) => res.json())
        .then((comments) => setComments(comments))
     }, []);
 
-    const deleteComment = (deleted_comment) => setComments(comments => comments.filter((comment) => comment.id !== deleted_comment.id))
+    const deleteComment = (deleted_comment_id) => {
+        setComments(comments => comments.filter((comment) => comment.id !== deleted_comment_id))
+        console.log(deleted_comment_id)
+    }
 
     const commentsSection = comments
     .filter(comment => comment.painting_id == painting_id)
@@ -37,13 +41,12 @@ function CommentsList({user, painting_id}){
         setComments([...comments, newComment])
     }
     
-
     return (
         <div className="ui container">
             {commentsSection}
             {user ? 
             <div style={{paddingBottom: "25px", paddingTop: "10px"}}>
-                {isComFormVis ? <CommentForm user={user}  onAddComment={addComment} paintingId={painting_id} onChangeIsComFormVis={changeIsComFormVis} /> : <button onClick={changeIsComFormVis} className="ui button small teal">Add Comment</button>}
+                {isComFormVis ? <CommentForm user={user} onAddComment={addComment} paintingId={painting_id} onChangeIsComFormVis={changeIsComFormVis} /> : <button onClick={changeIsComFormVis} className="ui button small teal">Add Comment</button>}
             </div>
             : <></>
             }

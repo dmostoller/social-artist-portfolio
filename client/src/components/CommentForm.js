@@ -28,6 +28,7 @@ function CommentForm({onAddComment, paintingId, onChangeIsComFormVis, user}){
             if(res.ok) {
               res.json().then(newComment => {
                 onAddComment(newComment)
+                formik.resetForm()
               })
             } else {
                 res.json().then(error => setError(error.message))
@@ -41,7 +42,8 @@ function CommentForm({onAddComment, paintingId, onChangeIsComFormVis, user}){
         <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>  
             <div className="field">
             <label>Add Comment</label>
-                <textarea type="text" id="comment" name="comment" value={formik.values.comment} placeholder="Your comment here" onChange={formik.handleChange}></textarea>               
+                <textarea rows="2" type="text" id="comment" name="comment" value={formik.values.comment} placeholder="Your comment here" onChange={formik.handleChange}></textarea>               
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.comment}</p>}
             </div>
             <div className="field"></div>
             <button onClick={onChangeIsComFormVis} style={{float: "left"}} className="ui button small teal" type="button">Hide Form</button>

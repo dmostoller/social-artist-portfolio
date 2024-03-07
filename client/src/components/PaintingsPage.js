@@ -15,8 +15,6 @@ function PaintingsPage ({ user, isAdmin}) {
       .then((paintings) => {setPaintings(paintings)})
     }, []);
 
-    const deletePainting = (deleted_painting) => setPaintings(paintings => paintings.filter((painting) => painting.id !== deleted_painting.id))
-
     const searchResults = paintings
     .filter(painting => {
         return (
@@ -30,7 +28,6 @@ function PaintingsPage ({ user, isAdmin}) {
     }
 
     const handleSortBy = (e) => {
-       //console.log(e.target.value)
         setSortBy(e.target.value)
     }
 
@@ -46,7 +43,7 @@ function PaintingsPage ({ user, isAdmin}) {
                 }
             </div>
             <div className="ui three column grid" style={{paddingTop:"40px"}}>
-                <PaintingsList paintings={searchResults} user={user} isAdmin={isAdmin} deletePainting={deletePainting}/>
+                <PaintingsList paintings={searchResults}/>
             </div>
         </div>
     )
