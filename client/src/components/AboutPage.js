@@ -1,12 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 export default function AboutPage () {
 
 return (
     <div className="ui container">
-    <div style={{width: "75%", margin: "auto"}} className="ui card">
+    <div style={{width: "90%", margin: "auto"}} className="ui card">
         <div className="image">
             <img className="ui huge image" src="./images/slider-2.jpg" alt="Yasmin Mostoller at the Jed William's Gallery"/>
         </div>
@@ -18,7 +17,8 @@ return (
                 <span className="category">Philadelphia, PA</span>
             </div>
             <div className="description">
-                <p>A trained artist with a Master's degree in Fine Arts originally from Tehran, Iran and now living in Philadelphia, Pennsylvania. My paintings are colorful, abstract, geometric, and imaginative works that are a window into my creative mind. Thank you for visiting my website.</p>
+                <p>	Yasmin is a Persian artist currently living in Philadelphia, PA.  After growing up with a love for the visual arts, Yasmin studied painting and fine art, recieving both Bachelor's and Master's degrees.  Her work has been shown internationally, with shows in the USA, Iran, France, Spain, India, and Germany.             
+                <br></br>Yasmin's works are an exploration of abstract ideas, stemming from a unique perspective on space and motion. Utilizing various techniques and methods for applying paint, Yasmin has created whole worlds within her canvases. Bright, colorful, and energetic vistas into a unique universe derived from a global perspective and a reach into the unknown.</p>
             </div>
             <div>
                 <a href="https://www.facebook.com/yasminmostollerart" target="none"><img style={{float: "left", padding:"5px"}} src="./icons/facebook.svg" alt="Facebook"></img></a>
@@ -30,8 +30,6 @@ return (
         </div>
 </div>
 </div>
-
-
 
 
 )

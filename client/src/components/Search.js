@@ -28,6 +28,5 @@ function Search({searchQ, onSearch, sortBy, selected}) {
             </span>
         </div>
     )
-
 }
 export default Search

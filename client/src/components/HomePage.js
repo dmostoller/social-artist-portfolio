@@ -1,16 +1,17 @@
 import React from "react";
 import CarouselContainer from './CarouselContainer.js';
+import Slider from './Slider.js';
+import PostsList from "./PostsList.js";
 
-export default function HomePage () {
+export default function HomePage ({isAdmin, user}) {
 
 return (
-    <div className="ui container" style={{height: "65vh"}}>
-        <div style={{width: "40%", float:"left", paddingLeft:"50px", paddingTop:"100px"}} className="ui container">
-            <h1>Yasmin Mostoller</h1>
-            <p>"To draw, you must close your eyes and sing."</p>
-            <p style={{fontStyle:"italic"}}>-Pablo Picasso</p>
-        </div>
-        <div className="ui container" style={{width: "60%", float:"left", paddingRight:"25px"}}><CarouselContainer /></div>
+    <div className="ui container fluid">
+
+        {/* <div className="ui container" style={{width: "60%", float:"left", paddingRight:"25px"}}><CarouselContainer /></div> */}
+        <div classname="ui container fluid"><Slider /></div>
+        <p style={{textAlign: "center", marginBottom: "0px"}}>"To draw, you must close your eyes and sing." <i> -Pablo Picasso</i></p>
+        <div classname="ui container fluid"><PostsList user={user} isAdmin={isAdmin}/></div>
     </div>
 )
 }

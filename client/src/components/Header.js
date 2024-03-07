@@ -1,16 +1,36 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
-function Header() {
+function Header({ user, onLogout}) {
+  function handleLogout() {
+    fetch("/logout", {
+      method: "DELETE",
+    }).then(() => onLogout());
+  }
+
    return ( 
-    <header className="ui container">
-      <div style={{borderBottomLeftRadius: "5px", borderBottomRightRadius: "5px",backgroundColor: "#202020", textAlign:"center"}}>
-          <img src="https://static.wixstatic.com/media/1d469b_fed699377ff94926952ced8f84ade651~mv2.jpeg/v1/fill/w_219,h_120,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/yasi%20logo%201.jpeg" alt="YasiArt"/>
-        </div>
-      <div className="ui four item menu">
+    <header className="ui container fluid">
+      <div style={{borderBottomLeftRadius: "5px", borderBottomRightRadius: "5px",backgroundColor: "#505050", textAlign:"left"}}>
+          <h1 style={{color: "white", padding: "25px"}}>Yasmin Mostoller
+          {user ? (
+            <> 
+               <button onClick={handleLogout} className="ui inverted basic button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Logout</button>
+            </>
+               ) : (
+              <>
+                <Link to='/login' className="ui inverted basic button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Login</Link>
+                <Link to='/signup' className="ui inverted basic button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Sign Up</Link>
+              </>
+              )
+              }
+          </h1>
+          {/* {user ? ( <><div style={{color:"red", float: "right", paddingRight: "5px", paddingBottom: "5px"}}>Welcome {user.username}!</div></>) : (<></>)} */}
+      </div>
+      <div className="ui five item menu">
         <NavLink to="/" className="item" >Home</NavLink>
         <NavLink to="/about" className="item" >About Me</NavLink>
         <NavLink to="/paintings" className="item" >Paintings</NavLink>
+        <NavLink to="/events" className="item" >Events</NavLink>
         <NavLink to="/contact" className="item" >Contact</NavLink>
       </div>
     </header>
