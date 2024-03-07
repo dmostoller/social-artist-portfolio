@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Error from "../styles/Error.js"
 
 function LoginForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -57,6 +58,11 @@ function LoginForm({ onLogin }) {
                 <button style={{float: "right"}} className="ui button small teal" type="submit">
                     {isLoading ? "Loading..." : "Login"}
                 </button>
+            </div>
+            <div>
+            {errors.map((err) => (
+                <Error key={err}>{err}</Error>
+            ))}
             </div>
         </form> 
     </div>
