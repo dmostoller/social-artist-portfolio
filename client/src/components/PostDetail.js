@@ -42,15 +42,20 @@ function PostDetail({user, isAdmin}){
                 </div>
                 <div style={{padding: "10px"}}> 
                     <Link to="/" className="ui button small teal">Back</Link>
-                    { (user && isAdmin) ? (
-                        <>
-                            <button style={{float: "right"}}className="ui icon button small teal" onClick={handleDeletePost}>
-                            <i class="trash icon" style={{visibility: "visible"}}></i>
-                            </button>
-                        </>    
-                        )
-                        : <></>    
-                    }
+                    { user && isAdmin ? (
+                                    <>
+                                        <button style={{float: "right"}} className="right attached ui icon button small teal" onClick={handleDeletePost}>
+                                            <i class="trash icon" style={{visibility: "visible"}}></i>
+                                            Delete Post
+                                        </button>
+                                        <Link to={`/posts/${id}/edit`} style={{float: "right"}} className="ui left attached button small teal">
+                                            <i className="edit icon" style={{visibility: "visible"}}></i>
+                                            Edit Post
+                                        </Link>
+                                    </>
+                                    )
+                                    : <></>    
+                                }
                 </div>
             </div>
     </div>

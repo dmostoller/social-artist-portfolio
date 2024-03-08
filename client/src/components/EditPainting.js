@@ -32,27 +32,27 @@ function EditPainting({}) {
     const initValues = painting
     
     const formik = useFormik({
-    enableReinitialize: true,   
-    initialValues: initValues,
-    validationSchema: formSchema,
-    onSubmit: (values) => {
-      fetch(`/paintings/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      }).then((res) => {
-        if(res.ok) {
-          res.json().then(painting => {
-            navigate(`/paintings/${id}`)
-          })
-        } else {
-            res.json().then(error => setError(error.message))
-        }
-      })
-    },
-  })
+      enableReinitialize: true,   
+      initialValues: initValues,
+      validationSchema: formSchema,
+      onSubmit: (values) => {
+        fetch(`/paintings/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(values),
+        }).then((res) => {
+          if(res.ok) {
+            res.json().then(painting => {
+              navigate(`/paintings/${id}`)
+            })
+          } else {
+              res.json().then(error => setError(error.message))
+          }
+        })
+      },
+    })
 
     return (
         <>

@@ -18,6 +18,9 @@ import AddEvent from './components/AddEvent.js';
 import AddPainting from './components/AddPainting.js';
 import EventDetail from './components/EventDetail.js';
 import EditPainting from './components/EditPainting.js';
+import EditPost from './components/EditPost.js';
+import EditEvent from './components/EditEvent.js';
+
 
 export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
@@ -64,7 +67,9 @@ export default function App() {
           <Route path="/events" element={<EventsPage user={user} isAdmin={isAdmin}/>} />
           <Route path="/events/new" element={<AddEvent/>} />
           <Route path="/posts/:id" element={<PostDetail user={user} isAdmin={isAdmin}/>} />
+          <Route path="/posts/:id/edit" element={<EditPost/>} />
           <Route path="/events/:id" element={<EventDetail user={user} isAdmin={isAdmin}/>} /> 
+          <Route path="/events/:id/edit" element={<EditEvent/>} /> 
           <Route path="/contact" element={<ContactPage/>} />
           <Route path="/posts/new" element={<AddPost/>} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>} />

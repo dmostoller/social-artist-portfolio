@@ -210,6 +210,20 @@ class PostsById(Resource):
             response = make_response({"error": "Post not found"}, 404)
         return response
     
+    def patch(self, id):
+        post = Post.query.filter_by(id=id).first()
+        if post:
+            try:
+                for attr in request.get_json():
+                    setattr(post, attr, request.get_json()[attr])
+                    db.session.commit()
+                    response = make_response(post.to_dict(), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            response = make_response({"error": "Post not found"}, 404) 
+        return response
+    
     def delete(self, id):
         post = Post.query.filter_by(id=id).first()
         if not post:
@@ -257,6 +271,20 @@ class EventsById(Resource):
             response = make_response({"error": "Post not found"}, 404)
         return response
     
+    def patch(self, id):
+        event = Event.query.filter_by(id=id).first()
+        if event:
+            try:
+                for attr in request.get_json():
+                    setattr(event, attr, request.get_json()[attr])
+                    db.session.commit()
+                    response = make_response(event.to_dict(), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            response = make_response({"error": "Event not found"}, 404) 
+        return response
+
     def delete(self, id):
         event = Event.query.filter_by(id=id).first()
         if not event:

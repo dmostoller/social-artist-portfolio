@@ -6,7 +6,6 @@ import * as yup from "yup";
 
 function LoginForm({ onLogin }) {
   const [errors, setErrors] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const formSchema = yup.object().shape({
@@ -67,9 +66,7 @@ function LoginForm({ onLogin }) {
             </div>    
             <div className="field">
                 <Link to="/" className="ui button small teal">Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">
-                    {isLoading ? "Loading..." : "Login"}
-                </button>
+                <button style={{float: "right"}} className="ui button small teal" type="submit">Login</button>
             </div>
             <div>
             {errors.map((err) => (

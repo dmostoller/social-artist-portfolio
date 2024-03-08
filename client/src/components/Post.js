@@ -1,23 +1,8 @@
 import React from "react";
-import {Link, useNavigate } from "react-router-dom";
+import {Link } from "react-router-dom";
 
 
-export default function Post ({id, title, content, image_url, date_added, isAdmin, deletePost}) {
-    // const navigate = useNavigate()
-
-    // const handleDeletePost = (post) => {
-    //     if (window.confirm("Are you sure you want to delete this post?")) {
-    //     fetch(`/posts/${id}`, {
-    //         method: "DELETE"
-    //         })
-    //         .then(() => {
-    //             deletePost(post)
-    //             navigate('/') 
-    //         })
-    //     }
-    // }    
-
-
+export default function Post ({id, title, content, image_url, date_added}) {
     return (
         <div className="ui container fluid">
             <div className="ui horizontal card fluid" style={{marginBottom: "15px"}}>

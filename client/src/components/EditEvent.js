@@ -1,11 +1,21 @@
-import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function AddEvent() {
+function EditEvent() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [event, setEvent] = useState({})
+    const {id} = useParams();
+
+
+  useEffect(() => {
+      fetch(`/events/${id}`)
+      .then((res) => res.json())
+      .then((event) => setEvent(event))
+  }, [id]);
+
 
     const formSchema = yup.object().shape({
         name: yup.string().required("Must enter a title"),
@@ -16,20 +26,15 @@ function AddEvent() {
         event_date: yup.date().required("Must enter a date"),
         event_link: yup.string().required("Must enter an event link"),
     })
+    const initValues = event 
+
     const formik = useFormik({
-        initialValues: {
-          name:'',
-          venue:'',
-          location:'',
-          details:'',
-          image_url:'',
-          event_date:'',
-          event_link:'',
-        },
+        enableReinitialize: true,
+        initialValues: initValues,
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("/events", {
-            method: "POST",
+          fetch(`/events/${id}`, {
+            method: "PATCH",
             headers: {
               "Content-Type": "application/json",
             },
@@ -37,8 +42,7 @@ function AddEvent() {
           }).then((res) => {
             if(res.ok) {
               res.json().then(event => {
-                // onAddEvent(event)
-                navigate(`/events`)
+                navigate(`/events/${id}`)
               })
             } else {
                 res.json().then(error => setError(error.message))
@@ -91,4 +95,4 @@ function AddEvent() {
     )
 }
 
-export default AddEvent
+export default EditEvent

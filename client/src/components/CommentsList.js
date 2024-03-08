@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useParams, useNavigate} from "react-router-dom";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 
@@ -23,7 +22,7 @@ function CommentsList({user, painting_id}){
     }
 
     const commentsSection = comments
-    .filter(comment => comment.painting_id == painting_id)
+    .filter(comment => comment.painting_id === painting_id)
     .map(comment => (
         <Comment 
             key={comment.id} 

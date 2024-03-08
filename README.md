@@ -21,14 +21,14 @@ There are 5 tables: Users, Paintings, Comments, Posts, and Events.
 There are two one-to-many relationships that form a many to many relationship: Users---<Comments>----Paintings.
 The Posts and Events tables are only accesible by the admins and therefor are self contained.
 
-Every resource has two Flask-Resful classes for routes, with every resource having GET, POST and DELETE routes. Paintings also has a PATCH route so that the paintings can be updated as needed.
+Every resource has two Flask-Resful classes for routes, with every resource having GET, POST PATCH, and DELETE routes except users and comments. 
 
 
 ### Future Expansions
 I plan to add a few features and then deploy the site, those include:
 - Enabling the direct upload of photos instead of just linking to already hosted files
-- Add PATCH routes for all resources so everything can be updated (except comments)
-- Fix the error handling of the login/signup forms so that bad entries dont break things (nonexistent user or a non-unique choice of username for example)
+- Add PATCH route for user and a view to see or edit or delete the user.
+- Fix the error handling of the login/signup forms
 - Possibly allow the Admin to be able to delete comments from any user
 - Dark Mode or just a darker theme
 - Integrate Formik validation with EmailJS

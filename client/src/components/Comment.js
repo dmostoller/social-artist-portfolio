@@ -18,7 +18,7 @@ function Comment({username, comment,key, id, date_added, comment_user_id, user, 
                 <div className="author">{username}<div className="metadata"><span className="date">{date_added}</span></div></div>
                 <div className="text">{comment}</div>
 
-            {user && user.id == comment_user_id ? 
+            {user && user.id === comment_user_id ? 
                 <div className="actions">
                 <a onClick={handleDeleteComment} className="delete">Delete</a>
             </div>
