@@ -12,7 +12,6 @@ from config import app, db, api
 from models import User, Painting, Comment, Post, Event 
 
 # Views go here!
-
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'

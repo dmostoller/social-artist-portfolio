@@ -21,7 +21,7 @@ There are 5 tables: Users, Paintings, Comments, Posts, and Events.
 There are two one-to-many relationships that form a many to many relationship: Users---<Comments>----Paintings.
 The Posts and Events tables are only accesible by the admins and therefor are self contained.
 
-Every resource has two Flask-Resful classes for routes, with every resource having GET, POST PATCH, and DELETE routes except users and comments. 
+Every resource has two Flask-Resful classes for all routes, with every resource having GET, POST PATCH, and DELETE routes except users and comments. There are also authentication routes: Signup(POST), CheckSession(GET), Login(POST), and Logout(DELETE).
 
 
 ### Future Expansions
