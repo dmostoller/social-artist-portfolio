@@ -31,3 +31,4 @@ I plan to add a few features and then deploy the site, those include:
 - Fix the error handling of the login/signup forms so that bad entries dont break things (nonexistent user or a non-unique choice of username for example)
 - Possibly allow the Admin to be able to delete comments from any user
 - Dark Mode or just a darker theme
+- Integrate Formik validation with EmailJS
