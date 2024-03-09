@@ -29,6 +29,7 @@ I plan to add a few features and then deploy the site, those include:
 - Enabling the direct upload of photos instead of just linking to already hosted files
 - Add PATCH route for user and a view to see or edit or delete the user.
 - Fix the error handling of the login/signup forms
-- Possibly allow the Admin to be able to delete comments from any user
+- Allow the Admin to be able to delete comments from any user
 - Dark Mode or just a darker theme
 - Integrate Formik validation with EmailJS
+- Comments on posts as well as paintings

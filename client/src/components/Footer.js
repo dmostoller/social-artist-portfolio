@@ -6,7 +6,7 @@ export default function Footer () {
             <div>
                 <p>
                     <span className="ui small text">
-                        ©Yasmin Mostoller 2024 --- Created by David Mostoller
+                        ©Yasmin Mostoller 2024
                     </span>
                 </p>
 

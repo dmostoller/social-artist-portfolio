@@ -26,9 +26,9 @@ function PostDetail({user, isAdmin}){
     }    
     return (
         <div className="ui container">
-        <div style={{width: "75%", margin: "auto"}} className="ui card">
+        <div style={{width: "50%", margin: "auto"}} className="ui card">
             <div className="image">
-                <img className="ui huge image" src={post.image_url} alt={post.title}></img>
+                <img src={post.image_url} className="ui medium image"  alt={post.title}></img>
             </div>
             <div className="content">
                 <div className="header">

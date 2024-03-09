@@ -26,7 +26,7 @@ function EventDetail({user, isAdmin}){
 
     return (
         <div className="ui container">
-        <div style={{width: "75%", margin: "auto"}} className="ui card">
+        <div style={{width: "70%", margin: "auto"}} className="ui card">
             <div className="image">
                 <img className="ui huge image" src={event.image_url} alt={event.name}></img>
             </div>

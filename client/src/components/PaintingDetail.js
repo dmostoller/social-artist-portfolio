@@ -26,7 +26,7 @@ function PaintingDetail({user, isAdmin}){
     }    
     return (
         <div className="ui container">
-            <div className="ui container" style={{width:"90%"}}>
+            <div className="ui container" style={{width:"80%"}}>
                 <div>
                     <div className="image">
                         <img src={painting.image} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>
@@ -59,7 +59,7 @@ function PaintingDetail({user, isAdmin}){
                 </div> 
             </div>
             
-            <div style={{width:"90%"}} className="ui container">
+            <div style={{width:"80%"}} className="ui container">
                     <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
                     <div><CommentsList user={user} painting_id={painting.id}/></div>          
             </div>
