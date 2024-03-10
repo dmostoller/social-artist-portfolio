@@ -14,12 +14,15 @@ function Header({ user, onLogout}) {
           <h1 style={{color: "white", padding: "25px"}}>Yasmin Mostoller
           {user ? (
             <> 
-               <button onClick={handleLogout} className="ui inverted basic button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Logout</button>
+               <Link to='/user'  className="ui inverted  icon button small" style={{float: "right", marginTop: "5px"}}>
+                    <i className="user icon"></i>
+               </Link>
+               <button onClick={handleLogout} className="ui inverted button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Logout</button>
             </>
                ) : (
               <>
-                <Link to='/login' className="ui inverted basic button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Login</Link>
-                <Link to='/signup' className="ui inverted basic button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Sign Up</Link>
+                <Link to='/login' className="ui inverted  button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Login</Link>
+                <Link to='/signup' className="ui inverted  button small" style={{float: "right", marginRight: "5px", marginTop: "5px"}}>Sign Up</Link>
               </>
               )
               }

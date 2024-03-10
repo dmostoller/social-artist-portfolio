@@ -20,7 +20,8 @@ import EventDetail from './components/EventDetail.js';
 import EditPainting from './components/EditPainting.js';
 import EditPost from './components/EditPost.js';
 import EditEvent from './components/EditEvent.js';
-
+import User from './components/User.js';
+import UploadPhoto from './components/UploadPhoto.js';
 
 export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
@@ -59,6 +60,7 @@ export default function App() {
       <div style={{marginTop: "25px"}}>
       <Routes>
           <Route path="/" element={<HomePage user={user} isAdmin={isAdmin}/>} />
+          <Route path="/user" element={<User user={user} setUser={setUser} isAdmin={isAdmin}/>} />
           <Route path="/about" element={<AboutPage/>} />
           <Route path="/paintings" element={<PaintingsPage user={user} isAdmin={isAdmin}/>} />
           <Route path="/paintings/:id" element={<PaintingDetail user={user} isAdmin={isAdmin}/>} />
@@ -74,6 +76,8 @@ export default function App() {
           <Route path="/posts/new" element={<AddPost/>} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>} />
           <Route path="/signup" element={<SignUp setUser={setUser}/>} />
+          <Route path="/upload" element={<UploadPhoto/>} />
+
       </Routes>
       </div>
       <Footer />

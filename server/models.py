@@ -104,3 +104,5 @@ class Event(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Event {self.id}>'
+    
+

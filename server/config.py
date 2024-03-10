@@ -1,6 +1,7 @@
 # Standard library imports
 
 # Remote library imports
+import os
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -11,12 +12,18 @@ from flask_bcrypt import Bcrypt
 
 # Local imports
 
+UPLOAD_FOLDER = './client/public/images'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'tiff'}
+
 # Instantiate app, set attributes
 app = Flask(__name__)
 app.secret_key = b'Y\xf1Xz\x00\xad|eQ\x80t \xca\x1a\x10K'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Define metadata, instantiate db
 metadata = MetaData(naming_convention={

@@ -2,21 +2,25 @@
 # Standard library imports
 
 # Remote library imports
-from flask import request, abort, make_response, jsonify, request, session 
+from flask import request, abort, make_response, jsonify, request, session, redirect, url_for, flash
+from werkzeug.utils import secure_filename
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 # Local imports
-from config import app, db, api
+from config import app, db, api, os
 # Add your model imports
 from models import User, Painting, Comment, Post, Event 
+
+UPLOAD_FOLDER = './images/'
+ALLOWED_EXTENSIONS = set(['tiff', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 # Views go here!
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
 
-class Signup(Resource):
+class Users(Resource):
     def post(self):
         try:
             form_json = request.get_json()
@@ -63,7 +67,7 @@ class Logout(Resource):
         session['user_id'] = None
         return {}, 204
 
-api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(Users, '/users', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
@@ -297,7 +301,43 @@ class EventsById(Resource):
 api.add_resource(Events, '/events')
 api.add_resource(EventsById, '/events/<int:id>')
 
+def allowedFile(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route('/upload', methods=['POST', 'GET'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # If the user does not select a file, the browser submits an
+        # empty file without a filename.
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowedFile(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('download_file', name=filename))
+    return
+
+# @app.route('/upload', methods=['POST', 'GET'])
+# # API to upload file
+# def fileUpload():
+#     if request.method == 'POST':
+#         file = request.files.getlist('file')
+#         for f in file:
+#             filename = secure_filename(f.filename)
+#             if allowedFile(filename):
+#                 f.save(os.path.join(UPLOAD_FOLDER, filename))
+#             else:
+#                 return jsonify({'message': 'File type not allowed'}), 400
+#         return jsonify({"name": filename, "status": "success"})
+#     else:
+#         return jsonify({"status": "failed"})
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

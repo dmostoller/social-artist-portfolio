@@ -31,7 +31,7 @@ const formik = useFormik({
   },
 validationSchema: formSchema,
 onSubmit: (values) => {
-  fetch("/signup", {
+  fetch("/user", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
