@@ -344,7 +344,7 @@ def upload():
 
         if file:
             filename = secure_filename(file.filename)
-            file_url = f'/uploads/{filename}'
+            file_url = f'server/uploads/{filename}'
             if extension not in app.config['ALLOWED_EXTENSIONS']:
                 return 'File is not an image'
             file.save(os.path.join(

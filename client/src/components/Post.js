@@ -2,12 +2,14 @@ import React from "react";
 import {Link } from "react-router-dom";
 
 
+
 export default function Post ({id, title, content, image_url, date_added}) {
     return (
         <div className="ui container fluid">
             <div className="ui horizontal card fluid" style={{marginBottom: "15px"}}>
                 <div className="image" style={{minWidth: "300px"}}>
                     <img src={image_url} alt={title} style={{minWidth: "300px"}}></img>
+                    {/* <img src={url_for('serve_image', filename={image_url})}/> */}
                 </div>
                 <div className="content" style={{padding: "25px"}}>
                     <div className="header">{title}</div>
