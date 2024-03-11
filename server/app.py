@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Standard library imports
-
 # Remote library imports
-from flask import request, abort, make_response, jsonify, request, session, redirect, url_for, flash
+from flask import request, abort, make_response, jsonify, request, session, redirect, send_from_directory, url_for, flash
 from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
@@ -12,8 +12,9 @@ from config import app, db, api, os
 # Add your model imports
 from models import User, Painting, Comment, Post, Event 
 
-UPLOAD_FOLDER = './images/'
-ALLOWED_EXTENSIONS = set(['tiff', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app.config['UPLOAD_FOLDER'] = 'uploads/'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16mb
+app.config['ALLOWED_EXTENSIONS'] = ['.png', '.jpg', '.jpeg', '.gif']
 
 # Views go here!
 @app.route('/')
@@ -301,28 +302,24 @@ class EventsById(Resource):
 api.add_resource(Events, '/events')
 api.add_resource(EventsById, '/events/<int:id>')
 
-def allowedFile(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/upload', methods=['POST', 'GET'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # If the user does not select a file, the browser submits an
-        # empty file without a filename.
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowedFile(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('download_file', name=filename))
-    return
+# @app.route('/upload', methods=['POST', 'GET'])
+# def upload_file():
+#     if request.method == 'POST':
+#         # check if the post request has the file part
+#         if 'file' not in request.files:
+#             flash('No file part')
+#             return redirect(request.url)
+#         file = request.files['file']
+#         # If the user does not select a file, the browser submits an
+#         # empty file without a filename.
+#         if file.filename == '':
+#             flash('No selected file')
+#             return redirect(request.url)
+#         if file and allowedFile(file.filename):
+#             filename = secure_filename(file.filename)
+#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+#             return redirect(url_for('download_file', name=filename))
+#     return
 
 # @app.route('/upload', methods=['POST', 'GET'])
 # # API to upload file
@@ -338,6 +335,31 @@ def upload_file():
 #         return jsonify({"name": filename, "status": "success"})
 #     else:
 #         return jsonify({"status": "failed"})
+
+@app.route('/upload_photo', methods=['POST'])
+def upload():
+    try:    
+        file = request.files['file']
+        extension = os.path.splitext(file.filename)[1].lower()
+
+        if file:
+            filename = secure_filename(file.filename)
+            file_url = f'/uploads/{filename}'
+            if extension not in app.config['ALLOWED_EXTENSIONS']:
+                return 'File is not an image'
+            file.save(os.path.join(
+                app.config['UPLOAD_FOLDER'],
+                filename
+            ))
+    except RequestEntityTooLarge:
+        return 'File is larger than the 16MB limit' 
+    
+    return make_response(jsonify({"name": file_url, "status": "success"}))
+    # return redirect(f"photo{file_url}")
+
+@app.route('/serve-image/<filename>', methods=['GET'])
+def serve_image(filename):
+    return send_from_directory(app.config['UPLOAD_DIRECTORY'], filename)
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

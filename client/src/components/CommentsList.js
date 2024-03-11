@@ -9,7 +9,6 @@ function CommentsList({user, painting_id}){
         setIsComFormVis(!isComFormVis)
     }
 
-
     useEffect(() => {
         fetch(`/comments`)
        .then((res) => res.json())
@@ -18,7 +17,7 @@ function CommentsList({user, painting_id}){
 
     const deleteComment = (deleted_comment_id) => {
         setComments(comments => comments.filter((comment) => comment.id !== deleted_comment_id))
-        console.log(deleted_comment_id)
+        // console.log(deleted_comment_id)
     }
 
     const commentsSection = comments

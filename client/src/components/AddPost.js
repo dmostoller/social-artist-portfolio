@@ -1,11 +1,14 @@
 import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import UploadPhoto from "./UploadPhoto";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function AddPost() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [file, setFile] = useState({});
+    const {url} = useParams();
 
     const formSchema = yup.object().shape({
         title: yup.string()
@@ -19,9 +22,10 @@ function AddPost() {
         initialValues: {
           title:'',
           content:'',
-          image_url:'',
+          image_url: url,
           date_added: `${new Date().toLocaleDateString('en-US')} ${new Date().toLocaleTimeString('en-US')}`,
         },
+        enableReinitialize: true,   
         validationSchema: formSchema,
         onSubmit: (values) => {
           fetch("/posts", {
@@ -46,6 +50,7 @@ function AddPost() {
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui container">
+            <UploadPhoto/>
             <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
                 <div className="field">
                     <label>Add Post</label>
@@ -53,7 +58,7 @@ function AddPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
                 <div className="field">
-                    <input type="text" name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    <input type="text" name="image_url" value={url} placeholder="Image link..." ></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
                 </div>    
                 <div className="field">

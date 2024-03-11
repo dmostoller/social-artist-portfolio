@@ -22,6 +22,7 @@ import EditPost from './components/EditPost.js';
 import EditEvent from './components/EditEvent.js';
 import User from './components/User.js';
 import UploadPhoto from './components/UploadPhoto.js';
+import Photo from './components/Photo.js';
 
 export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
@@ -76,7 +77,8 @@ export default function App() {
           <Route path="/posts/new" element={<AddPost/>} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>} />
           <Route path="/signup" element={<SignUp setUser={setUser}/>} />
-          <Route path="/upload" element={<UploadPhoto/>} />
+          <Route path="/uploadphoto" element={<UploadPhoto/>} />
+          <Route path="photo" element={<Photo/>} />
 
       </Routes>
       </div>
