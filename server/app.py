@@ -1,77 +1,98 @@
 #!/usr/bin/env python3
 # Standard library imports
 # Remote library imports
-from flask import request, abort, make_response, jsonify, request, session, redirect, send_from_directory, url_for, flash
+from flask import (
+    request,
+    abort,
+    make_response,
+    jsonify,
+    request,
+    session,
+    redirect,
+    send_from_directory,
+    url_for,
+    flash,
+)
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+from datetime import datetime
 
 # Local imports
 from config import app, db, api, os
-# Add your model imports
-from models import User, Painting, Comment, Post, Event 
 
-app.config['UPLOAD_FOLDER'] = 'uploads/'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 #16mb
-app.config['ALLOWED_EXTENSIONS'] = ['.png', '.jpg', '.jpeg', '.gif']
+# Add your model imports
+from models import User, Painting, Comment, Post, Event
+
+app.config["UPLOAD_FOLDER"] = "uploads/"
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16mb
+app.config["ALLOWED_EXTENSIONS"] = [".png", ".jpg", ".jpeg", ".gif"]
+
 
 # Views go here!
-@app.route('/')
+@app.route("/")
 def index():
-    return '<h1>Project Server</h1>'
+    return "<h1>Project Server</h1>"
+
 
 class Users(Resource):
     def post(self):
         try:
             form_json = request.get_json()
-            if form_json['password'] == form_json['password_confirmation']:
+            if form_json["password"] == form_json["password_confirmation"]:
                 new_user = User(
-                    username=form_json['username'],
-                    password_hash=form_json['password'],
-                    email=form_json['email'],
-                    is_admin=False
+                    username=form_json["username"],
+                    password_hash=form_json["password"],
+                    email=form_json["email"],
+                    is_admin=False,
                 )
                 db.session.add(new_user)
                 db.session.commit()
-                session['user_id'] = new_user.id 
-                response = make_response(new_user.to_dict(rules = ('-_password_hash', )), 201)
+                session["user_id"] = new_user.id
+                response = make_response(
+                    new_user.to_dict(rules=("-_password_hash",)), 201
+                )
             else:
                 raise AttributeError("Passwords must match")
         except IntegrityError:
-            response = make_response({'errors': ['validation errors']}, 422)
-        
+            response = make_response({"errors": ["validation errors"]}, 422)
+
         return response
+
 
 class CheckSession(Resource):
     def get(self):
-        user_id = session.get('user_id')
+        user_id = session.get("user_id")
         if user_id:
             user = User.query.filter(User.id == user_id).first()
-            return user.to_dict(rules = ('-_password_hash', )), 200
-        return make_response({'errors': 'You must be logged in'}, 401)
+            return user.to_dict(rules=("-_password_hash",)), 200
+        return make_response({"errors": "You must be logged in"}, 401)
+
 
 class Login(Resource):
     def post(self):
-        username = request.get_json()['username']
-        password = request.get_json()['password']
+        username = request.get_json()["username"]
+        password = request.get_json()["password"]
         user = User.query.filter(User.username == username).first()
         if user and user.authenticate(password):
-            session['user_id'] = user.id
-            return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
-        return make_response({'errors': 'Invalid username or password'}, 401)
+            session["user_id"] = user.id
+            return make_response(user.to_dict(rules=("-_password_hash",)), 200)
+        return make_response({"errors": "Invalid username or password"}, 401)
+
 
 class Logout(Resource):
     def delete(self):
-        if session['user_id'] == None:
-            return {'error': 'No user found'}, 401
-        session['user_id'] = None
+        if session["user_id"] == None:
+            return {"error": "No user found"}, 401
+        session["user_id"] = None
         return {}, 204
 
-api.add_resource(Users, '/users', endpoint='signup')
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-api.add_resource(Login, '/login', endpoint='login')
-api.add_resource(Logout, '/logout', endpoint='logout')
+
+api.add_resource(Users, "/users", endpoint="signup")
+api.add_resource(CheckSession, "/check_session", endpoint="check_session")
+api.add_resource(Login, "/login", endpoint="login")
+api.add_resource(Logout, "/logout", endpoint="logout")
 
 
 class Paintings(Resource):
@@ -79,27 +100,28 @@ class Paintings(Resource):
         paintings = [painting.to_dict() for painting in Painting.query.all()]
         reponse = make_response(paintings, 200)
         return reponse
-    
+
     def post(self):
         try:
-            sold_response = eval(request.get_json()['sold'])
+            sold_response = eval(request.get_json()["sold"])
             form_json = request.get_json()
             new_painting = Painting(
-                title=form_json['title'],
-                materials=form_json['materials'],
-                width=form_json['width'],
-                height=form_json['height'],
-                price=form_json['price'],
-                image=form_json['image'],
+                title=form_json["title"],
+                materials=form_json["materials"],
+                width=form_json["width"],
+                height=form_json["height"],
+                price=form_json["price"],
+                image=form_json["image"],
                 sold=sold_response,
             )
             db.session.add(new_painting)
             db.session.commit()
             response = make_response(new_painting.to_dict(), 201)
         except ValueError:
-            response = make_response({"errors" : ["validation errors"]}, 422)
-        
+            response = make_response({"errors": ["validation errors"]}, 422)
+
         return response
+
 
 class PaintingsById(Resource):
     def get(self, id):
@@ -109,18 +131,18 @@ class PaintingsById(Resource):
         else:
             response = make_response({"error": "Painting not found"}, 404)
         return response
-    
+
     def patch(self, id):
         painting = Painting.query.filter_by(id=id).first()
         if painting:
             try:
-                sold_response = eval(request.get_json()['sold'])
-                setattr(painting, "title", request.get_json()['title'])
-                setattr(painting, "materials", request.get_json()['materials'])
-                setattr(painting, "width", request.get_json()['width'])
-                setattr(painting, "height", request.get_json()['height'])
-                setattr(painting, "price", request.get_json()['price'])
-                setattr(painting, "image", request.get_json()['image'])
+                sold_response = eval(request.get_json()["sold"])
+                setattr(painting, "title", request.get_json()["title"])
+                setattr(painting, "materials", request.get_json()["materials"])
+                setattr(painting, "width", request.get_json()["width"])
+                setattr(painting, "height", request.get_json()["height"])
+                setattr(painting, "price", request.get_json()["price"])
+                setattr(painting, "image", request.get_json()["image"])
                 setattr(painting, "sold", sold_response)
 
                 db.session.commit()
@@ -128,10 +150,10 @@ class PaintingsById(Resource):
             except ValueError:
                 response = make_response({"errors": ["validation errors"]}, 400)
         else:
-            response = make_response({"error": "Power not found"}, 404) 
-        
+            response = make_response({"error": "Power not found"}, 404)
+
         return response
-    
+
     def delete(self, id):
         painting = Painting.query.filter_by(id=id).first()
         if not painting:
@@ -142,31 +164,33 @@ class PaintingsById(Resource):
         return response
 
 
-api.add_resource(Paintings, '/paintings')
-api.add_resource(PaintingsById, '/paintings/<int:id>')
+api.add_resource(Paintings, "/paintings")
+api.add_resource(PaintingsById, "/paintings/<int:id>")
+
 
 class Comments(Resource):
     def get(self):
         comments = [comment.to_dict() for comment in Comment.query.all()]
         reponse = make_response(comments, 200)
         return reponse
-    
+
     def post(self):
         try:
             form_json = request.get_json()
             new_comment = Comment(
-                comment=form_json['comment'],
-                date_added=form_json['date_added'],
-                painting_id=form_json['painting_id'],
-                user_id=form_json['user_id'],
+                comment=form_json["comment"],
+                date_added=form_json["date_added"],
+                painting_id=form_json["painting_id"],
+                user_id=form_json["user_id"],
             )
             db.session.add(new_comment)
             db.session.commit()
             response = make_response(new_comment.to_dict(), 201)
         except ValueError:
-            response = make_response({"errors" : ["validation errors"]}, 422)
-        
+            response = make_response({"errors": ["validation errors"]}, 422)
+
         return response
+
 
 class CommentsById(Resource):
     def delete(self, id):
@@ -178,8 +202,9 @@ class CommentsById(Resource):
         response = make_response("", 204)
         return response
 
-api.add_resource(Comments, '/comments')
-api.add_resource(CommentsById, '/comments/<int:id>')
+
+api.add_resource(Comments, "/comments")
+api.add_resource(CommentsById, "/comments/<int:id>")
 
 
 class Posts(Resource):
@@ -187,23 +212,26 @@ class Posts(Resource):
         posts = [post.to_dict() for post in Post.query.all()]
         reponse = make_response(posts, 200)
         return reponse
-    
+
     def post(self):
+        now = datetime.now()
+        date = now.date()
         try:
             form_json = request.get_json()
             new_post = Post(
-                title=form_json['title'],
-                content=form_json['content'],
-                image_url=form_json['image_url'],
-                date_added=form_json['date_added'],
+                title=form_json["title"],
+                content=form_json["content"],
+                image_url=form_json["image_url"],
+                date_added=date,
             )
             db.session.add(new_post)
             db.session.commit()
             response = make_response(new_post.to_dict(), 201)
         except ValueError:
-            response = make_response({"errors" : ["validation errors"]}, 422)
-        
+            response = make_response({"errors": ["validation errors"]}, 422)
+
         return response
+
 
 class PostsById(Resource):
     def get(self, id):
@@ -213,7 +241,7 @@ class PostsById(Resource):
         else:
             response = make_response({"error": "Post not found"}, 404)
         return response
-    
+
     def patch(self, id):
         post = Post.query.filter_by(id=id).first()
         if post:
@@ -225,9 +253,9 @@ class PostsById(Resource):
             except ValueError:
                 response = make_response({"errors": ["validation errors"]}, 400)
         else:
-            response = make_response({"error": "Post not found"}, 404) 
+            response = make_response({"error": "Post not found"}, 404)
         return response
-    
+
     def delete(self, id):
         post = Post.query.filter_by(id=id).first()
         if not post:
@@ -237,8 +265,10 @@ class PostsById(Resource):
         response = make_response("", 204)
         return response
 
-api.add_resource(Posts, '/posts')
-api.add_resource(PostsById, '/posts/<int:id>')
+
+api.add_resource(Posts, "/posts")
+api.add_resource(PostsById, "/posts/<int:id>")
+
 
 class Events(Resource):
     def get(self):
@@ -250,21 +280,22 @@ class Events(Resource):
         try:
             form_json = request.get_json()
             new_event = Event(
-                name=form_json['name'],
-                venue=form_json['venue'],
-                location=form_json['location'],
-                details=form_json['details'],
-                image_url=form_json['image_url'],
-                event_date=form_json['event_date'],
-                event_link=form_json['event_link']
+                name=form_json["name"],
+                venue=form_json["venue"],
+                location=form_json["location"],
+                details=form_json["details"],
+                image_url=form_json["image_url"],
+                event_date=form_json["event_date"],
+                event_link=form_json["event_link"],
             )
             db.session.add(new_event)
             db.session.commit()
             response = make_response(new_event.to_dict(), 201)
         except ValueError:
-            response = make_response({"errors" : ["validation errors"]}, 422)
-        
+            response = make_response({"errors": ["validation errors"]}, 422)
+
         return response
+
 
 class EventsById(Resource):
     def get(self, id):
@@ -274,7 +305,7 @@ class EventsById(Resource):
         else:
             response = make_response({"error": "Post not found"}, 404)
         return response
-    
+
     def patch(self, id):
         event = Event.query.filter_by(id=id).first()
         if event:
@@ -286,7 +317,7 @@ class EventsById(Resource):
             except ValueError:
                 response = make_response({"errors": ["validation errors"]}, 400)
         else:
-            response = make_response({"error": "Event not found"}, 404) 
+            response = make_response({"error": "Event not found"}, 404)
         return response
 
     def delete(self, id):
@@ -299,8 +330,8 @@ class EventsById(Resource):
         return response
 
 
-api.add_resource(Events, '/events')
-api.add_resource(EventsById, '/events/<int:id>')
+api.add_resource(Events, "/events")
+api.add_resource(EventsById, "/events/<int:id>")
 
 # @app.route('/upload', methods=['POST', 'GET'])
 # def upload_file():
@@ -336,30 +367,30 @@ api.add_resource(EventsById, '/events/<int:id>')
 #     else:
 #         return jsonify({"status": "failed"})
 
-@app.route('/upload_photo', methods=['POST'])
+
+@app.route("/upload_photo", methods=["POST"])
 def upload():
-    try:    
-        file = request.files['file']
+    try:
+        file = request.files["file"]
         extension = os.path.splitext(file.filename)[1].lower()
 
         if file:
             filename = secure_filename(file.filename)
-            file_url = f'server/uploads/{filename}'
-            if extension not in app.config['ALLOWED_EXTENSIONS']:
-                return 'File is not an image'
-            file.save(os.path.join(
-                app.config['UPLOAD_FOLDER'],
-                filename
-            ))
+            file_url = f"server/uploads/{filename}"
+            if extension not in app.config["ALLOWED_EXTENSIONS"]:
+                return "File is not an image"
+            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
     except RequestEntityTooLarge:
-        return 'File is larger than the 16MB limit' 
-    
+        return "File is larger than the 16MB limit"
+
     return make_response(jsonify({"name": file_url, "status": "success"}))
     # return redirect(f"photo{file_url}")
 
-@app.route('/serve-image/<filename>', methods=['GET'])
-def serve_image(filename):
-    return send_from_directory(app.config['UPLOAD_DIRECTORY'], filename)
 
-if __name__ == '__main__':
+@app.route("/serve-image/<filename>", methods=["GET"])
+def serve_image(filename):
+    return send_from_directory(app.config["UPLOAD_DIRECTORY"], filename)
+
+
+if __name__ == "__main__":
     app.run(port=5555, debug=True)

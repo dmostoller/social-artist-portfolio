@@ -2,10 +2,14 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadWidget from "./UploadWidget.js"
+
 
 function AddEvent() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
+
 
     const formSchema = yup.object().shape({
         name: yup.string().required("Must enter a title"),
@@ -17,12 +21,13 @@ function AddEvent() {
         event_link: yup.string().required("Must enter an event link"),
     })
     const formik = useFormik({
+      enableReinitialize: true,
         initialValues: {
           name:'',
           venue:'',
           location:'',
           details:'',
-          image_url:'',
+          image_url:`${imageUrl}`,
           event_date:'',
           event_link:'',
         },
@@ -52,8 +57,20 @@ function AddEvent() {
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui container">
             <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+            <h4 className="ui horizontal inverted divider">Add New Event</h4>
                 <div className="field">
-                    <label>Add Event</label>
+                    <label>Upload image, then enter event info...<Link style={{float:"right"}} to="/events">  Back to Events Page</Link></label>
+                    {(imageUrl === "")?
+                    <UploadWidget onSetImageUrl={setImageUrl}/>
+                    : (
+                    <>
+                    <img className="ui circular centered image small" src={imageUrl} alt=""></img>
+                    <input style={{visibility: "hidden"}} type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>                
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
+                    </>
+                    )}
+                </div> 
+                <div className="field">
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.name}</p>}
                 </div>
@@ -64,10 +81,6 @@ function AddEvent() {
                 <div className="field">
                     <input type="text" name="location" value={formik.values.location} placeholder="Location address..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
-                </div>    
-                <div className="field">
-                    <input type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
-                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
                 </div>    
                 <div className="field">
                     <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
