@@ -69,8 +69,8 @@ function EditEvent() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+        <div className="ui text container">
+            <form className="ui form" onSubmit={formik.handleSubmit}>
             <h4 style={{marginTop: "10px"}} className="ui horizontal divider">Edit Event</h4>
             <div className="field">
                     <label>Upload image, then enter event info...<Link style={{float:"right"}} to={`/events/${id}`}>  Back to Event</Link></label>
@@ -106,7 +106,7 @@ function EditEvent() {
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button style={{float: "right"}} className="ui button fluid teal" type="submit">Submit</button>
+                <button className="ui button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

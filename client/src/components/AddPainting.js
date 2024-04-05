@@ -2,10 +2,12 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadWidget from "./UploadWidget";
 
 function AddPainting() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [imageUrl, setImageUrl] = useState("");
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Must enter a title"),
@@ -22,13 +24,14 @@ function AddPainting() {
         .required("Must enter True or False")
     })
     const formik = useFormik({
+        enableReinitialize: true, 
         initialValues: {
             title:'',
             materials:'',
             width:'',
             height:'',
             price:'',
-            image:'',
+            image:`${imageUrl}`,
             sold:'',
         },
     validationSchema: formSchema,
@@ -55,10 +58,17 @@ function AddPainting() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+        <div className="ui text container">
+            <form className="ui form" onSubmit={formik.handleSubmit}>
+            <h4 style={{marginTop: "10px"}} className="ui horizontal divider">Add New Painting</h4>
                 <div className="field">
-                    <label>Add Painting</label>
+                    <label>Upload image then enter painting info...<Link style={{float: "right"}} to="/paintings">  Back to Paintings Page</Link></label>
+                    <UploadWidget onSetImageUrl={setImageUrl}/>
+                    <img className="ui circular centered image small" src={imageUrl} style={{marginTop: "10px"}} alt=""></img>
+                    <input type="text" style={{visibility: "hidden"}} name="image" value={formik.values.image} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
+                </div>   
+                <div className="field">
                     <input type="text" name="title" value={formik.values.title} placeholder="Title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
@@ -77,10 +87,6 @@ function AddPainting() {
                 <div className="field">
                     <input type="text" name="price" value={formik.values.price} placeholder="Price..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.price}</p>}
-                </div>  
-                <div className="field">
-                    <input type="text" name="image" value={formik.values.image} placeholder="Image link..." onChange={formik.handleChange}></input>               
-                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image}</p>}
                 </div>           
                 <div className="field">
                     <label for="sold">Is the painting already sold?</label>
@@ -88,8 +94,8 @@ function AddPainting() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.sold}</p>}
                 </div>
                 <div className="field">
-                <Link to="/paintings" className="ui button small teal" >Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">Submit</button>
+                {/* <Link to="/paintings" className="ui button small teal" >Back</Link> */}
+                <button className="ui button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

@@ -4,12 +4,10 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import UploadWidget from "./UploadWidget";
 
-
 function AddPost() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [imageUrl, setImageUrl] = useState("");
-
 
     const formSchema = yup.object().shape({
         title: yup.string()
@@ -49,8 +47,8 @@ function AddPost() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+        <div className="ui text container">
+            <form className="ui form" onSubmit={formik.handleSubmit}>
             <h4 style={{marginTop: "50px"}} className="ui horizontal divider">Add New Post</h4>
                 <div className="field">
                     <label>Upload image then enter post info...<Link style={{float: "right"}} to="/">  Back to homepage</Link></label>
@@ -69,7 +67,7 @@ function AddPost() {
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button style={{float: "right"}} className="ui fluid button teal" type="submit">Submit</button>
+                <button className="ui fluid button teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>
