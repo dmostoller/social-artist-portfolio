@@ -61,13 +61,13 @@ function EditPost() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui container">
-            <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+        <div className="ui text container">
+            <form className="ui form" onSubmit={formik.handleSubmit}>
             <h4 style={{marginTop: "10px"}} className="ui horizontal divider">Edit Post</h4>
                 <div className="field">
                     <label>Upload image then enter post info...<Link style={{float: "right"}} to={`/posts/${id}`}>  Back to homepage</Link></label>
                     <UploadWidget onSetImageUrl={setImageUrl}/>
-                    <img className="ui circular centered image small" src={imageUrl} alt=""></img>
+                    <img className="ui circular centered image small" src={imageUrl} style={{marginTop: "10px"}} alt=""></img>
                     <input type="text" style={{visibility: "hidden"}} name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
                 </div>  
@@ -83,7 +83,7 @@ function EditPost() {
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button style={{float: "right"}} className="ui button fluid teal" type="submit">Submit</button>
+                <button className="ui button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>
