@@ -57,18 +57,13 @@ function AddEvent() {
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui container">
             <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
-            <h4 className="ui horizontal inverted divider">Add New Event</h4>
+            <h4 className="ui horizontal divider">Add New Event</h4>
                 <div className="field">
                     <label>Upload image, then enter event info...<Link style={{float:"right"}} to="/events">  Back to Events Page</Link></label>
-                    {(imageUrl === "")?
                     <UploadWidget onSetImageUrl={setImageUrl}/>
-                    : (
-                    <>
                     <img className="ui circular centered image small" src={imageUrl} alt=""></img>
                     <input style={{visibility: "hidden"}} type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>                
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
-                    </>
-                    )}
                 </div> 
                 <div className="field">
                     <input type="text"  name="name" value={formik.values.name} placeholder="Event Name..." onChange={formik.handleChange}></input>
@@ -83,7 +78,7 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>    
                 <div className="field">
-                    <input type="text"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
+                    <input type="date"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}
                 </div>  
                 <div className="field">
@@ -95,8 +90,8 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">
-                <Link to="/" className="ui button small teal" >Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">Submit</button>
+                {/* <Link to="/" className="ui button small teal" >Back</Link> */}
+                <button style={{float: "right"}} className="ui button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

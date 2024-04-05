@@ -51,7 +51,7 @@ function AddPost() {
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui container">
             <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
-            <h4 style={{marginTop: "50px"}} className="ui horizontal inverted divider">Add New Post</h4>
+            <h4 style={{marginTop: "50px"}} className="ui horizontal divider">Add New Post</h4>
                 <div className="field">
                     <label>Upload image then enter post info...<Link style={{float: "right"}} to="/">  Back to homepage</Link></label>
                     <UploadWidget onSetImageUrl={setImageUrl}/>
@@ -68,8 +68,8 @@ function AddPost() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <Link to="/" className="ui button small teal" >Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">Submit</button>
+                {/* <Link to="/" className="ui button small teal" >Back</Link> */}
+                <button style={{float: "right"}} className="ui fluid button teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>
