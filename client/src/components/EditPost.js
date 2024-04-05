@@ -2,17 +2,24 @@ import React, {useState, useEffect} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import UploadWidget from "./UploadWidget";
+
 
 function EditPost() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [post, setPost] = useState({})
     const {id} = useParams();
+    const [imageUrl, setImageUrl] = useState("");
+
 
     useEffect(() => {
       fetch(`/posts/${id}`)
       .then((res) => res.json())
-      .then((post) => setPost(post))
+      .then((post) => {
+        setPost(post)
+        setImageUrl(post.image_url)
+      })
   }, [id]);
 
     const formSchema = yup.object().shape({
@@ -26,7 +33,11 @@ function EditPost() {
     const initValues = post
     const formik = useFormik({
         enableReinitialize: true,   
-        initialValues: initValues,
+        initialValues:  {
+          title:`${post.title}`,
+          content:`${post.content}`,
+          image_url:`${imageUrl}`,
+        },
         validationSchema: formSchema,
         onSubmit: (values) => {
           fetch(`/posts/${id}`, {
@@ -52,22 +63,27 @@ function EditPost() {
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
         <div className="ui container">
             <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+            <h4 style={{marginTop: "10px"}} className="ui horizontal divider">Edit Post</h4>
                 <div className="field">
-                    <label>Add Post</label>
+                    <label>Upload image then enter post info...<Link style={{float: "right"}} to={`/posts/${id}`}>  Back to homepage</Link></label>
+                    <UploadWidget onSetImageUrl={setImageUrl}/>
+                    <img className="ui circular centered image small" src={imageUrl} alt=""></img>
+                    <input type="text" style={{visibility: "hidden"}} name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
+                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
+                </div>  
+                <div className="field">
+                    <label>Post Title:</label>
                     <input type="text" name="title" value={formik.values.title} placeholder="Post title..." onChange={formik.handleChange}></input>
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.title}</p>}
                 </div>
                 <div className="field">
-                    <input type="text" name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               
-                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.image_url}</p>}
-                </div>    
-                <div className="field">
+                    <label>Post Content:</label>
                     <textarea type="text" rows="6" name="content" value={formik.values.content} placeholder="Post content..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
-                <Link to="/" className="ui button small teal" >Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">Submit</button>
+                {/* <Link to="/" className="ui button small teal" >Back</Link> */}
+                <button style={{float: "right"}} className="ui button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>
