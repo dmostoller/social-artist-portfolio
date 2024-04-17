@@ -3,6 +3,8 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from config import db, bcrypt
+from wtforms.validators import ValidationError
+
 
 
 # Models go here!
@@ -10,9 +12,9 @@ class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True)
+    username = db.Column(db.String, unique=True, nullable=False, index=True)
     _password_hash = db.Column(db.String, nullable=False)
-    email = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
     is_admin = db.Column(db.Boolean)
 
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
@@ -34,8 +36,18 @@ class User(db.Model, SerializerMixin):
     @validates
     def validate_username(self, key, username):
         if not username:
-            raise ('You must enter a username')
+            raise ValueError('You must enter a username')
+        if User.query.filter_by(username=username).first():
+            raise ValidationError("Username already in use")
         return username
+    
+    @validates
+    def validate_email(self, key, email):
+        if not email:
+            raise ValueError('You must enter a email')
+        if User.query.filter_by(email=email).first():
+            raise ValidationError("Email already in use")
+        return email
 
     def __repr__(self):
         return f'User {self.username}, ID {self.id}'

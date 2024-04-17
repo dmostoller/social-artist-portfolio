@@ -17,6 +17,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+from wtforms.validators import ValidationError
 from datetime import datetime
 
 # Local imports
@@ -56,7 +57,7 @@ class Users(Resource):
             else:
                 raise AttributeError("Passwords must match")
         except IntegrityError:
-            response = make_response({"errors": ["validation errors"]}, 422)
+            raise UnprocessableEntity("Your username or email is is already in use, please try again.")
 
         return response
 class UpdateUser(Resource):

@@ -61,6 +61,8 @@ function LoginForm({ onLogin }) {
         </h2>
         <form className="ui form initial" onSubmit={formik.handleSubmit}>
             <div className="field">
+            <div className="ui left icon input">
+                <i className="user icon"></i>
                 <input type="text" 
                   id="username" 
                   name="username" 
@@ -69,9 +71,12 @@ function LoginForm({ onLogin }) {
                   onChange={formik.handleChange}
                   >    
                 </input>
+                </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}    
             </div>
             <div className="field">
+            <div className="ui left icon input">
+                <i className="lock icon"></i>
                 <input type="password" 
                   id="password" 
                   name="password" 
@@ -80,9 +85,10 @@ function LoginForm({ onLogin }) {
                   onChange={formik.handleChange}
                   >
                 </input>
+            </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}               
             </div>    
-            <button className="ui fluid button teal" type="submit">Login</button>
+            <button className="ui fluid button large teal" type="submit">Login</button>
             <div>
             </div>
             <div className="ui grey message tiny">

@@ -10,6 +10,10 @@ function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
+  function tryAgain() {
+    setError(null)
+  }
+
   const formSchema = yup.object().shape({
     username: yup.string()
     .min(2, 'Name must be minimum 2 characters')
@@ -27,13 +31,13 @@ function SignUp() {
 const formik = useFormik({
   initialValues: {
       username:'',
+      email:'',
       password:'',
       password_confirmation:'',
-      email:'',
   },
 validationSchema: formSchema,
 onSubmit: (values) => {
-  fetch("/user", {
+  fetch("/users", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -52,11 +56,28 @@ onSubmit: (values) => {
 },
 })
 
+if(error) return (
+    <>
+     <div className="ui center aligned grid" style={{minHeight:"100vh"}}>
+       <div className="column" style={{width:"450px"}}>
+       <h4 className="ui image header">
+           <div className="content"><span className="ui red text">{error}</span></div>
+       </h4>
+       <button onClick={tryAgain} className="ui fluid button large grey" type="submit">Try Again</button>
+     </div>
+   </div>      
+         
+   </>)
   return (
-    <div className="ui container">
-        <form style={{width:"50%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+    <div className="ui center aligned grid" style={{minHeight:"100vh"}}>
+            <div className="column" style={{width:"450px"}}>
+            <h2 className="ui image header">
+          <div className="content">Create a new account</div>
+        </h2>
+        <form className="ui form" onSubmit={formik.handleSubmit}>
             <div className="field">
-                <label>Login</label>
+                <div className="ui left icon input">
+                <i className="user icon"></i>
                 <input type="text" 
                   id="username" 
                   name="username" 
@@ -64,10 +85,27 @@ onSubmit: (values) => {
                   placeholder="Username..." 
                   onChange={formik.handleChange}
                   >    
-                </input>                    
+                </input>   
+                </div>                 
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
             </div>
             <div className="field">
+            <div className="ui left icon input">
+                <i className="mail icon"></i>
+                <input type="text" 
+                  id="email" 
+                  name="email" 
+                  value={formik.values.email} 
+                  placeholder="Email Address..." 
+                  onChange={formik.handleChange}
+                  >
+                </input>  
+                </div>              
+                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
+            </div> 
+            <div className="field">
+            <div className="ui left icon input">
+                <i className="lock icon"></i>
                 <input type="password" 
                   id="password" 
                   name="password" 
@@ -76,43 +114,36 @@ onSubmit: (values) => {
                   onChange={formik.handleChange}
                   >
                 </input>
+                </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}
              </div>   
               <div className="field">
+              <div className="ui left icon input">
+                <i className="lock icon"></i>
                 <input type="password" 
-                  id="password" 
+                  id="password_confirmation" 
                   name="password_confirmation" 
                   value={formik.values.password_confirmation} 
                   placeholder="Password Confirmation..." 
                   onChange={formik.handleChange}
                   >
                 </input>
+                </div>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
-            </div>
+            </div>   
             <div className="field">
-                <input type="text" 
-                  id="email" 
-                  name="email" 
-                  value={formik.values.email} 
-                  placeholder="Email Address..." 
-                  onChange={formik.handleChange}
-                  >
-                </input>                
-                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
-            </div>    
-            <div className="field">
-                <Link to="/" className="ui button small teal">Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">
+                <button className="ui fluid button large teal" type="submit">
                     Submit
                 </button>
             </div>
-            {/* <div>
-            {errors.map((err) => (
-                <Error key={err}>{err}</Error>
-            ))}
-            </div> */}
+            <div className="ui grey message tiny">
+             Already have an account? 
+              <Link to="/login">    Login</Link>
+            </div>
         </form> 
     </div>
+    </div>
+
 )
 }
 
