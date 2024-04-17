@@ -29,8 +29,8 @@ function EventDetail(){
     }    
 
     return (
-        <div className="ui container">
-        <div style={{width: "70%", margin: "auto"}} className="ui card">
+        <div className="ui container" style={{minHeight:"100vh"}}>
+        <div style={{width: "80%", margin: "auto"}} className="ui card">
             <div className="image">
                 <img className="ui huge image" src={event.image_url} alt={event.name}></img>
             </div>

@@ -55,7 +55,7 @@ function AddEvent() {
     return (
         <>
         {error && <h2 style={{color:'red', textAlign:'center'}}> {error} </h2>}
-        <div className="ui text container">
+        <div className="ui text container" style={{minHeight:"100vh"}}>
             <form className="ui form" onSubmit={formik.handleSubmit}>
             <h4 className="ui horizontal divider">Add New Event</h4>
                 <div className="field">
