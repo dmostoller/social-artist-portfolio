@@ -2,9 +2,12 @@ import React, {useState, useEffect} from "react";
 import PaintingsList from "./PaintingsList";
 import Search from "./Search";
 import { Link } from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function PaintingsPage ({ user, isAdmin}) {
-
+function PaintingsPage () {
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
     const [paintings, setPaintings] = useState([])
     const [searchQ, setSearchQ] = useState("")
     const [sortBy, setSortBy] = useState("Default")
@@ -36,13 +39,18 @@ function PaintingsPage ({ user, isAdmin}) {
             <div className="ui container fluid">
                 <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy}/>
                 {(user && isAdmin) ? 
-                    <div style={{ textAlign: "right"}} className="ui container">   
-                        <Link to="/paintings/new" className="ui button small teal">Add Painting</Link>
+                    <div style={{textAlign: "right"}} className="ui container">   
+                        <Link to="/paintings/new" className="ui animated fade icon basic button teal small" tabindex="0">
+                            <div className="visible content"><i className="plus icon"></i></div>
+                            <div className="hidden content">
+                                New
+                            </div> 
+                        </Link>
                     </div>
                     : <></>
                 }
             </div>
-            <div className="ui three column grid" style={{paddingTop:"40px"}}>
+            <div className="ui container centered" style={{paddingTop:"40px"}}>
                 <PaintingsList paintings={searchResults}/>
             </div>
         </div>

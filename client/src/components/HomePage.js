@@ -1,9 +1,12 @@
 import React from "react";
 import Slider from './Slider.js';
 import PostsList from "./PostsList.js";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-export default function HomePage ({isAdmin, user}) {
-
+export default function HomePage () {
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
 return (
     <div className="ui container fluid">
 

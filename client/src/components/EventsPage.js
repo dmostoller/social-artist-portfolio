@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from "react";
 import EventsList from "./EventsList"
 import { Link } from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function EventsPage ({user, isAdmin}) {
+function EventsPage () {
     const [events, setEvents] = useState([])
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
 
     useEffect(() => {
       fetch(`/events`)
@@ -18,7 +22,12 @@ function EventsPage ({user, isAdmin}) {
         <div className="ui container">
             {(user && isAdmin) ?  
                 <div style={{marginBottom:  "20px", textAlign: "right"}} className="ui container">     
-                    <Link to={`/events/new`} className="ui button small teal">Add Event</Link>
+                    <Link to={`/events/new`} className="ui animated fade icon basic button teal small" tabindex="0">
+                            <div className="visible content"><i className="plus icon"></i></div>
+                            <div className="hidden content">
+                                New
+                            </div> 
+                        </Link>
                 </div>
                 : <div></div>
             }

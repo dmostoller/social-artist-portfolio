@@ -65,7 +65,7 @@ function EditPost() {
             <form className="ui form" onSubmit={formik.handleSubmit}>
             <h4 style={{marginTop: "10px"}} className="ui horizontal divider">Edit Post</h4>
                 <div className="field">
-                    <label>Upload image then enter post info...<Link style={{float: "right"}} to={`/posts/${id}`}>  Back to homepage</Link></label>
+                    <label>Upload image then enter post info...<Link style={{float: "right"}} to={`/posts/${id}`}>  Back to Post</Link></label>
                     <UploadWidget onSetImageUrl={setImageUrl}/>
                     <img className="ui circular centered image small" src={imageUrl} style={{marginTop: "10px"}} alt=""></img>
                     <input type="text" style={{visibility: "hidden"}} name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>               

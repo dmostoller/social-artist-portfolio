@@ -21,11 +21,19 @@ return (
                 <br></br>Yasmin's works are an exploration of abstract ideas, stemming from a unique perspective on space and motion. Utilizing various techniques and methods for applying paint, Yasmin has created whole worlds within her canvases. Bright, colorful, and energetic vistas into a unique universe derived from a global perspective and a reach into the unknown.</p>
             </div>
             <div>
-                <a href="https://www.facebook.com/yasminmostollerart" target="none"><img style={{float: "left", padding:"5px"}} src="./icons/facebook.svg" alt="Facebook"></img></a>
-                <a href="https://www.instagram.com/yasminnunsy/" target="none"><img style={{float: "left", padding:"5px"}} src="./icons/instagram.svg" alt="Instagram"></img></a>
+                {/* <a href="https://www.facebook.com/yasminmostollerart" target="none"><img style={{float: "left", padding:"5px"}} src="./icons/facebook.svg" alt="Facebook"></img></a>
+                <a href="https://www.instagram.com/yasminnunsy/" target="none"><img style={{float: "left", padding:"5px"}} src="./icons/instagram.svg" alt="Instagram"></img></a> */}
+                <Link to="https://www.facebook.com/yasminmostollerart" target="blank"  className="ui circular facebook icon button" style={{float: "left", marginTop: "5px", marginRight: "5px"}}>
+                    <i className="facebook icon"></i>
+                </Link> 
+                <Link to="https://www.instagram.com/yasminnunsy/" target="blank"  className="ui circular icon purple button" style={{float: "left", marginTop: "5px", marginRight: "5px"}}>
+                    <i className="instagram icon"></i>
+                </Link>
+
+            
             </div>
             <div style={{padding: "10px", float: "right"}}> 
-                <Link to="/contact" className="ui button small teal">Contact Me</Link>
+                <Link to="/contact" className="ui button basic small teal">Contact Me</Link>
             </div>
         </div>
 </div>

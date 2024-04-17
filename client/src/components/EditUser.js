@@ -1,18 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "../context/user";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 
-export default function EditUser ({id, setUser, showEdit}) {
+export default function EditUser ({setShowEdit}) {
     const [error, setError] = useState(null);
-    const [userToEdit, setUserToEdit] = useState({});
-
-
-    useEffect(() => {
-        fetch(`/user/${id}`)
-        .then((res) => res.json())
-        .then((user) => setUserToEdit(user))
-    }, [id]);
+    const { user, setUser} = useUser();
 
     const formSchema = yup.object().shape({
         username: yup.string()
@@ -23,13 +16,13 @@ export default function EditUser ({id, setUser, showEdit}) {
         .email("Must be a valid email address")
       })
     
-    const initValues = userToEdit
+    const initValues = user
     const formik = useFormik({
         enableReinitialize: true,   
         initialValues: initValues,
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch(`/users/${id}`, {
+          fetch(`/users/${user.id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -39,7 +32,7 @@ export default function EditUser ({id, setUser, showEdit}) {
             if(res.ok) {
               res.json().then(user => {
                 setUser(user)
-                showEdit()
+                setShowEdit()
               })
             } else {
                 res.json().then(error => setError(error.message))
@@ -49,10 +42,12 @@ export default function EditUser ({id, setUser, showEdit}) {
       })
 
     return (
-        <div className="ui container fluid">
-            <div className="ui card" style={{marginBottom: "15px"}}>
-                <div className="content" style={{padding: "25px"}}>
-                    <form className="ui form" onSubmit={formik.handleSubmit}>
+        <div className="ui inverted container" style={{marginTop: "5px"}}>
+            <h4 className="ui horizontal divider">My Account</h4>
+            <div className="ui centered grid">
+                <div className="ui card" style={{margin: "25px"}}>
+                    <div className="content" style={{padding: "25px"}}>
+                        <form className="ui form" onSubmit={formik.handleSubmit}>
                             <div className="field">
                                 <input type="text" name="title" value={formik.values.username} onChange={formik.handleChange}></input>
                                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
@@ -61,12 +56,12 @@ export default function EditUser ({id, setUser, showEdit}) {
                                 <input type="text" name="title" value={formik.values.email} onChange={formik.handleChange}></input>
                                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
                             </div>
-                        <div style={{paddingTop: "25px", float: "left"}}> 
-                            <button onclick={showEdit} className="ui button small teal">Back</button>
-                            <button className="ui button small teal">Submit</button>
-                        </div>       
-                    </form>
-
+                            <div style={{paddingTop: "25px"}}> 
+                                <button onClick={setShowEdit} className="ui button basic small teal">Back</button>
+                                <button className="ui button small teal">Submit</button>
+                            </div>       
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
