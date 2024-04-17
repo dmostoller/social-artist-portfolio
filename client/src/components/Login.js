@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Error from "../styles/Error.js"
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 function LoginForm({ onLogin }) {
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  function tryAgain() {
+    setError(null)
+  }
 
   const formSchema = yup.object().shape({
     username: yup.string().required("Must enter a username"),
@@ -32,17 +35,32 @@ function LoginForm({ onLogin }) {
           navigate('/')
       })
       } else {
-          r.json().then(errors => setErrors(errors.message))
+          r.json().then(error => setError(error.message))
       }
     })
   },
   })
+  if(error) return (
+    <>
+     <div className="ui center aligned grid" style={{minHeight:"100vh"}}>
+       <div className="column" style={{width:"450px"}}>
+       <h4 className="ui image header">
+           <div className="content"><span className="ui red text">{error}</span></div>
+       </h4>
+       <button onClick={tryAgain} className="ui fluid button large grey"ß>Try Again</button>
+     </div>
+   </div>      
+         
+   </>)
 
   return (
-    <div className="ui container">
-        <form style={{width:"50%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>
+    <div className="ui center aligned grid" style={{minHeight:"100vh"}}>
+      <div className="column" style={{width:"450px"}}>
+        <h2 className="ui image header">
+          <div className="content">Log-in to your account</div>
+        </h2>
+        <form className="ui form initial" onSubmit={formik.handleSubmit}>
             <div className="field">
-                <label>Login</label>
                 <input type="text" 
                   id="username" 
                   name="username" 
@@ -64,16 +82,17 @@ function LoginForm({ onLogin }) {
                 </input>
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}               
             </div>    
-            <div className="field">
-                <Link to="/" className="ui button small teal">Back</Link>
-                <button style={{float: "right"}} className="ui button small teal" type="submit">Login</button>
+            <button className="ui fluid button teal" type="submit">Login</button>
+            <div>
+            </div>
+            <div className="ui grey message tiny">
+             New to us? 
+              <Link to="/signup">    Sign Up</Link>
             </div>
             <div>
-            {errors.map((err) => (
-                <Error key={err}>{err}</Error>
-            ))}
             </div>
         </form> 
+    </div>
     </div>
 )
 }
