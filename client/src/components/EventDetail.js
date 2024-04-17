@@ -47,17 +47,17 @@ function EventDetail({user, isAdmin}){
                     <p>{event.details}</p>
                 </div>
                 <div style={{padding: "10px"}}> 
-                    <Link to="/events" className="ui button small teal">Back</Link>
-                    <a href={event.event_link} className="ui button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
+                    <Link to="/events" className="left attached ui basic button small teal">Back</Link>
+                    <a href={event.event_link} className="right attached ui basic button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
                     { user && isAdmin ? (
                         <>
-                            <button style={{float: "right"}} className="right attached ui icon button small teal" onClick={handleDeleteEvent}>
+                            <button style={{float: "right"}} className="right attached ui basic icon button small teal" onClick={handleDeleteEvent}>
                                 <i class="trash icon" style={{visibility: "visible"}}></i>
-                                Delete Event
+                                Delete
                             </button>
-                            <Link to={`/events/${id}/edit`} style={{float: "right"}} className="ui left attached button small teal">
+                            <Link to={`/events/${id}/edit`} style={{float: "right"}} className="ui left attached basic button small teal">
                                 <i className="edit icon" style={{visibility: "visible"}}></i>
-                                Edit Event
+                                Edit
                             </Link>
                         </>
                         )

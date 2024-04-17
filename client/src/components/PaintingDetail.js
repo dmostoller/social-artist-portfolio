@@ -39,20 +39,19 @@ function PaintingDetail({user, isAdmin}){
                                 {painting.sold ? "SOLD" : <Link to="/contact">{painting.price}</Link>}
                             </div>
                             <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
-                                <Link to="/paintings" className="ui button small teal" >Back</Link>
-                                { isAdmin ? (
+                                <Link to="/paintings" className="ui button basic small teal" >Back</Link>
+                                { isAdmin && (
                                     <>
-                                        <button style={{float: "right"}} className="right attached ui icon button small teal" onClick={handleDeletePainting}>
+                                        <button style={{float: "right"}} className="right attached ui basic icon button small teal" onClick={handleDeletePainting}>
                                             <i class="trash icon" style={{visibility: "visible"}}></i>
-                                            Delete Painting
+                                            Delete
                                         </button>
-                                        <Link to={`/paintings/${id}/edit`} style={{float: "right"}} className="ui left attached button small teal">
+                                        <Link to={`/paintings/${id}/edit`} style={{float: "right"}} className="ui left attached basic button small teal">
                                             <i className="edit icon" style={{visibility: "visible"}}></i>
-                                            Edit Painting
+                                            Edit
                                         </Link>
                                     </>
-                                    )
-                                    : <></>    
+                                    )   
                                 }
                             </div>
                     </div>

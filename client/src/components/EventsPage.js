@@ -18,7 +18,12 @@ function EventsPage ({user, isAdmin}) {
         <div className="ui container">
             {(user && isAdmin) ?  
                 <div style={{marginBottom:  "20px", textAlign: "right"}} className="ui container">     
-                    <Link to={`/events/new`} className="ui button small teal">Add Event</Link>
+                    <Link to={`/events/new`} className="ui animated fade icon basic button teal small" tabindex="0">
+                            <div className="visible content"><i className="plus icon"></i></div>
+                            <div className="hidden content">
+                                New
+                            </div> 
+                        </Link>
                 </div>
                 : <div></div>
             }

@@ -38,16 +38,16 @@ function CommentForm({onAddComment, paintingId, onChangeIsComFormVis, user}){
       })
 
     return (
-        <div className="ui container">
-        <form style={{width:"60%", margin:"auto", padding:"25px"}} className="ui form" onSubmit={formik.handleSubmit}>  
+        <div className="ui text container">
+        <form className="ui form" onSubmit={formik.handleSubmit}>  
             <div className="field">
-            <label>Add Comment</label>
+            <label>Add Comment<a style={{float: "right"}} onClick={onChangeIsComFormVis}>Hide</a></label>
                 <textarea rows="2" type="text" id="comment" name="comment" value={formik.values.comment} placeholder="Your comment here" onChange={formik.handleChange}></textarea>               
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.comment}</p>}
             </div>
-            <div className="field"></div>
-            <button onClick={onChangeIsComFormVis} style={{float: "left"}} className="ui button small teal" type="button">Hide Form</button>
-            <button style={{float: "right"}} className="ui button small teal" type="submit">Submit</button>
+            <div className="field">
+                <button className="ui button fluid small teal" type="submit">Submit</button>
+            </div>
         </form>
          
          </div>

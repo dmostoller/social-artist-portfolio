@@ -17,7 +17,7 @@ export default function Painting ({image, title, sold, width, height, materials,
                         {sold ? "SOLD" : <Link to="/contact">{price}</Link>}
                     </div>
                     <div style={{paddingBottom: "5px", float: "right"}}> 
-                        <Link to={`/paintings/${id}`} className="ui button small teal">View Details</Link>
+                        <Link to={`/paintings/${id}`} className="ui button basic small teal">View Details</Link>
                     </div>
 
                 </div>

@@ -36,8 +36,13 @@ function PaintingsPage ({ user, isAdmin}) {
             <div className="ui container fluid">
                 <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy}/>
                 {(user && isAdmin) ? 
-                    <div style={{ textAlign: "right"}} className="ui container">   
-                        <Link to="/paintings/new" className="ui button small teal">Add Painting</Link>
+                    <div style={{textAlign: "right"}} className="ui container">   
+                        <Link to="/paintings/new" className="ui animated fade icon basic button teal small" tabindex="0">
+                            <div className="visible content"><i className="plus icon"></i></div>
+                            <div className="hidden content">
+                                New
+                            </div> 
+                        </Link>
                     </div>
                     : <></>
                 }

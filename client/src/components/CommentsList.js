@@ -40,11 +40,21 @@ function CommentsList({user, painting_id}){
     }
     
     return (
-        <div className="ui container">
+        <div className="ui text container">
             {commentsSection}
             {user ? 
             <div style={{paddingBottom: "25px", paddingTop: "10px"}}>
-                {isComFormVis ? <CommentForm user={user} onAddComment={addComment} paintingId={painting_id} onChangeIsComFormVis={changeIsComFormVis} /> : <button onClick={changeIsComFormVis} className="ui button small teal">Add Comment</button>}
+                {isComFormVis ? <CommentForm user={user} onAddComment={addComment} paintingId={painting_id} onChangeIsComFormVis={changeIsComFormVis} />
+                 : 
+                 <div 
+                    onClick={changeIsComFormVis} 
+                    className="ui fluid animated fade basic button teal tiny" tabindex="0">
+                    <div className="visible content"><i className="plus icon"></i></div>
+                    <div className="hidden content">
+                        New Comment
+                    </div>   
+                 </div>
+                 }
             </div>
             : <></>
             }
