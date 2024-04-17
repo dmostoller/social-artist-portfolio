@@ -5,7 +5,7 @@ export default function AboutPage () {
 
 return (
     <div className="ui container" style={{minHeight:"100vh"}}>
-    <div style={{width: "90%", margin: "auto"}} className="ui card">
+    <div style={{width: "100%", margin: "auto"}} className="ui card">
         <div className="image">
             <img className="ui huge image" src="./images/slider-2.jpg" alt="Yasmin Mostoller at the Jed William's Gallery"/>
         </div>
@@ -33,7 +33,7 @@ return (
             
             </div>
             <div style={{padding: "10px", float: "right"}}> 
-                <Link to="/contact" className="ui button basic small teal">Contact Me</Link>
+                <Link to="/contact" className="ui button inverted small teal">Contact Me</Link>
             </div>
         </div>
 </div>

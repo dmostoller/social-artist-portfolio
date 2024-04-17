@@ -1,9 +1,13 @@
 import './App.css';
 import React, {useState, useEffect} from 'react';
 import './semantic/dist/semantic.min.css'
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { useUser } from "./context/user";
 import { useAdmin } from "./context/admin.js"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/Header.js';
 import PaintingsPage from './components/PaintingsPage.js';
@@ -12,7 +16,6 @@ import ContactPage from './components/ContactPage.js';
 import EventsPage from './components/EventsPage.js';
 import AboutPage from './components/AboutPage.js';
 import Footer from './components/Footer.js';
-import { Routes, Route, useNavigate } from 'react-router-dom';
 import PaintingDetail from './components/PaintingDetail.js';
 import PostDetail from './components/PostDetail.js';
 import AddPost from './components/AddPost.js'
@@ -51,17 +54,21 @@ export default function App() {
   function handleLogin(user) {
     setUser(user);
     user.is_admin ? setIsAdmin(true) : setIsAdmin(false)
+    toast(`Welcome back, ${user.username}!`);
+
   }
   function handleLogout() {
     setUser(null);
     setIsAdmin(false)
     navigate('/')
+    toast(`Goodbye, thanks for visiting!`);
   }
 
   return (
-    <div className='ui inverted container'>
-      <Header pageToLoad={pageToLoad} onChangePage={setPageToLoad} user={user} onLogout={handleLogout}/>
-      <div style={{marginTop: "10px"}}>
+    <div className='ui container'>
+      <Header onLogout={handleLogout}/>
+      <div style={{marginTop: "75px"}}>
+      <ToastContainer/>
       <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/user" element={<User />} />

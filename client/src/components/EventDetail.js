@@ -51,18 +51,21 @@ function EventDetail(){
                     <p>{event.details}</p>
                 </div>
                 <div style={{padding: "10px"}}> 
-                    <Link to="/events" className="left attached ui basic button small teal">Back</Link>
-                    <a href={event.event_link} className="right attached ui basic button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
+                    <Link to="/events" className="ui inverted button small teal">Back</Link>
+                    <a href={event.event_link} className="ui inverted button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
                     { user && isAdmin ? (
                         <>
-                            <button style={{float: "right"}} className="right attached ui basic icon button small teal" onClick={handleDeleteEvent}>
-                                <i class="trash icon" style={{visibility: "visible"}}></i>
-                                Delete
-                            </button>
-                            <Link to={`/events/${id}/edit`} style={{float: "right"}} className="ui left attached basic button small teal">
-                                <i className="edit icon" style={{visibility: "visible"}}></i>
+                        <div style={{float: "right"}} className="ui buttons">
+                            <Link to={`/events/${id}/edit`} className="ui icon inverted button small teal">
+                                <i className="edit icon"></i>
                                 Edit
                             </Link>
+                            <div class="or"></div>
+                            <div className="ui icon inverted button small teal" onClick={handleDeleteEvent}>
+                                <i class="trash icon" style={{visibility: "visible"}}></i>
+                                Delete
+                            </div>
+                        </div>
                         </>
                         )
                         : <></>    

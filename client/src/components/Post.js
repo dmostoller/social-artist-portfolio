@@ -16,7 +16,7 @@ export default function Post ({id, title, content, image_url, date_added}) {
                     <div className="meta">{date_added}</div> 
                     <div className="description">{content}</div>
                     <div style={{paddingTop: "25px", float: "left"}}> 
-                        <Link to={`/posts/${id}`}  className="ui button basic small teal">Read More</Link>
+                        <Link to={`/posts/${id}`}  className="ui button inverted small teal">Read More</Link>
                     </div>
                     {/* { isAdmin ? (
                         <div style={{paddingTop: "25px", float: "left"}}> 
