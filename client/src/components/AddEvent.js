@@ -86,12 +86,12 @@ function AddEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_link}</p>}
                 </div>      
                 <div className="field">
-                    <textarea type="text" rows="6" name="details" value={formik.values.details} placeholder="Event Details..." onChange={formik.handleChange}></textarea>               
+                    <textarea type="text" rows="8" name="details" value={formik.values.details} placeholder="Event Details..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.details}</p>}
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button className="ui button fluid teal" type="submit">Submit</button>
+                <button className="ui button fluid inverted teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

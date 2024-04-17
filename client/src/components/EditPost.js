@@ -78,12 +78,12 @@ function EditPost() {
                 </div>
                 <div className="field">
                     <label>Post Content:</label>
-                    <textarea type="text" rows="6" name="content" value={formik.values.content} placeholder="Post content..." onChange={formik.handleChange}></textarea>               
+                    <textarea type="text" rows="8" name="content" value={formik.values.content} placeholder="Post content..." onChange={formik.handleChange}></textarea>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.content}</p>}
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button className="ui button fluid teal" type="submit">Submit</button>
+                <button className="ui button fluid inverted teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>
