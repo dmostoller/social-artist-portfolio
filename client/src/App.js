@@ -31,7 +31,6 @@ export default function App() {
   const { user, setUser } = useUser()
   const { setIsAdmin } = useAdmin()
 
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +61,7 @@ export default function App() {
   return (
     <div className='ui inverted container'>
       <Header pageToLoad={pageToLoad} onChangePage={setPageToLoad} user={user} onLogout={handleLogout}/>
-      <div style={{marginTop: "25px"}}>
+      <div style={{marginTop: "10px"}}>
       <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/user" element={<User />} />

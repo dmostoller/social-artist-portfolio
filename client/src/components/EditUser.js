@@ -7,6 +7,10 @@ export default function EditUser ({setShowEdit}) {
     const [error, setError] = useState(null);
     const { user, setUser} = useUser();
 
+    function tryAgain() {
+        setError(null)
+      }
+
     const formSchema = yup.object().shape({
         username: yup.string()
             .required("Username is required")
@@ -22,7 +26,7 @@ export default function EditUser ({setShowEdit}) {
         initialValues: initValues,
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch(`/users/${user.id}`, {
+          fetch(`/update_user/${user.id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -41,24 +45,65 @@ export default function EditUser ({setShowEdit}) {
         },
       })
 
+if(error) return (
+    <>
+     <div className="ui center aligned grid" style={{minHeight:"100vh"}}>
+       <div className="column" style={{width:"450px"}}>
+       <h4 className="ui image header">
+           <div className="content"><span className="ui red text">{error}</span></div>
+       </h4>
+       <button onClick={tryAgain} className="ui fluid button large grey">Try Again</button>
+     </div>
+   </div>      
+         
+   </>)
+
     return (
         <div className="ui inverted container" style={{marginTop: "5px"}}>
             <h4 className="ui horizontal divider">My Account</h4>
             <div className="ui centered grid">
                 <div className="ui card" style={{margin: "25px"}}>
                     <div className="content" style={{padding: "25px"}}>
-                        <form className="ui form" onSubmit={formik.handleSubmit}>
+                        <form className="ui form" type="submit" onSubmit={formik.handleSubmit}>
                             <div className="field">
-                                <input type="text" name="title" value={formik.values.username} onChange={formik.handleChange}></input>
-                                {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
+                                <input type="text" id="username" name="username" value={formik.values.username} onChange={formik.handleChange}></input>               
+                                    {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
                             </div>
                             <div className="field">
-                                <input type="text" name="title" value={formik.values.email} onChange={formik.handleChange}></input>
+                                <input type="text" id="email" name="email" value={formik.values.email} onChange={formik.handleChange}></input>
                                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
                             </div>
+                            <div className="field">
+                        <div className="ui left icon input">
+                            <i className="lock icon"></i>
+                            <input type="password" 
+                                id="password" 
+                                name="password" 
+                                value={formik.values.password} 
+                                placeholder="Password..." 
+                                onChange={formik.handleChange}
+                            >
+                            </input>
+                        </div>
+                            {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password}</p>}
+                        </div>   
+                        <div className="field">
+                        <div className="ui left icon input">
+                            <i className="lock icon"></i>
+                            <input type="password" 
+                                id="password_confirmation" 
+                                name="password_confirmation" 
+                                value={formik.values.password_confirmation} 
+                                placeholder="Password Confirmation..." 
+                                onChange={formik.handleChange}
+                            >
+                            </input>
+                        </div>
+                            {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
+                        </div>
                             <div style={{paddingTop: "25px"}}> 
                                 <button onClick={setShowEdit} className="ui button basic small teal">Back</button>
-                                <button className="ui button small teal">Submit</button>
+                                <button className="ui button small teal" type="submit">Submit</button>
                             </div>       
                         </form>
                     </div>

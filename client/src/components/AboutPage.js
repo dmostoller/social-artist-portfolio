@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function AboutPage () {
 
 return (
-    <div className="ui container">
+    <div className="ui container" style={{minHeight:"100vh"}}>
     <div style={{width: "90%", margin: "auto"}} className="ui card">
         <div className="image">
             <img className="ui huge image" src="./images/slider-2.jpg" alt="Yasmin Mostoller at the Jed William's Gallery"/>

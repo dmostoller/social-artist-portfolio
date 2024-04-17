@@ -14,9 +14,10 @@ from flask import (
     flash,
 )
 from werkzeug.utils import secure_filename
-from werkzeug.exceptions import RequestEntityTooLarge
+from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+from wtforms.validators import ValidationError
 from datetime import datetime
 
 # Local imports
@@ -56,10 +57,25 @@ class Users(Resource):
             else:
                 raise AttributeError("Passwords must match")
         except IntegrityError:
-            response = make_response({"errors": ["validation errors"]}, 422)
+            raise UnprocessableEntity("Your username or email is is already in use, please try again.")
 
         return response
-
+class UpdateUser(Resource):
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            try:
+                form_json = request.get_json()
+                setattr(user, 'username', form_json['username'])
+                setattr(user, 'password_hash', form_json['password'])
+                setattr(user, 'email', form_json['email'])
+                db.session.commit()
+                response = make_response(user.to_dict(rules = ('-_password_hash', )), 200)
+            except ValueError:
+                response = make_response({"errors": ["validation errors"]}, 400)
+        else:
+            raise Unauthorized
+        return response 
 
 class CheckSession(Resource):
     def get(self):
@@ -76,9 +92,10 @@ class Login(Resource):
         password = request.get_json()["password"]
         user = User.query.filter(User.username == username).first()
         if user and user.authenticate(password):
-            session["user_id"] = user.id
-            return make_response(user.to_dict(rules=("-_password_hash",)), 200)
-        return make_response({"errors": "Invalid username or password"}, 401)
+            session['user_id'] = user.id
+            return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
+        else:
+            raise Unauthorized("The username and/or password you have entered is incorrect. Please try again.")
 
 
 class Logout(Resource):
@@ -90,6 +107,7 @@ class Logout(Resource):
 
 
 api.add_resource(Users, "/users", endpoint="signup")
+api.add_resource(UpdateUser, '/update_user/<int:id>', endpoint='update_user')
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(Login, "/login", endpoint="login")
 api.add_resource(Logout, "/logout", endpoint="logout")
@@ -333,63 +351,30 @@ class EventsById(Resource):
 api.add_resource(Events, "/events")
 api.add_resource(EventsById, "/events/<int:id>")
 
-# @app.route('/upload', methods=['POST', 'GET'])
-# def upload_file():
-#     if request.method == 'POST':
-#         # check if the post request has the file part
-#         if 'file' not in request.files:
-#             flash('No file part')
-#             return redirect(request.url)
-#         file = request.files['file']
-#         # If the user does not select a file, the browser submits an
-#         # empty file without a filename.
-#         if file.filename == '':
-#             flash('No selected file')
-#             return redirect(request.url)
-#         if file and allowedFile(file.filename):
-#             filename = secure_filename(file.filename)
-#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#             return redirect(url_for('download_file', name=filename))
-#     return
+@app.errorhandler(NotFound)
+def handle_not_found(e):
+    response = make_response(
+        {"message": "Not Found: Sorry the resource you are looking for does not exist"},
+        404,
+    )
+    return response
 
-# @app.route('/upload', methods=['POST', 'GET'])
-# # API to upload file
-# def fileUpload():
-#     if request.method == 'POST':
-#         file = request.files.getlist('file')
-#         for f in file:
-#             filename = secure_filename(f.filename)
-#             if allowedFile(filename):
-#                 f.save(os.path.join(UPLOAD_FOLDER, filename))
-#             else:
-#                 return jsonify({'message': 'File type not allowed'}), 400
-#         return jsonify({"name": filename, "status": "success"})
-#     else:
-#         return jsonify({"status": "failed"})
+@app.errorhandler(Unauthorized)
+def handle_unauthorized(e):
+    response = make_response(
+        {"message": "Unauthorized: you must be logged in to make that request."},
+        401,
+    )
+    return response
 
+@app.errorhandler(UnprocessableEntity)
+def handle_unprocessable_entity(e):
+    response = make_response(
+        {"message": "Unprocessable Entity: Username is already in use."},
+        422,
+    )
+    return response
 
-@app.route("/upload_photo", methods=["POST"])
-def upload():
-    try:
-        file = request.files["file"]
-        extension = os.path.splitext(file.filename)[1].lower()
-
-        if file:
-            filename = secure_filename(file.filename)
-            file_url = f"server/uploads/{filename}"
-            if extension not in app.config["ALLOWED_EXTENSIONS"]:
-                return "File is not an image"
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
-    except RequestEntityTooLarge:
-        return "File is larger than the 16MB limit"
-
-    return make_response(jsonify({"name": file_url, "status": "success"}))
-    # return redirect(f"photo{file_url}")
-
-
-@app.route("/serve-image/<filename>", methods=["GET"])
-def serve_image(filename):
-    return send_from_directory(app.config["UPLOAD_DIRECTORY"], filename)
 
 
 if __name__ == "__main__":
