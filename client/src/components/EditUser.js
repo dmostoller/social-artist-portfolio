@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from "../context/user";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-export default function EditUser ({id, setUser, setShowEdit}) {
+export default function EditUser ({setShowEdit}) {
     const [error, setError] = useState(null);
-    const [userToEdit, setUserToEdit] = useState({});
-
-
-    useEffect(() => {
-        fetch(`/user/${id}`)
-        .then((res) => res.json())
-        .then((user) => setUserToEdit(user))
-    }, [id]);
+    const { user, setUser} = useUser();
 
     const formSchema = yup.object().shape({
         username: yup.string()
@@ -22,13 +16,13 @@ export default function EditUser ({id, setUser, setShowEdit}) {
         .email("Must be a valid email address")
       })
     
-    const initValues = userToEdit
+    const initValues = user
     const formik = useFormik({
         enableReinitialize: true,   
         initialValues: initValues,
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch(`/users/${id}`, {
+          fetch(`/users/${user.id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
@@ -62,8 +56,8 @@ export default function EditUser ({id, setUser, setShowEdit}) {
                                 <input type="text" name="title" value={formik.values.email} onChange={formik.handleChange}></input>
                                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.email}</p>}
                             </div>
-                            <div style={{paddingTop: "25px", float: "left"}}> 
-                                <button onClick={setShowEdit} className="ui button small teal">Back</button>
+                            <div style={{paddingTop: "25px"}}> 
+                                <button onClick={setShowEdit} className="ui button basic small teal">Back</button>
                                 <button className="ui button small teal">Submit</button>
                             </div>       
                         </form>

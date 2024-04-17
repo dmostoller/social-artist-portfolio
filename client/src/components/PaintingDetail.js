@@ -2,8 +2,12 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {Link, useNavigate} from "react-router-dom";
 import CommentsList from "./CommentsList";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function PaintingDetail({user, isAdmin}){
+function PaintingDetail(){
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
     const [painting, setPainting] = useState({})
     const {id} = useParams();
     const navigate = useNavigate()

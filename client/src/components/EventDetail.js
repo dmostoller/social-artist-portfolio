@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function EventDetail({user, isAdmin}){
+function EventDetail(){
     const [event, setEvent] = useState({})
     const {id} = useParams();
     const navigate = useNavigate();
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
 
     useEffect(() => {
         fetch(`/events/${id}`)

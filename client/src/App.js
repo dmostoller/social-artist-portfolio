@@ -1,6 +1,10 @@
 import './App.css';
 import React, {useState, useEffect} from 'react';
 import './semantic/dist/semantic.min.css'
+
+import { useUser } from "./context/user";
+import { useAdmin } from "./context/admin.js"
+
 import Header from './components/Header.js';
 import PaintingsPage from './components/PaintingsPage.js';
 import HomePage from './components/HomePage.js';
@@ -21,13 +25,13 @@ import EditPainting from './components/EditPainting.js';
 import EditPost from './components/EditPost.js';
 import EditEvent from './components/EditEvent.js';
 import User from './components/User.js';
-import UploadPhoto from './components/UploadPhoto.js';
-import Photo from './components/Photo.js';
 
 export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
-  const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { user, setUser } = useUser()
+  const { setIsAdmin } = useAdmin()
+
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,26 +64,23 @@ export default function App() {
       <Header pageToLoad={pageToLoad} onChangePage={setPageToLoad} user={user} onLogout={handleLogout}/>
       <div style={{marginTop: "25px"}}>
       <Routes>
-          <Route path="/" element={<HomePage user={user} isAdmin={isAdmin}/>} />
-          <Route path="/user" element={<User user={user} setUser={setUser} isAdmin={isAdmin}/>} />
-          <Route path="/about" element={<AboutPage/>} />
-          <Route path="/paintings" element={<PaintingsPage user={user} isAdmin={isAdmin}/>} />
-          <Route path="/paintings/:id" element={<PaintingDetail user={user} isAdmin={isAdmin}/>} />
-          <Route path="/paintings/new" element={<AddPainting/>}/>
-          <Route path="/paintings/:id/edit" element={<EditPainting/>}/>
-          <Route path="/events" element={<EventsPage user={user} isAdmin={isAdmin}/>} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/user" element={<User />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/paintings" element={<PaintingsPage />} />
+          <Route path="/paintings/:id" element={<PaintingDetail />} />
+          <Route path="/paintings/new" element={<AddPainting />}/>
+          <Route path="/paintings/:id/edit" element={<EditPainting />}/>
+          <Route path="/events" element={<EventsPage/>} />
           <Route path="/events/new" element={<AddEvent/>} />
-          <Route path="/posts/:id" element={<PostDetail user={user} isAdmin={isAdmin}/>} />
-          <Route path="/posts/:id/edit" element={<EditPost/>} />
-          <Route path="/events/:id" element={<EventDetail user={user} isAdmin={isAdmin}/>} /> 
+          <Route path="/posts/:id" element={<PostDetail/>} />
+          <Route path="/posts/:id/edit" element={<EditPost />} />
+          <Route path="/events/:id" element={<EventDetail />} /> 
           <Route path="/events/:id/edit" element={<EditEvent/>} /> 
           <Route path="/contact" element={<ContactPage/>} />
           <Route path="/posts/new" element={<AddPost/>} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>} />
-          <Route path="/signup" element={<SignUp setUser={setUser}/>} />
-          <Route path="/uploadphoto" element={<UploadPhoto/>} />
-          <Route path="photo" element={<Photo/>} />
-
+          <Route path="/signup" element={<SignUp />} />
       </Routes>
       </div>
       <Footer />

@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from "react";
 import EventsList from "./EventsList"
 import { Link } from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function EventsPage ({user, isAdmin}) {
+function EventsPage () {
     const [events, setEvents] = useState([])
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
 
     useEffect(() => {
       fetch(`/events`)

@@ -2,9 +2,12 @@ import React, {useState, useEffect} from "react";
 import PaintingsList from "./PaintingsList";
 import Search from "./Search";
 import { Link } from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function PaintingsPage ({ user, isAdmin}) {
-
+function PaintingsPage () {
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
     const [paintings, setPaintings] = useState([])
     const [searchQ, setSearchQ] = useState("")
     const [sortBy, setSortBy] = useState("Default")

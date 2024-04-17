@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useParams, useNavigate} from "react-router-dom";
 import {Link} from "react-router-dom";
+import { useUser } from "../context/user";
+import { useAdmin } from "../context/admin.js"
 
-function PostDetail({user, isAdmin}){
+function PostDetail(){
+    const { user } = useUser()
+    const { isAdmin } = useAdmin()
     const [post, setPost] = useState({})
     const {id} = useParams();
     const navigate = useNavigate();

@@ -1,7 +1,10 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
+import { useUser } from "../context/user";
 
-function Header({ user, onLogout}) {
+
+function Header({ onLogout}) {
+    const { user } = useUser()
   function handleLogout() {
     fetch("/logout", {
       method: "DELETE",

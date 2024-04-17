@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { useUser } from "../context/user";
 import EditUser from "./EditUser";
 
-export default function User ({user}) {
+export default function User () {
     const [showEdit, setShowEdit] = useState(false);
+    const {user} = useUser();
 
     function showEditForm() {
         setShowEdit(!showEdit)
     }
-
 
     return (
         <div className="ui middle aligned center aligned grid" style={{minHeight:"100vh"}}>
@@ -22,7 +23,7 @@ export default function User ({user}) {
                             <div className="header">{user.username}</div>
                             <div className="description">{user.email}</div>
                             <div style={{paddingTop: "25px"}}> 
-                                <button onClick={showEditForm} className="ui button small teal">Edit User</button>
+                                <button onClick={showEditForm} className="ui button basic small teal">Edit User</button>
                             </div>
                         </div>
                     </div>
