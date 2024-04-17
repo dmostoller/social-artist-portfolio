@@ -16,7 +16,11 @@ function PaintingsList ({paintings}) {
         />
     })
     return ( 
-        <div className="ui grid">{gallery}</div>
+        <div className="ui grid">
+            <div className="ui centered stackable three link cards">
+                {gallery}
+            </div>
+        </div>
     )
 }
 

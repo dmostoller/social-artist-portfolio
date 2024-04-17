@@ -47,7 +47,7 @@ function PaintingsPage ({ user, isAdmin}) {
                     : <></>
                 }
             </div>
-            <div className="ui three column grid" style={{paddingTop:"40px"}}>
+            <div className="ui container centered" style={{paddingTop:"40px"}}>
                 <PaintingsList paintings={searchResults}/>
             </div>
         </div>
