@@ -5,8 +5,8 @@ import ContactForm from "./ContactForm";
 export default function ContactPage () {
 
 return (
-    <div>
-    <div className="ui container" style={{width: "70%", margin: "auto", textAlign: "center"}}>
+    <div style={{minHeight:"100vh"}}>
+    <div className="ui container" style={{width: "60%", margin: "auto", textAlign: "center"}}>
         <h1 className="header">Get In Touch</h1>
         <h3>Purchase a painting or commission a custom work.</h3>    
             <p>

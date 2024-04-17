@@ -27,15 +27,15 @@ export default function Slider () {
         centerMode={true}
         swipeable={true}
         draggable={true}
-        showDots={true}
-        renderDotsOutside={true}
+        showDots={false}
+        renderDotsOutside={false}
         responsive={responsive}
         ssr={false} // means to render carousel on server-side.
         infinite={true}
-        autoPlaySpeed={100}
+        autoPlaySpeed={1000}
         keyBoardControl={true}
         customTransition="all .5"
-        transitionDuration={500}
+        transitionDuration={1000}
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
         dotListClass="custom-dot-list-style"
@@ -51,19 +51,19 @@ export default function Slider () {
             <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-3.jpg" alt="Yasmin Mostoller"></img>
         </div>
         <div >
+            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-4.jpg" alt="Yasmin Mostoller"></img>
+        </div>
+        <div>
             <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-1.jpg" alt="Yasmin Mostoller"></img>
         </div>
         <div>
             <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-2.jpg" alt="Yasmin Mostoller"></img>
-        </div>
-        <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-3.jpg" alt="Yasmin Mostoller"></img>
         </div>
         <div >
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-1.jpg" alt="Yasmin Mostoller"></img>
+            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-3.jpg" alt="Yasmin Mostoller"></img>
         </div>
         <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-2.jpg" alt="Yasmin Mostoller"></img>
+            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-4.jpg" alt="Yasmin Mostoller"></img>
         </div>
       </Carousel>
       </div>

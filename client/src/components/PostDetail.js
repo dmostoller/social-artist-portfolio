@@ -45,17 +45,20 @@ function PostDetail(){
                     <p>{post.content}</p>
                 </div>
                 <div style={{padding: "10px"}}> 
-                    <Link to="/" className="ui basic button small teal">Back</Link>
+                    <Link to="/" className="ui inverted button small teal">Back</Link>
                     { user && isAdmin ? (
                                     <>
-                                        <button style={{float: "right"}} className="right attached ui icon basic button small teal" onClick={handleDeletePost}>
-                                            <i class="trash icon" style={{visibility: "visible"}}></i>
-                                            Delete Post
-                                        </button>
-                                        <Link to={`/posts/${id}/edit`} style={{float: "right"}} className="ui left attached basic button small teal">
-                                            <i className="edit icon" style={{visibility: "visible"}}></i>
-                                            Edit Post
+                                    <div style={{float: "right"}} className="ui buttons">
+                                        <Link to={`/posts/${id}/edit`} className="ui icon inverted button small teal">
+                                            <i className="edit icon"></i>
+                                            Edit
                                         </Link>
+                                        <div class="or"></div>
+                                        <div className="ui icon inverted button small teal" onClick={handleDeletePost}>
+                                            <i class="trash icon" style={{visibility: "visible"}}></i>
+                                            Delete
+                                        </div>
+                                        </div>
                                     </>
                                     )
                                     : <></>    

@@ -43,17 +43,20 @@ function PaintingDetail(){
                                 {painting.sold ? "SOLD" : <Link to="/contact">{painting.price}</Link>}
                             </div>
                             <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
-                                <Link to="/paintings" className="ui button basic small teal" >Back</Link>
+                                <Link to="/paintings" className="ui button inverted small teal" >Back</Link>
                                 { isAdmin && (
                                     <>
-                                        <button style={{float: "right"}} className="right attached ui basic icon button small teal" onClick={handleDeletePainting}>
-                                            <i class="trash icon" style={{visibility: "visible"}}></i>
-                                            Delete
-                                        </button>
-                                        <Link to={`/paintings/${id}/edit`} style={{float: "right"}} className="ui left attached basic button small teal">
+                                    <div style={{float: "right"}} className="ui buttons">
+                                        <Link to={`/paintings/${id}/edit`} className="ui icon inverted button small teal">
                                             <i className="edit icon" style={{visibility: "visible"}}></i>
                                             Edit
                                         </Link>
+                                        <div class="or"></div>
+                                        <div className="ui inverted icon button small teal" onClick={handleDeletePainting}>
+                                            <i class="trash icon" style={{visibility: "visible"}}></i>
+                                            Delete
+                                        </div>
+                                    </div>
                                     </>
                                     )   
                                 }
