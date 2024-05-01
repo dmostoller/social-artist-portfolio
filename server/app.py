@@ -9,6 +9,7 @@ from flask import (
     request,
     session,
     redirect,
+    render_template,
     send_from_directory,
     url_for,
     flash,
@@ -33,8 +34,9 @@ app.config["ALLOWED_EXTENSIONS"] = [".png", ".jpg", ".jpeg", ".gif"]
 
 # Views go here!
 @app.route("/")
-def index():
-    return "<h1>Project Server</h1>"
+@app.route("/<int:id")
+def index(id=0):
+    return render_template("index.html")
 
 
 class Users(Resource):
