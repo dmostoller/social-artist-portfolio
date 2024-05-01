@@ -28,6 +28,8 @@ import EditPainting from './components/EditPainting.js';
 import EditPost from './components/EditPost.js';
 import EditEvent from './components/EditEvent.js';
 import User from './components/User.js';
+import logo from './assets/yasi-logo-1.png'
+
 
 export default function App() {
   const [pageToLoad, setPageToLoad] = useState("homepage")
@@ -66,6 +68,7 @@ export default function App() {
 
   return (
     <div className='ui container'>
+
       <Header onLogout={handleLogout}/>
       <div style={{marginTop: "75px"}}>
       <ToastContainer/>

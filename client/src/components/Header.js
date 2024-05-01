@@ -13,7 +13,12 @@ function Header({ onLogout}) {
   }
 
    return ( 
+    <>
+
     <Menu className='ui top fixed menu'>
+        <div className="item">
+            YASMIN MOSTOLLER
+        </div>   
         <NavLink to="/" className="item" >Home</NavLink>
         <NavLink to="/about" className="item" >About Me</NavLink>
         <NavLink to="/paintings" className="item" >Paintings</NavLink>
@@ -44,6 +49,7 @@ function Header({ onLogout}) {
             </div>
             </div>
     </Menu>
+    </>
     )
 }
 
