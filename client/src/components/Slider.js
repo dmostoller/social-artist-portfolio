@@ -1,6 +1,12 @@
 import React from "react";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import slider1 from "../assets/slider/slider-1.jpg"
+import slider2 from "../assets/slider/slider-2.jpg"
+import slider3 from "../assets/slider/slider-3.jpg"
+import slider4 from "../assets/slider/slider-4.jpg"
+
+
 
 export default function Slider () {
 
@@ -24,7 +30,7 @@ export default function Slider () {
       return (
         <div className="ui container">
       <Carousel
-        centerMode={true}
+        centerMode={false}
         swipeable={true}
         draggable={true}
         showDots={false}
@@ -32,38 +38,27 @@ export default function Slider () {
         responsive={responsive}
         ssr={false} // means to render carousel on server-side.
         infinite={true}
-        autoPlaySpeed={1000}
+        autoPlaySpeed={3000}
+        autoPlay={true}
         keyBoardControl={true}
-        customTransition="all .5"
-        transitionDuration={1000}
+        customTransition="transform 300ms ease-in-out"
+        transitionDuration={300}
         containerClass="carousel-container"
         removeArrowOnDeviceType={["tablet", "mobile"]}
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
       >
         <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-1.jpg" alt="Yasmin Mostoller"></img>
+            <img style={{height: "600px"}} src={slider1} alt="Yasmin Mostoller"></img>
         </div>
         <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-2.jpg" alt="Yasmin Mostoller"></img>
+            <img style={{height: "600px"}} src={slider2} alt="Yasmin Mostoller"></img>
         </div>
         <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-3.jpg" alt="Yasmin Mostoller"></img>
-        </div>
-        <div >
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-4.jpg" alt="Yasmin Mostoller"></img>
+            <img style={{height: "600px"}} src={slider3} alt="Yasmin Mostoller"></img>
         </div>
         <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-1.jpg" alt="Yasmin Mostoller"></img>
-        </div>
-        <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-2.jpg" alt="Yasmin Mostoller"></img>
-        </div>
-        <div >
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-3.jpg" alt="Yasmin Mostoller"></img>
-        </div>
-        <div>
-            <img style={{height: "600px", padding:"10px"}} src="/images/Yasi-4.jpg" alt="Yasmin Mostoller"></img>
+            <img style={{height: "600px"}} src={slider4} alt="Yasmin Mostoller"></img>
         </div>
       </Carousel>
       </div>

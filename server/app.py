@@ -58,7 +58,7 @@ class Users(Resource):
                 raise AttributeError("Passwords must match")
         except IntegrityError:
             raise UnprocessableEntity(
-                "Your username or email is is already in use, please try again."
+                "The username or email is is already in use, please try again."
             )
 
         return response
@@ -77,7 +77,7 @@ class UpdateUser(Resource):
                 response = make_response(user.to_dict(rules=("-_password_hash",)), 200)
             except IntegrityError:
                 raise UnprocessableEntity(
-                    "Your username or email is is already in use, please try again."
+                    "The username or email is is already in use, please try again."
                 )
         else:
             raise Unauthorized
