@@ -57,25 +57,32 @@ class Users(Resource):
             else:
                 raise AttributeError("Passwords must match")
         except IntegrityError:
-            raise UnprocessableEntity("Your username or email is is already in use, please try again.")
+            raise UnprocessableEntity(
+                "The username or email is is already in use, please try again."
+            )
 
         return response
+
+
 class UpdateUser(Resource):
     def patch(self, id):
         user = User.query.filter_by(id=id).first()
         if user:
             try:
                 form_json = request.get_json()
-                setattr(user, 'username', form_json['username'])
-                setattr(user, 'password_hash', form_json['password'])
-                setattr(user, 'email', form_json['email'])
+                setattr(user, "username", form_json["username"])
+                setattr(user, "password_hash", form_json["password"])
+                setattr(user, "email", form_json["email"])
                 db.session.commit()
-                response = make_response(user.to_dict(rules = ('-_password_hash', )), 200)
-            except ValueError:
-                response = make_response({"errors": ["validation errors"]}, 400)
+                response = make_response(user.to_dict(rules=("-_password_hash",)), 200)
+            except IntegrityError:
+                raise UnprocessableEntity(
+                    "The username or email is is already in use, please try again."
+                )
         else:
             raise Unauthorized
-        return response 
+        return response
+
 
 class CheckSession(Resource):
     def get(self):
@@ -92,10 +99,12 @@ class Login(Resource):
         password = request.get_json()["password"]
         user = User.query.filter(User.username == username).first()
         if user and user.authenticate(password):
-            session['user_id'] = user.id
-            return make_response(user.to_dict(rules = ('-_password_hash', )), 200)
+            session["user_id"] = user.id
+            return make_response(user.to_dict(rules=("-_password_hash",)), 200)
         else:
-            raise Unauthorized("The username and/or password you have entered is incorrect. Please try again.")
+            raise Unauthorized(
+                "The username and/or password you have entered is incorrect. Please try again."
+            )
 
 
 class Logout(Resource):
@@ -107,7 +116,7 @@ class Logout(Resource):
 
 
 api.add_resource(Users, "/users", endpoint="signup")
-api.add_resource(UpdateUser, '/update_user/<int:id>', endpoint='update_user')
+api.add_resource(UpdateUser, "/update_user/<int:id>", endpoint="update_user")
 api.add_resource(CheckSession, "/check_session", endpoint="check_session")
 api.add_resource(Login, "/login", endpoint="login")
 api.add_resource(Logout, "/logout", endpoint="logout")
@@ -351,6 +360,7 @@ class EventsById(Resource):
 api.add_resource(Events, "/events")
 api.add_resource(EventsById, "/events/<int:id>")
 
+
 @app.errorhandler(NotFound)
 def handle_not_found(e):
     response = make_response(
@@ -358,6 +368,7 @@ def handle_not_found(e):
         404,
     )
     return response
+
 
 @app.errorhandler(Unauthorized)
 def handle_unauthorized(e):
@@ -367,6 +378,7 @@ def handle_unauthorized(e):
     )
     return response
 
+
 @app.errorhandler(UnprocessableEntity)
 def handle_unprocessable_entity(e):
     response = make_response(
@@ -374,7 +386,6 @@ def handle_unprocessable_entity(e):
         422,
     )
     return response
-
 
 
 if __name__ == "__main__":

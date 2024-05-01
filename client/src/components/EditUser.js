@@ -14,7 +14,15 @@ export default function EditUser ({setShowEdit}) {
     const formSchema = yup.object().shape({
         username: yup.string()
             .required("Username is required")
-            .min(2, 'Username must be more than two characters'),
+            .min(2, 'Username must be more than two characters')
+            .max(100, 'Name must not be more than 100 characters')
+            .required("Username is required"),
+        password: yup.string()
+            .min(4, 'Password must be at least 4 characters')
+            .required("Password is required"),
+        password_confirmation: yup.string()
+            .oneOf([yup.ref('password')], 'Passwords must match')
+            .required("Confirm password is required"),
         email: yup.string()
         .required("Email is required")
         .email("Must be a valid email address")
@@ -66,6 +74,7 @@ if(error) return (
                     <div className="content" style={{padding: "25px"}}>
                         <form className="ui form" type="submit" onSubmit={formik.handleSubmit}>
                             <div className="field">
+                                <label><span style={{float:'left'}}>Update User Details & Password</span><a onClick={setShowEdit} style={{float:'right'}}>Back</a></label>
                                 <input type="text" id="username" name="username" value={formik.values.username} onChange={formik.handleChange}></input>               
                                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.username}</p>}
                             </div>
@@ -101,9 +110,8 @@ if(error) return (
                         </div>
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
                         </div>
-                            <div style={{paddingTop: "25px"}}> 
-                                <button onClick={setShowEdit} className="ui button basic small teal">Back</button>
-                                <button className="ui button small teal" type="submit">Submit</button>
+                            <div className="field"> 
+                                <button className="ui button fluid inverted teal" type="submit">Submit</button>
                             </div>       
                         </form>
                     </div>

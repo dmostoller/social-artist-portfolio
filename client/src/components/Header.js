@@ -23,10 +23,10 @@ function Header({ onLogout}) {
             <div className="item">
                 { !user ? (
                     <>
-                    <Link to='/login' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Login" data-position="bottom center" className="ui inverted teal icon button small">
+                    <Link to='/login' style={{marginRight: '3px'}} data-tooltip="Login" data-position="bottom center" className="ui inverted teal icon button small">
                         <i className="sign in alternate icon"></i>
                     </Link>
-                    <Link to='/signup' style={{marginRight: '3px'}} data-inverted="" data-tooltip="Sign Up" data-position="bottom right" className="ui inverted teal icon button small">
+                    <Link to='/signup' style={{marginRight: '3px'}} data-tooltip="Sign Up" data-position="bottom right" className="ui inverted teal icon button small">
                         <i className="plus icon"></i>
                     </Link>
                     </>

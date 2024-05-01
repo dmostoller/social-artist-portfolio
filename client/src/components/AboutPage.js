@@ -7,7 +7,7 @@ return (
     <div className="ui container" style={{minHeight:"100vh"}}>
     <div style={{width: "100%", margin: "auto"}} className="ui card">
         <div className="image">
-            <img className="ui huge image" src="./images/slider-2.jpg" alt="Yasmin Mostoller at the Jed William's Gallery"/>
+            <img className="ui huge image" src="./images/slider2.jpg" alt="Yasmin Mostoller at the Jed William's Gallery"/>
         </div>
         <div className="content">
             <div className="header">
