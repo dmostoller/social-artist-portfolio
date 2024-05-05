@@ -41,10 +41,10 @@ function PaintingDetail(){
     }    
     return (
         <div className="ui container">
-            <div className="ui container" style={{width:"600px"}}>
-                <div>
-                    <div className="image">
-                        <img src={painting.image} onClick={handleOpen} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>
+            <div className="ui container">
+                <div className="ui horizontal card fluid" style={{margin: "10px"}}>
+                    <div className="item">
+                        <img className="ui large image" src={painting.image} onClick={handleOpen} alt={painting.title} ></img>
                         <Modal
                             open={modalOpen}
                             onClose={handleClose}
@@ -54,40 +54,38 @@ function PaintingDetail(){
                         </Modal>
                     </div>
                     <div className="content">
-                            <div className="header"><h2>{painting.title}</h2></div>
-                            <div className="description">{painting.materials}</div>
-                            <div className="description">{painting.width}" x {painting.height}"</div>
-                            <div className="description">
-                                {painting.sold ? "SOLD" : <Link to="/contact">{painting.price}</Link>}
-                            </div>
-                            <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
-                                <Link to="/paintings" className="ui circular button small teal" >Back</Link>
-                                { isAdmin && (
-                                    <>
-                                    <div style={{float: "right"}} className="ui buttons">
-                                        <Link to={`/paintings/${id}/edit`} className="ui circular icon button small teal">
-                                            <i className="edit icon" style={{visibility: "visible"}}></i>
-                                            Edit
-                                        </Link>
-                                        <div class="or"></div>
-                                        <div className="ui circular icon button small teal" onClick={handleDeletePainting}>
-                                            <i class="trash icon" style={{visibility: "visible"}}></i>
-                                            Delete
-                                        </div>
+                        <div className="header"><h2>{painting.title}</h2></div>
+                        <div className="description">{painting.materials}</div>
+                        <div className="description">{painting.width}" x {painting.height}"</div>
+                        <div className="description">
+                            {painting.sold ? "SOLD" : <Link to="/contact">{painting.price}</Link>}
+                        </div>
+                        <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
+                            <Link to="/paintings" className="ui circular button small teal" >Back</Link>
+                            { isAdmin && (
+                                <>
+                                <div style={{float: "right"}} className="ui buttons">
+                                    <Link to={`/paintings/${id}/edit`} className="ui circular icon button small teal">
+                                        <i className="edit icon" style={{visibility: "visible"}}></i>
+                                        Edit
+                                    </Link>
+                                    <div class="or"></div>
+                                    <div className="ui circular icon button small teal" onClick={handleDeletePainting}>
+                                        <i class="trash icon" style={{visibility: "visible"}}></i>
+                                        Delete
                                     </div>
-                                    </>
-                                    )   
-                                }
-                            </div>
+                                </div>
+                                </>
+                                )   
+                            }
+                        </div>
+                        <div style={{width:"60%"}} className="ui container">
+                            <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
+                            <div><CommentsList user={user} painting_id={painting.id}/></div>          
+                        </div>
                     </div>
                 </div> 
             </div>
-            
-            <div style={{width:"60%"}} className="ui container">
-                    <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
-                    <div><CommentsList user={user} painting_id={painting.id}/></div>          
-            </div>
-            
         </div>
     );
 }
