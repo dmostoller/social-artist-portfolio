@@ -41,7 +41,7 @@ function PaintingDetail(){
     }    
     return (
         <div className="ui container">
-            <div className="ui container" style={{width:"60%"}}>
+            <div className="ui container" style={{width:"600px"}}>
                 <div>
                     <div className="image">
                         <img src={painting.image} onClick={handleOpen} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>

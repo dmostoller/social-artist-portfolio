@@ -30,7 +30,7 @@ function PostDetail(){
     }    
     return (
         <div className="ui container" style={{minHeight:"100vh"}}>
-        <div style={{width: "80%", margin: "auto"}} className="ui card">
+        <div style={{width: "600px", margin: "auto"}} className="ui card">
             <div className="image">
                 <img src={post.image_url} className="ui medium image"  alt={post.title}></img>
             </div>
