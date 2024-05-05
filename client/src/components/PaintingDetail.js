@@ -83,7 +83,7 @@ function PaintingDetail(){
                 </div> 
             </div>
             
-            <div style={{width:"80%"}} className="ui container">
+            <div style={{width:"60%"}} className="ui container">
                     <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
                     <div><CommentsList user={user} painting_id={painting.id}/></div>          
             </div>
