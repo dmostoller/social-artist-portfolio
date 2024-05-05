@@ -34,7 +34,7 @@ app.config["ALLOWED_EXTENSIONS"] = [".png", ".jpg", ".jpeg", ".gif"]
 
 # Views go here!
 @app.route("/")
-@app.route("/<int:id")
+@app.route("/<int:id>")
 def index(id=0):
     return render_template("index.html")
 
