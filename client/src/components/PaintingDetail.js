@@ -4,6 +4,8 @@ import {Link, useNavigate} from "react-router-dom";
 import CommentsList from "./CommentsList";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin.js"
+import { Modal } from "semantic-ui-react";
+import PaintingModal from "./PaintingModal";
 
 function PaintingDetail(){
     const { user } = useUser()
@@ -11,6 +13,15 @@ function PaintingDetail(){
     const [painting, setPainting] = useState({})
     const {id} = useParams();
     const navigate = useNavigate()
+    const [modalOpen, setModalOpen] = useState(false);
+
+    function handleOpen() {
+        setModalOpen(true)
+    } 
+
+    function handleClose() {
+        setModalOpen(false)
+    } 
     
     useEffect(() => {
         fetch(`/paintings/${id}`)
@@ -34,6 +45,13 @@ function PaintingDetail(){
                 <div>
                     <div className="ui huge image">
                         <img src={painting.image} alt={painting.title} style={{borderRadius:"5px"}}></img>
+                        <Modal
+                            open={modalOpen}
+                            onClose={handleClose}
+                            basic={true}
+                            >
+                            <PaintingModal painting={painting}/>
+                        </Modal>
                     </div>
                     <div className="content">
                             <div className="header"><h2>{painting.title}</h2></div>
