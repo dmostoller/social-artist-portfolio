@@ -42,9 +42,9 @@ function PaintingDetail(){
     return (
         <div className="ui center aligned middle aligned grid">
             <div className="ui container">
-                <div className="ui container">
-                    <div className="ui container">
-                        <img className="ui huge image" src={painting.image} alt={painting.title} style={{borderRadius:"5px"}}></img>
+                <div>
+                    <div className="ui medium image">
+                        <img src={painting.image} alt={painting.title} style={{borderRadius:"5px"}}></img>
                         <Modal
                             open={modalOpen}
                             onClose={handleClose}
