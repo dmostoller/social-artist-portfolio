@@ -41,10 +41,10 @@ function PaintingDetail(){
     }    
     return (
         <div className="ui container">
-            <div className="ui container" style={{width:"80%"}}>
+            <div className="ui container" style={{width:"60%"}}>
                 <div>
                     <div className="image">
-                        <img src={painting.image} alt={painting.title} style={{width:"70%", margin:"auto", borderRadius:"5px"}}></img>
+                        <img src={painting.image} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>
                         <Modal
                             open={modalOpen}
                             onClose={handleClose}
