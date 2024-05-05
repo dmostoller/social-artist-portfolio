@@ -29,11 +29,11 @@ function PaintingDetail(){
         }
     }    
     return (
-        <div className="ui container">
-            <div className="ui container" style={{width:"80%"}}>
+        <div className="ui center aligned middle aligned grid">
+            <div className="ui container">
                 <div>
-                    <div className="image">
-                        <img src={painting.image} alt={painting.title} style={{width:"100%", margin:"auto", borderRadius:"5px"}}></img>
+                    <div className="ui huge image">
+                        <img src={painting.image} alt={painting.title} style={{borderRadius:"5px"}}></img>
                     </div>
                     <div className="content">
                             <div className="header"><h2>{painting.title}</h2></div>
