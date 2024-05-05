@@ -33,7 +33,7 @@ function EditEvent() {
         event_date: yup.date().required("Must enter a date"),
         event_link: yup.string().required("Must enter an event link"),
     })
-    const initValues = event 
+    // const initValues = event 
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -93,7 +93,7 @@ function EditEvent() {
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.location}</p>}
                 </div>     
                 <div className="field">
-                    <input type="date"  name="event_date" value={formik.values.event_date} placeholder="Event Date (MM/DD/YYYY)..." onChange={formik.handleChange}></input>               
+                    <input type="date"  name="event_date" value={formik.values.event_date} placeholder="Event Date..." onChange={formik.handleChange}></input>               
                     {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.event_date}</p>}
                 </div>  
                 <div className="field">
@@ -106,7 +106,7 @@ function EditEvent() {
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button className="ui circular button fluid inverted teal" type="submit">Submit</button>
+                <button className="ui circular button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

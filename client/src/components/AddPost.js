@@ -67,7 +67,7 @@ function AddPost() {
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button className="ui circular fluid button inverted teal" type="submit">Submit</button>
+                <button className="ui circular fluid button teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

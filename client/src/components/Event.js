@@ -15,7 +15,7 @@ export default function Event ({id, name, venue, location, details, image_url, e
                     <div className="description">{location}</div>                                   
                     <div className="description">{details}</div>
                     <div style={{paddingTop: "25px", float: "left"}}> 
-                        <Link to={`/events/${id}`}  className="ui circular button inverted small teal">View Event</Link>
+                        <Link to={`/events/${id}`}  className="ui circular button small teal">View Event</Link>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ import * as yup from "yup";
 import UploadWidget from "./UploadWidget";
 
 
-function EditPainting({}) {
+function EditPainting() {
     const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [painting, setPainting] = useState({})
@@ -36,7 +36,7 @@ function EditPainting({}) {
         sold: yup.string()
         .required("Must enter True or False")
     })
-    const initValues = painting
+    // const initValues = painting
     
     const formik = useFormik({
       enableReinitialize: true,   
@@ -114,7 +114,7 @@ function EditPainting({}) {
                 </div>
                 <div className="field">
                 {/* <Link to={`/paintings/${id}`} className="ui button small teal" >Back</Link> */}
-                <button className="ui circular button fluid inverted teal" type="submit">Submit</button>
+                <button className="ui circular button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

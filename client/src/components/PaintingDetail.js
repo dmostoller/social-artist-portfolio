@@ -43,16 +43,16 @@ function PaintingDetail(){
                                 {painting.sold ? "SOLD" : <Link to="/contact">{painting.price}</Link>}
                             </div>
                             <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
-                                <Link to="/paintings" className="ui circular button inverted small teal" >Back</Link>
+                                <Link to="/paintings" className="ui circular button small teal" >Back</Link>
                                 { isAdmin && (
                                     <>
                                     <div style={{float: "right"}} className="ui buttons">
-                                        <Link to={`/paintings/${id}/edit`} className="ui circular icon inverted button small teal">
+                                        <Link to={`/paintings/${id}/edit`} className="ui circular icon button small teal">
                                             <i className="edit icon" style={{visibility: "visible"}}></i>
                                             Edit
                                         </Link>
                                         <div class="or"></div>
-                                        <div className="ui circular inverted icon button small teal" onClick={handleDeletePainting}>
+                                        <div className="ui circular icon button small teal" onClick={handleDeletePainting}>
                                             <i class="trash icon" style={{visibility: "visible"}}></i>
                                             Delete
                                         </div>

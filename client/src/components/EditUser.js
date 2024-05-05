@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useUser } from "../context/user";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -111,7 +111,7 @@ if(error) return (
                             {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
                         </div>
                             <div className="field"> 
-                                <button className="ui circular button fluid inverted teal" type="submit">Submit</button>
+                                <button className="ui circular button fluid teal" type="submit">Submit</button>
                             </div>       
                         </form>
                     </div>

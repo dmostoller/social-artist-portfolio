@@ -132,7 +132,7 @@ if(error) return (
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
             </div>   
             <div className="field">
-                <button className="ui circular fluid button inverted large teal" type="submit">
+                <button className="ui circular fluid button large teal" type="submit">
                     Submit
                 </button>
             </div>

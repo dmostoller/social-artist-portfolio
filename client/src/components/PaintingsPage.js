@@ -40,7 +40,7 @@ function PaintingsPage () {
                 <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy}/>
                 {(user && isAdmin) ? 
                     <div style={{textAlign: "right"}} className="ui container">   
-                        <Link to="/paintings/new" className="ui circular animated fade icon inverted button teal small" tabindex="0">
+                        <Link to="/paintings/new" className="ui circular animated fade icon button teal small" tabindex="0">
                             <div className="visible content"><i className="plus icon"></i></div>
                             <div className="hidden content">
                                 New

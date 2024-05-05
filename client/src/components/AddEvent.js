@@ -91,7 +91,7 @@ function AddEvent() {
                 </div>
                 <div className="field">
                 {/* <Link to="/" className="ui button small teal" >Back</Link> */}
-                <button className="ui circular button fluid inverted teal" type="submit">Submit</button>
+                <button className="ui circular button fluid teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

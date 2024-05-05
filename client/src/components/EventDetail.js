@@ -51,17 +51,17 @@ function EventDetail(){
                     <p>{event.details}</p>
                 </div>
                 <div style={{padding: "10px"}}> 
-                    <Link to="/events" className="ui circular inverted button small teal">Back</Link>
-                    <a href={event.event_link} className="ui circular inverted button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
+                    <Link to="/events" className="ui circular button small teal">Back</Link>
+                    <a href={event.event_link} className="ui circular button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
                     { user && isAdmin ? (
                         <>
                         <div style={{float: "right"}} className="ui buttons">
-                            <Link to={`/events/${id}/edit`} className="ui circular icon inverted button small teal">
+                            <Link to={`/events/${id}/edit`} className="ui circular icon button small teal">
                                 <i className="edit icon"></i>
                                 Edit
                             </Link>
                             <div class="or"></div>
-                            <div className="ui circular icon inverted button small teal" onClick={handleDeleteEvent}>
+                            <div className="ui circular icon button small teal" onClick={handleDeleteEvent}>
                                 <i class="trash icon" style={{visibility: "visible"}}></i>
                                 Delete
                             </div>
