@@ -22,7 +22,7 @@ function UploadWidget({onSetImageUrl}) {
 
 return (
     <>
-    <button type="button" className="ui button fluid inverted blue small" onClick={() => widgetRef.current.open()}>
+    <button type="button" className="ui circular button fluid inverted blue small" onClick={() => widgetRef.current.open()}>
         Upload Image
     </button>
     </>

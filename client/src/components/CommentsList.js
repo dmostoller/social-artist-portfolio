@@ -48,7 +48,7 @@ function CommentsList({user, painting_id}){
                  : 
                  <div 
                     onClick={changeIsComFormVis} 
-                    className="ui fluid animated fade inverted button teal tiny" tabindex="0">
+                    className="ui circular fluid animated fade inverted button teal tiny" tabindex="0">
                     <div className="visible content"><i className="plus icon"></i></div>
                     <div className="hidden content">
                         New Comment

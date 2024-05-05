@@ -63,7 +63,7 @@ if(error) return (
        <h4 className="ui image header">
            <div className="content"><span className="ui red text">{error}</span></div>
        </h4>
-       <button onClick={tryAgain} className="ui fluid button large grey" type="submit">Try Again</button>
+       <button onClick={tryAgain} className="ui circular fluid button large grey" type="submit">Try Again</button>
      </div>
    </div>      
          
@@ -132,7 +132,7 @@ if(error) return (
                 {formik.errors && <p style={{color:'red', textAlign:'center'}}>{formik.errors.password_confirmation}</p>}                    
             </div>   
             <div className="field">
-                <button className="ui fluid button inverted large teal" type="submit">
+                <button className="ui circular fluid button inverted large teal" type="submit">
                     Submit
                 </button>
             </div>

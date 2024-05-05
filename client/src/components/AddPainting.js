@@ -95,7 +95,7 @@ function AddPainting() {
                 </div>
                 <div className="field">
                 {/* <Link to="/paintings" className="ui button small teal" >Back</Link> */}
-                <button className="ui button fluid inverted teal" type="submit">Submit</button>
+                <button className="ui circular button fluid inverted teal" type="submit">Submit</button>
                 </div>
             </form> 
         </div>

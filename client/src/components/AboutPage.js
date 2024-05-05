@@ -33,7 +33,7 @@ return (
             
             </div>
             <div style={{padding: "10px", float: "right"}}> 
-                <Link to="/contact" className="ui button inverted small teal">Contact Me</Link>
+                <Link to="/contact" className="ui circular button inverted small teal">Contact Me</Link>
             </div>
         </div>
 </div>

@@ -23,7 +23,7 @@ export default function User () {
                             <div className="header">{user.username}</div>
                             <div className="description">{user.email}</div>
                             <div style={{paddingTop: "25px"}}> 
-                                <button onClick={showEditForm} className="ui button inverted small teal">Edit User</button>
+                                <button onClick={showEditForm} className="ui circular button inverted small teal">Edit User</button>
                             </div>
                         </div>
                     </div>
