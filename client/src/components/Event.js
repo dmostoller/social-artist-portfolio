@@ -43,7 +43,7 @@ export default function Event ({id, name, venue, location, details, image_url, e
                             onClose={handleClose}
                             basic={true}
                             >
-                            <EventModal image={image} name={name}/>
+                            <EventModal image={image_url} name={name}/>
                         </Modal>
                 </div>
                 <div className="content" style={{padding: "25px"}}>
