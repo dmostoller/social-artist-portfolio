@@ -1,29 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useUser } from "../context/user";
-import { Menu } from 'semantic-ui-react'
+import { DropdownMenu, DropdownItem, Dropdown, Menu } from 'semantic-ui-react'
 
 
 function Header({ onLogout}) {
     const { user } = useUser()
+
   function handleLogout() {
     fetch("/logout", {
       method: "DELETE",
     }).then(() => onLogout());
   }
 
+  const [deviceSize, setDeviceSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const resizeW = () => setDeviceSize(window.innerWidth);
+    window.addEventListener("resize", resizeW); // Update the width on resize
+    return () => window.removeEventListener("resize", resizeW);
+  });
+
+// console.log(deviceSize)
    return ( 
-    <>
+
 
     <Menu className='ui top fixed menu'>
+    {(deviceSize <= 768) && 
+            <>
+            <Dropdown     
+            icon='hamburger'
+            style={{padding: "0.5em"}}
+            floating
+            className='dropdown icon'>
+                <DropdownMenu>
+                    <NavLink to="/" className="item" >Home</NavLink>
+                    <NavLink to="/about" className="item" >About Me</NavLink>
+                    <NavLink to="/paintings" className="item" >Paintings</NavLink>
+                    <NavLink to="/events" className="item" >Events</NavLink>
+                    <NavLink to="/contact" className="item" >Contact</NavLink>
+                </DropdownMenu>
+            </Dropdown>
+            </>
+        }
         <div className="item">
             YASMIN MOSTOLLER
-        </div>   
+        </div> 
+        {(deviceSize > 768) &&
+        <>
         <NavLink to="/" className="item" >Home</NavLink>
         <NavLink to="/about" className="item" >About Me</NavLink>
         <NavLink to="/paintings" className="item" >Paintings</NavLink>
         <NavLink to="/events" className="item" >Events</NavLink>
         <NavLink to="/contact" className="item" >Contact</NavLink>
+        </> 
+        }
         <div className='right menu'>
             <div className="item">
                 { !user ? (
@@ -47,9 +78,9 @@ function Header({ onLogout}) {
                 )
                 }
             </div>
-            </div>
+        </div>
     </Menu>
-    </>
+    
     )
 }
 
