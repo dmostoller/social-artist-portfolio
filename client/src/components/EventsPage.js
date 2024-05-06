@@ -5,6 +5,7 @@ import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin.js"
 import Event from "./Event.js";
 
+
 function EventsPage () {
     const [events, setEvents] = useState([])
     const { user } = useUser()

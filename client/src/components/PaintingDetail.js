@@ -84,7 +84,6 @@ function PaintingDetail(){
                 </div>
             </div> 
             <div className="ui segment">
-                    <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
                     <div><CommentsList user={user} painting_id={painting.id}/></div>          
             </div>
         </div>
