@@ -43,7 +43,7 @@ function EventsPage () {
         <div className="ui container" style={{minHeight:"100vh"}}>
             {(user && isAdmin) ?  
                 <div style={{marginBottom:  "20px", textAlign: "right"}} className="ui container">     
-                    <Link to={`/events/new`} className="ui animated fade icon inverted button teal small" tabindex="0">
+                    <Link to={`/events/new`} className="ui animated fade circular icon button teal small" tabindex="0">
                             <div className="visible content"><i className="plus icon"></i></div>
                             <div className="hidden content">
                                 New
