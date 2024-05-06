@@ -61,7 +61,7 @@ function CommentsList({user, painting_id}){
             : 
             <div className="ui centered grid" style={{padding: "5px"}}>
                 <div className="ui message">
-                <span className="ui medium cyan text">
+                <span className="ui small text">
                     Please <Link to='/login'>Login</Link> or <Link to='/signup'>Create an Account</Link> to leave a comment
                 </span>
                 </div>

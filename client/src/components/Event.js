@@ -53,7 +53,7 @@ export default function Event ({id, name, venue, location, details, image_url, e
                     <div className="description">{location}</div>                                   
                     <div className="description">{details}</div>
                     <div style={{paddingTop: "20px"}}> 
-                    <a href={event_link} className="ui circular button small teal" target="_blank" rel="noopener noreferrer">Go To Event</a>
+                    <a href={event_link} className="ui circular button small teal" target="_blank" rel="noopener noreferrer">Tickets / More Info</a>
                     { user && isAdmin ? (
                         <>
                             <Link to={`/events/${id}/edit`} className="ui circular icon button small teal">
