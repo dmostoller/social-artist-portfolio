@@ -22,7 +22,6 @@ function EventsPage () {
     }
     const sortedEvents = events.sort((a, b) => (a.event_date) > (b.event_date) ? -1 :1)
 
-
     const gallery = sortedEvents.map((event) => {
         return <Event 
         key={event.id}
