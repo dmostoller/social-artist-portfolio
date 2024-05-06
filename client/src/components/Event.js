@@ -3,12 +3,20 @@ import { Link } from "react-router-dom";
 import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin.js"
 import { Modal } from "semantic-ui-react";
-import PaintingModal from "./PaintingModal";
 import EventModal from "./EventModal.js";
 
 export default function Event ({id, name, venue, location, details, image_url, event_date, event_link, onDeleteEvent}) {
     const { user } = useUser()
     const { isAdmin } = useAdmin()
+    const [modalOpen, setModalOpen] = useState(false);
+
+    function handleOpen() {
+        setModalOpen(true)
+    } 
+
+    function handleClose() {
+        setModalOpen(false)
+    } 
 
     const handleDeleteEvent = (event) => {
         if (window.confirm("Are you sure you want to delete this event?")) {
