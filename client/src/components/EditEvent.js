@@ -57,7 +57,7 @@ function EditEvent() {
           }).then((res) => {
             if(res.ok) {
               res.json().then(event => {
-                navigate(`/events/${id}`)
+                navigate(`/events`)
               })
             } else {
                 res.json().then(error => setError(error.message))
@@ -73,7 +73,7 @@ function EditEvent() {
             <form className="ui form" onSubmit={formik.handleSubmit}>
             <h4 style={{marginTop: "10px"}} className="ui horizontal divider">Edit Event</h4>
             <div className="field">
-                    <label>Upload image, then enter event info...<Link style={{float:"right"}} to={`/events/${id}`}>  Back to Event</Link></label>
+                    <label>Upload image, then enter event info...<Link style={{float:"right"}} to={`/events`}>  Back to Events</Link></label>
                     <UploadWidget onSetImageUrl={setImageUrl}/>
                     <img className="ui circular centered image small" src={imageUrl} style={{marginTop: "10px"}} alt=""></img>
                     <input style={{visibility: "hidden"}} type="text"  name="image_url" value={formik.values.image_url} placeholder="Image link..." onChange={formik.handleChange}></input>                
