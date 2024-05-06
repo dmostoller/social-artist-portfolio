@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
+import { Link } from "react-router-dom";
 
 function CommentsList({user, painting_id}){
     const [comments, setComments] = useState([])
