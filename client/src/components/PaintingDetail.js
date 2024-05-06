@@ -41,7 +41,6 @@ function PaintingDetail(){
     }    
     return (
         <div className="ui container">
-            <div className="ui container">
                 <div className="ui horizontal card fluid" style={{margin: "10px"}}>
                     <div className="item">
                         <img className="ui large image" src={painting.image} onClick={handleOpen} alt={painting.title} ></img>
@@ -60,11 +59,11 @@ function PaintingDetail(){
                         <div className="description">
                             {painting.sold ? "SOLD" : <Link to="/contact">{painting.price}</Link>}
                         </div>
-                        <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="ui container"> 
+                        <div style={{paddingBottom: "10px", paddingTop: "10px"}} className="center aligned grid"> 
                             <Link to="/paintings" className="ui circular button small teal" >Back</Link>
                             { isAdmin && (
                                 <>
-                                <div style={{float: "right"}} className="ui buttons">
+                                <div className="ui buttons">
                                     <Link to={`/paintings/${id}/edit`} className="ui circular icon button small teal">
                                         <i className="edit icon" style={{visibility: "visible"}}></i>
                                         Edit
@@ -79,13 +78,12 @@ function PaintingDetail(){
                                 )   
                             }
                         </div>
-                        <div style={{width:"60%"}} className="ui container">
+                        <div style={{width:"90%"}} className="ui container">
                             <h3 style={{paddingTop: "15px"}}className="ui dividing header">Comments</h3>  
                             <div><CommentsList user={user} painting_id={painting.id}/></div>          
                         </div>
                     </div>
                 </div> 
-            </div>
         </div>
     );
 }
