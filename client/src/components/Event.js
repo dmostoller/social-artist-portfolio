@@ -32,11 +32,12 @@ export default function Event ({id, name, venue, location, details, image_url, e
     return (
         <div className="ui container fluid">
             <div className="ui horizontal card fluid" style={{marginBottom: "15px"}}>
-                <div className="image" style={{minWidth: "400px"}}>
-                    <img className='ui medium' 
-                    src={image_url} alt={name} 
-                    onClick={handleOpen}  
-                    style={{minWidth: "400px"}}>
+                <div className="item">
+                    <img className='ui large image' 
+                    src={image_url} 
+                    alt={name} 
+                    onClick={handleOpen}
+                    >
                     </img>
                         <Modal
                             open={modalOpen}
@@ -53,7 +54,7 @@ export default function Event ({id, name, venue, location, details, image_url, e
                     <div className="description">{location}</div>                                   
                     <div className="description">{details}</div>
                     <div style={{paddingTop: "20px"}}> 
-                    <a href={event_link} className="ui circular button small teal" target="_blank" rel="noopener noreferrer">Tickets / More Info</a>
+                    <a href={event_link} className="ui circular button small teal" target="_blank" rel="noopener noreferrer">Tickets / Info</a>
                     { user && isAdmin ? (
                         <>
                             <Link to={`/events/${id}/edit`} className="ui circular icon button small teal">

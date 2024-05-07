@@ -43,10 +43,9 @@ function PostDetail(){
     return (
         <div className="ui container" style={{minHeight:"100vh"}}>
         <div style={{width: "100%", margin: "auto"}} className="ui horizontal card">
-            <div className="image" style={{minWidth: "400px"}}>
+            <div className="item">
                 <img src={post.image_url} 
-                className="ui medium image"  
-                style={{minWidth: "400px"}}
+                className="ui large image"  
                 onClick={handleOpen}  
                 alt={post.title}>
                 </img>
