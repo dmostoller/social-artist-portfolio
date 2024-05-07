@@ -35,9 +35,9 @@ function Search({searchQ, onSearch, sortBy, selected}) {
                 style={{padding: "5px"}}
                 value={selected} // ...force the select's value to match the state variable...
                 onChange={sortBy}>
-                <option value="Default">Unsorted</option>
-                <option value="Small">Smallest to Largest</option>
-                <option value="Large">Largest to Smallest</option>
+                <option value="Default">-----</option>
+                <option value="Small">SM to LG</option>
+                <option value="Large">LG to SM</option>
             </select>
             </span>
 
