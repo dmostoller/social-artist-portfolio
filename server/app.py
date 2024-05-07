@@ -33,11 +33,10 @@ app.config["ALLOWED_EXTENSIONS"] = [".png", ".jpg", ".jpeg", ".gif"]
 
 
 # Views go here!
-@app.route("/")
-@app.route("/<int:id>")
-def index(id=0):
+@app.route("/", defaults={'path': ''})
+@app.route("/<path:path>")
+def index(path):
     return render_template("index.html")
-
 
 class Users(Resource):
     def post(self):
@@ -362,9 +361,6 @@ class EventsById(Resource):
 api.add_resource(Events, "/events")
 api.add_resource(EventsById, "/events/<int:id>")
 
-@app.errorhandler(404)   
-def not_found(e):   
-  return app.send_static_file('index.html')
 
 @app.errorhandler(NotFound)
 def handle_not_found(e):
