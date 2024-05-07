@@ -50,8 +50,8 @@ export default function Event ({id, name, venue, location, details, image_url, e
                 <div className="content" style={{padding: "25px"}}>
                     <div className="header">{name}</div>
                     <div className="meta">{event_date}</div> 
-                    <div className="description">{venue}</div>
-                    <div className="description">{location}</div>                                   
+                    <div className="description"><p style={{fontWeight: "bold"}}>{venue}</p></div>
+                    <div className="description"><p style={{fontWeight: "bold"}}>{location}</p></div>                                   
                     <div className="description">{details}</div>
                     <div style={{paddingTop: "20px"}}> 
                     <a href={event_link} className="ui circular button small teal" target="_blank" rel="noopener noreferrer">Tickets / Info</a>
