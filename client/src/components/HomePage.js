@@ -11,7 +11,7 @@ return (
     <div className="ui container fluid">
 
         {/* <div className="ui container" style={{width: "60%", float:"left", paddingRight:"25px"}}><CarouselContainer /></div> */}
-        <div className="ui container fluid"><Slider /></div>
+        <div className="ui container fluid" style={{textAlign: "center"}}><Slider /></div>
         <p style={{textAlign: "center", marginTop:"15px", marginBottom: "0px"}}>"To draw, you must close your eyes and sing." <i> -Pablo Picasso</i></p>
         <div className="ui container fluid"><PostsList user={user} isAdmin={isAdmin}/></div>
     </div>

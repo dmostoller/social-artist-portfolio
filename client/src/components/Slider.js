@@ -36,7 +36,7 @@ export default function Slider () {
       return (
         
         <div className="ui container">
-        {(deviceSize > 768) ?
+        {(deviceSize > 768) &&
         <Carousel
             centerMode={false}
             swipeable={true}
@@ -69,7 +69,8 @@ export default function Slider () {
                 <img style={{height: "600px"}} src={slider4} alt="Yasmin Mostoller"></img>
             </div>      
         </Carousel>
-        :
+}
+ {       (deviceSize <= 768 ) &&
                 <Carousel
             centerMode={false}
             swipeable={true}
@@ -90,20 +91,53 @@ export default function Slider () {
             itemClass="carousel-item-padding-40-px"
         >
             <div>
-                <img style={{height: "300px"}} src={slider1} alt="Yasmin Mostoller"></img>
+                <img style={{height: "250px"}} src={slider1} alt="Yasmin Mostoller"></img>
             </div>
             <div>
-                <img style={{height: "300px"}} src={slider2} alt="Yasmin Mostoller"></img>
+                <img style={{height: "250px"}} src={slider2} alt="Yasmin Mostoller"></img>
             </div>
             <div>
-                <img style={{height: "300px"}} src={slider3} alt="Yasmin Mostoller"></img>
+                <img style={{height: "250px"}} src={slider3} alt="Yasmin Mostoller"></img>
             </div>
             <div>
-                <img style={{height: "300px"}} src={slider4} alt="Yasmin Mostoller"></img>
+                <img style={{height: "250px"}} src={slider4} alt="Yasmin Mostoller"></img>
             </div>      
         </Carousel>
         }
-
+        {/* {(deviceSize < 360) &&
+        <Carousel
+            centerMode={false}
+            swipeable={true}
+            draggable={true}
+            showDots={false}
+            renderDotsOutside={false}
+            responsive={responsive}
+            ssr={false} // means to render carousel on server-side.
+            infinite={true}
+            autoPlaySpeed={3000}
+            autoPlay={true}
+            keyBoardControl={true}
+            customTransition="transform 300ms ease-in-out"
+            transitionDuration={300}
+            containerClass="carousel-container"
+            removeArrowOnDeviceType={["tablet", "mobile"]}
+            dotListClass="custom-dot-list-style"
+            itemClass="carousel-item-padding-40-px"
+        >
+            <div>
+                <img style={{height: "200px"}} src={slider1} alt="Yasmin Mostoller"></img>
+            </div>
+            <div>
+                <img style={{height: "200px"}} src={slider2} alt="Yasmin Mostoller"></img>
+            </div>
+            <div>
+                <img style={{height: "200px"}} src={slider3} alt="Yasmin Mostoller"></img>
+            </div>
+            <div>
+                <img style={{height: "200px"}} src={slider4} alt="Yasmin Mostoller"></img>
+            </div>      
+        </Carousel>
+} */}
       </div>
       );
 
