@@ -362,6 +362,9 @@ class EventsById(Resource):
 api.add_resource(Events, "/events")
 api.add_resource(EventsById, "/events/<int:id>")
 
+@app.errorhandler(404)   
+def not_found(e):   
+  return app.send_static_file('index.html')
 
 @app.errorhandler(NotFound)
 def handle_not_found(e):
