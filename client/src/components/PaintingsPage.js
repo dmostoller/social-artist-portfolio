@@ -37,7 +37,7 @@ function PaintingsPage () {
     return (
         <div className="ui container fluid">
             <div className="ui container fluid">
-                <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy}/>
+                <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy} />
                 {(user && isAdmin) ? 
                     <div style={{textAlign: "right"}} className="ui container">   
                         <Link to="/paintings/new" className="ui circular animated fade icon button teal small" tabindex="0">
@@ -50,7 +50,7 @@ function PaintingsPage () {
                     : <></>
                 }
             </div>
-            <div className="ui container centered" style={{paddingTop:"40px"}}>
+            <div className="ui container centered" style={{paddingTop:"50px"}}>
                 <PaintingsList paintings={searchResults}/>
             </div>
         </div>
