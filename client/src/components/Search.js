@@ -4,7 +4,7 @@ function Search({searchQ, onSearch, sortBy, selected}) {
     return (
         <div className="ui centered grid">
             <span>
-            <div className="ui icon input ">
+            <div className="ui icon input " style={{marginBottom: "5px"}}>
                 <input 
                 type="text"
                 value={searchQ}
