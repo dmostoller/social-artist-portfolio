@@ -75,18 +75,18 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/user" element={<User />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/all_paintings" element={<PaintingsPage />} />
-          <Route path="/painting/:id" element={<PaintingDetail />} />
-          <Route path="/painting/new" element={<AddPainting />}/>
-          <Route path="/painting/:id/edit" element={<EditPainting />}/>
-          <Route path="/all_eventa" element={<EventsPage/>} />
-          <Route path="/event/new" element={<AddEvent/>} />
-          <Route path="/post/:id" element={<PostDetail/>} />
-          <Route path="/post/:id/edit" element={<EditPost />} />
-          <Route path="/event/:id" element={<EventDetail />} /> 
-          <Route path="/event/:id/edit" element={<EditEvent/>} /> 
+          <Route path="/paintings" element={<PaintingsPage />} />
+          <Route path="/paintings/:id" element={<PaintingDetail />} />
+          <Route path="/paintings/new" element={<AddPainting />}/>
+          <Route path="/paintings/:id/edit" element={<EditPainting />}/>
+          <Route path="/events" element={<EventsPage/>} />
+          <Route path="/events/new" element={<AddEvent/>} />
+          <Route path="/posts/:id" element={<PostDetail/>} />
+          <Route path="/posts/:id/edit" element={<EditPost />} />
+          <Route path="/events/:id" element={<EventDetail />} /> 
+          <Route path="/events/:id/edit" element={<EditEvent/>} /> 
           <Route path="/contact" element={<ContactPage/>} />
-          <Route path="/post/new" element={<AddPost/>} />
+          <Route path="/posts/new" element={<AddPost/>} />
           <Route path="/login" element={<LoginForm onLogin={handleLogin}/>} />
           <Route path="/signup" element={<SignUp />} />
       </Routes>
