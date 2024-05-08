@@ -14,7 +14,7 @@ function EditPainting() {
 
 
     useEffect(() => {
-        fetch(`/paintings/${id}`)
+        fetch(`/painting/${id}`)
         .then((res) => res.json())
         .then((painting) => {
           setPainting(painting)

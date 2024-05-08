@@ -20,7 +20,7 @@ export default function Event ({id, name, venue, location, details, image_url, e
 
     const handleDeleteEvent = (event) => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        fetch(`/events/${id}`, {
+        fetch(`/event/${id}`, {
             method: "DELETE"
             })
             .then(() => {

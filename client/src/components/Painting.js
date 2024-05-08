@@ -5,7 +5,7 @@ export default function Painting ({image, title, sold, width, height, materials,
 
     return (
 
-            <Link to={`/paintings/${id}`} className="ui centered card" style={{marginBottom: "15px"}}>
+            <Link to={`/painting/${id}`} className="ui centered card" style={{marginBottom: "15px"}}>
                 <div className="image">
                     <img src={image} alt={title}></img>
                 </div>

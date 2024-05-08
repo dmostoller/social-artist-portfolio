@@ -19,7 +19,7 @@ function EventDetail(){
 
     const handleDeleteEvent = (event) => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        fetch(`/events/${id}`, {
+        fetch(`/event/${id}`, {
             method: "DELETE"
             })
             .then(() => {

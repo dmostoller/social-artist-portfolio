@@ -36,7 +36,7 @@ function AddPainting() {
         },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch("/paintings", {
+      fetch("/painting", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

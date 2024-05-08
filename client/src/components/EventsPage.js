@@ -12,7 +12,7 @@ function EventsPage () {
     const { isAdmin } = useAdmin()
 
     useEffect(() => {
-      fetch(`/events`)
+      fetch(`/event`)
       .then((res) => res.json())
       .then((events) => {setEvents(events)})
     }, []);

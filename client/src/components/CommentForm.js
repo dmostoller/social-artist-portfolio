@@ -18,7 +18,7 @@ function CommentForm({onAddComment, paintingId, onChangeIsComFormVis, user}){
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("/comments", {
+          fetch("/comment", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

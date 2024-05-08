@@ -6,7 +6,7 @@ function PostsList ({user, isAdmin}) {
     const [posts, setPosts] = useState([])
 
     useEffect(() => {
-      fetch(`/posts`)
+      fetch(`/post`)
       .then((res) => res.json())
       .then((posts) => {setPosts(posts)})
     }, []);

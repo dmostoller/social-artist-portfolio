@@ -13,7 +13,7 @@ function PaintingsPage () {
     const [sortBy, setSortBy] = useState("Default")
 
     useEffect(() => {
-      fetch(`/paintings`)
+      fetch(`/painting`)
       .then((res) => res.json())
       .then((paintings) => {setPaintings(paintings)})
     }, []);

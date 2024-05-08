@@ -192,8 +192,8 @@ class PaintingsById(Resource):
         return response
 
 
-api.add_resource(Paintings, "/paintings")
-api.add_resource(PaintingsById, "/paintings/<int:id>")
+api.add_resource(Paintings, "/painting")
+api.add_resource(PaintingsById, "/painting/<int:id>")
 
 
 class Comments(Resource):
@@ -231,8 +231,8 @@ class CommentsById(Resource):
         return response
 
 
-api.add_resource(Comments, "/comments")
-api.add_resource(CommentsById, "/comments/<int:id>")
+api.add_resource(Comments, "/comment")
+api.add_resource(CommentsById, "/comment/<int:id>")
 
 
 class Posts(Resource):
@@ -294,8 +294,8 @@ class PostsById(Resource):
         return response
 
 
-api.add_resource(Posts, "/posts")
-api.add_resource(PostsById, "/posts/<int:id>")
+api.add_resource(Posts, "/post")
+api.add_resource(PostsById, "/post/<int:id>")
 
 
 class Events(Resource):
@@ -358,8 +358,8 @@ class EventsById(Resource):
         return response
 
 
-api.add_resource(Events, "/events")
-api.add_resource(EventsById, "/events/<int:id>")
+api.add_resource(Events, "/event")
+api.add_resource(EventsById, "/event/<int:id>")
 
 
 @app.errorhandler(404)

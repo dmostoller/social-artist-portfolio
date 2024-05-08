@@ -48,7 +48,7 @@ function EditEvent() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch(`/events/${id}`, {
+          fetch(`/event/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",

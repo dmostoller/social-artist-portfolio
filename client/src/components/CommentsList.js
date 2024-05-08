@@ -11,7 +11,7 @@ function CommentsList({user, painting_id}){
     }
 
     useEffect(() => {
-        fetch(`/comments`)
+        fetch(`/comment`)
        .then((res) => res.json())
        .then((comments) => setComments(comments))
     }, []);

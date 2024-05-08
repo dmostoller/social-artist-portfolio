@@ -3,7 +3,7 @@ import React from "react";
 function Comment({username, comment,key, id, date_added, comment_user_id, user, onDeleteComment}){
 
     const handleDeleteComment = (e) => {
-        fetch(`/comments/${id}`,{
+        fetch(`/comment/${id}`,{
           method:"DELETE"
         })
         .then(() => {

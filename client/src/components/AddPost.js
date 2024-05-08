@@ -26,7 +26,7 @@ function AddPost() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch("/posts", {
+          fetch("/post", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

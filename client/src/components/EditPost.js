@@ -14,7 +14,7 @@ function EditPost() {
 
 
     useEffect(() => {
-      fetch(`/posts/${id}`)
+      fetch(`/post/${id}`)
       .then((res) => res.json())
       .then((post) => {
         setPost(post)

@@ -24,14 +24,14 @@ function PaintingDetail(){
     } 
     
     useEffect(() => {
-        fetch(`/paintings/${id}`)
+        fetch(`/painting/${id}`)
         .then((res) => res.json())
         .then((painting) => setPainting(painting))
     }, [id]);
 
     const handleDeletePainting = (e) => {
         if (window.confirm("Are you sure you want to delete this painting?")) {
-        fetch(`/paintings/${id}`, {
+        fetch(`/painting/${id}`, {
             method: "DELETE"
             })
             .then(() => {
