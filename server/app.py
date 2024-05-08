@@ -20,8 +20,6 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from flask_cors import CORS
-from pathlib import Path
-
 
 
 # Local imports
@@ -32,26 +30,13 @@ from models import User, Painting, Comment, Post, Event
 
 CORS(app)
 
-dir_path = Path().absolute()
 
 # Views go here!
 @app.route("/", defaults={'path': ''})
 @app.route("/<string:path>")
 @app.route("/<path:path>")
-def catch_all(path):
-    build_folder = dir_path.joinpath("frontend", "build")
-    if path != "" and os.path.exists(dir_path.joinpath(build_folder, path)):
-        if path.count("/") > 1:
-            [path, filename] = path.rsplit("/", maxsplit=1)
-            return send_from_directory(dir_path.joinpath(build_folder, path), filename)
-        else:
-            filename = path
-            return send_from_directory(dir_path.joinpath(build_folder), filename)
-    else:
-        return render_template("index.html")
-
-# def index(path):
-#     return render_template("index.html")
+def index(path):
+    return render_template("index.html")
 
 class Users(Resource):
     def post(self):
