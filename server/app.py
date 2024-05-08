@@ -18,8 +18,9 @@ from werkzeug.utils import secure_filename
 from werkzeug.exceptions import NotFound, Unauthorized, UnprocessableEntity
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
-from wtforms.validators import ValidationError
 from datetime import datetime
+from flask_cors import CORS
+
 
 # Local imports
 from config import app, db, api, os
@@ -27,9 +28,7 @@ from config import app, db, api, os
 # Add your model imports
 from models import User, Painting, Comment, Post, Event
 
-app.config["UPLOAD_FOLDER"] = "uploads/"
-app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024  # 16mb
-app.config["ALLOWED_EXTENSIONS"] = [".png", ".jpg", ".jpeg", ".gif"]
+CORS(app)
 
 
 # Views go here!
@@ -361,6 +360,10 @@ class EventsById(Resource):
 api.add_resource(Events, "/events")
 api.add_resource(EventsById, "/events/<int:id>")
 
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
 
 @app.errorhandler(NotFound)
 def handle_not_found(e):
