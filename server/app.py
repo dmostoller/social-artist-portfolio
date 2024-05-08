@@ -371,7 +371,7 @@ def handle_not_found(e):
         {"message": "Not Found: Sorry the resource you are looking for does not exist"},
         404,
     )
-    return response
+    return app.send_static_file('index.html')
 
 
 @app.errorhandler(Unauthorized)
