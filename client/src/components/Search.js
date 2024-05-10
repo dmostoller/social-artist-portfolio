@@ -21,12 +21,6 @@ function Search({searchQ, onSearch, sortBy, selected, forSale, setForSale}) {
                 <i className="search icon"></i>
             </div>
             </span>
-            <span>
-                <Radio toggle label="For Sale" 
-                onChange={toggleForSale} 
-                style={{padding: "0.5em"}}
-                /> 
-            </span>
             <span>            
             <select className="ui selection dropdown"
                 style={{padding: "5px"}}
@@ -37,7 +31,12 @@ function Search({searchQ, onSearch, sortBy, selected, forSale, setForSale}) {
                 <option value="Large">Large to Small</option>
             </select>
             </span>
-
+            <span>
+                <Radio toggle label="For Sale" 
+                onChange={toggleForSale} 
+                style={{padding: "0.5em"}}
+                /> 
+            </span>
         </div>
     )
 }

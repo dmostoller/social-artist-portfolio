@@ -26,7 +26,7 @@ from flask_cors import CORS
 from config import app, db, api, os
 
 # Add your model imports
-from models import User, Painting, Comment, Post, Event
+from models import User, Painting, Comment, Post, Event, PostComment
 
 CORS(app)
 
@@ -296,6 +296,43 @@ class PostsById(Resource):
 
 api.add_resource(Posts, "/post")
 api.add_resource(PostsById, "/post/<int:id>")
+
+class PostComments(Resource):
+    def get(self):
+        comments = [comment.to_dict() for comment in PostComment.query.all()]
+        reponse = make_response(comments, 200)
+        return reponse
+
+    def post(self):
+        try:
+            form_json = request.get_json()
+            new_comment = PostComment(
+                comment=form_json["comment"],
+                date_added=form_json["date_added"],
+                post_id=form_json["post_id"],
+                user_id=form_json["user_id"],
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            response = make_response(new_comment.to_dict(), 201)
+        except ValueError:
+            response = make_response({"errors": ["validation errors"]}, 422)
+
+        return response
+
+class PostCommentsById(Resource):
+    def delete(self, id):
+        comment = PostComment.query.filter_by(id=id).first()
+        if not comment:
+            abort(404, "The comment was not found")
+        db.session.delete(comment)
+        db.session.commit()
+        response = make_response("", 204)
+        return response
+
+
+api.add_resource(PostComments, "/post_comments")
+api.add_resource(PostCommentsById, "/post_comments/<int:id>")
 
 
 class Events(Resource):

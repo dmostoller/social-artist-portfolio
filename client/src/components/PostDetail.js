@@ -5,7 +5,7 @@ import { useUser } from "../context/user";
 import { useAdmin } from "../context/admin.js"
 import { Modal } from "semantic-ui-react";
 import PostModal from "./PostModal.js";
-
+import PostCommentsList from "./PostCommentList.js";
 
 function PostDetail(){
     const { user } = useUser()
@@ -41,7 +41,7 @@ function PostDetail(){
         }
     }    
     return (
-        <div className="ui container" style={{minHeight:"100vh"}}>
+    <div className="ui container" style={{minHeight:"100vh"}}>
         <div style={{width: "100%", margin: "auto"}} className="ui horizontal card">
             <div className="item">
                 <img src={post.image_url} 
@@ -85,7 +85,10 @@ function PostDetail(){
                                 }
                 </div>
             </div>
-    </div>
+        </div>
+        <div className="ui segment">
+                <div><PostCommentsList user={user} post_id={post.id}/></div>          
+        </div>
     </div>
     
     );

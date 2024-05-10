@@ -18,6 +18,7 @@ class User(db.Model, SerializerMixin):
     is_admin = db.Column(db.Boolean)
 
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
+    post_comments = db.relationship('PostComment', back_populates='user', cascade='all, delete')
 
     serialize_rules = ('-comments.user', )
     
@@ -98,10 +99,29 @@ class Post(db.Model, SerializerMixin):
     image_url = db.Column(db.String)
     date_added = db.Column(db.String)
 
+    post_comments = db.relationship('PostComment', back_populates='post', cascade='all, delete')
+
     def __repr__(self):
         return f'<Post {self.id}>'
     
+class PostComment(db.Model, SerializerMixin):
+    __tablename__ = 'post_comments'
 
+    id = db.Column(db.Integer, primary_key=True)    
+    comment = db.Column(db.String)
+    date_added = db.Column(db.String)
+
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
+    post = db.relationship('Post', back_populates='post_comments')
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='post_comments')
+
+    serialize_rules = ('-post.post_comments', '-user.post_comments')
+
+    def __repr__(self):
+        return f'<Comment {self.id}>'  
+    
 class Event(db.Model, SerializerMixin):
     __tablename__ = 'events'
 
