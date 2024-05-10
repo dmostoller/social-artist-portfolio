@@ -11,6 +11,8 @@ function PaintingsPage () {
     const [paintings, setPaintings] = useState([])
     const [searchQ, setSearchQ] = useState("")
     const [sortBy, setSortBy] = useState("Default")
+    const [forSale, setForSale] = useState(false)
+
 
     useEffect(() => {
       fetch(`/painting`)
@@ -18,11 +20,23 @@ function PaintingsPage () {
       .then((paintings) => {setPaintings(paintings)})
     }, []);
 
-    const searchResults = paintings
+    const results = paintings
     .filter(painting => {
         return (
             painting.title.toLowerCase().includes(searchQ.toLowerCase())        
         )
+    })
+    const searchResults = results
+    .filter(painting => {
+        if (forSale == true) {
+        return (
+            painting.sold !== true
+        )
+    } else {
+        return (
+            painting
+        )
+    }
     })
     if (sortBy === "Small"){
         (searchResults.sort((a, b) => (a.width*a.height) < (b.width*b.height) ? -1 : 1))
@@ -37,7 +51,7 @@ function PaintingsPage () {
     return (
         <div className="ui container fluid">
             <div className="ui container fluid">
-                <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy} />
+                <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy} forSale={forSale} setForSale={setForSale}/>
                 {(user && isAdmin) ? 
                     <div style={{textAlign: "right"}} className="ui container">   
                         <Link to="/paintings/new" className="ui circular animated fade icon button teal small" tabindex="0">

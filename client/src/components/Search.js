@@ -1,6 +1,13 @@
 import React from "react";
+import { Radio } from 'semantic-ui-react'
 
-function Search({searchQ, onSearch, sortBy, selected}) {
+
+function Search({searchQ, onSearch, sortBy, selected, forSale, setForSale}) {
+
+    function toggleForSale() {
+        setForSale(!forSale)
+    }
+
     return (
         <div className="ui centered grid">
             <span>
@@ -14,30 +21,20 @@ function Search({searchQ, onSearch, sortBy, selected}) {
                 <i className="search icon"></i>
             </div>
             </span>
-
-            {/* <span>
-                <label style={{padding:"10px"}}>
-                    <input type="radio" value="Default" checked={selected === "Default"} onChange={sortBy} />
-                    Unsorted
-                </label>
-                <label style={{padding:"5px"}}>
-                    <input type="radio" value="Small" checked={selected === "Small"} onChange={sortBy} />
-                    Smallest to Largest
-                </label>
-                <label style={{padding:"5px"}}>
-                    <input type="radio" value="Large" checked={selected === "Large"} onChange={sortBy} />
-                    Largest to Smallest
-                </label>
-                
-            </span> */}
+            <span>
+                <Radio toggle label="For Sale" 
+                onChange={toggleForSale} 
+                style={{padding: "0.5em"}}
+                /> 
+            </span>
             <span>            
             <select className="ui selection dropdown"
                 style={{padding: "5px"}}
                 value={selected} // ...force the select's value to match the state variable...
                 onChange={sortBy}>
                 <option value="Default">-----</option>
-                <option value="Small">SM to LG</option>
-                <option value="Large">LG to SM</option>
+                <option value="Small">Small to Large</option>
+                <option value="Large">Large to Small</option>
             </select>
             </span>
 
