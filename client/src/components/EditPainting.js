@@ -51,7 +51,7 @@ function EditPainting() {
     },
       validationSchema: formSchema,
       onSubmit: (values) => {
-        fetch(`/paintings/${id}`, {
+        fetch(`/painting/${id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

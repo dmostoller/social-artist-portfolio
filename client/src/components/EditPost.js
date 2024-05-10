@@ -40,7 +40,7 @@ function EditPost() {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-          fetch(`/posts/${id}`, {
+          fetch(`/post/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",

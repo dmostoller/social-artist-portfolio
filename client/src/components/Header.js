@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { useUser } from "../context/user";
-import { DropdownMenu, DropdownItem, Dropdown, Menu } from 'semantic-ui-react'
+import { DropdownMenu, Dropdown, Menu } from 'semantic-ui-react'
 
 
 function Header({ onLogout}) {

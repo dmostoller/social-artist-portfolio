@@ -15,7 +15,7 @@ function EditEvent() {
 
 
   useEffect(() => {
-      fetch(`/events/${id}`)
+      fetch(`/event/${id}`)
       .then((res) => res.json())
       .then((event) => {
         setEvent(event)
