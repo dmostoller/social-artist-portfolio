@@ -52,16 +52,15 @@ function PaintingsPage () {
         <div className="ui container fluid">
             <div className="ui container fluid">
                 <Search searchQ={searchQ} onSearch={setSearchQ} selected={sortBy} sortBy={handleSortBy} forSale={forSale} setForSale={setForSale}/>
-                {(user && isAdmin) ? 
-                    <div style={{textAlign: "right"}} className="ui container">   
-                        <Link to="/paintings/new" className="ui circular animated fade icon button teal small" tabindex="0">
+                {(user && isAdmin) &&
+                    <div style={{paddingTop: "20px"}} className="ui container">   
+                        <Link to="/paintings/new" className="ui circular animated fade icon button teal fluid small" tabindex="0">
                             <div className="visible content"><i className="plus icon"></i></div>
                             <div className="hidden content">
-                                New
+                                Create New Painting
                             </div> 
                         </Link>
                     </div>
-                    : <></>
                 }
             </div>
             <div className="ui container centered" style={{paddingTop:"50px"}}>

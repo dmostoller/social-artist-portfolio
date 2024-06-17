@@ -43,15 +43,15 @@ function Header({ onLogout}) {
             </Dropdown>
             </>
         }
-        <div className="item">
-            YASMIN MOSTOLLER
-        </div> 
+            
+        <Link to="/" className="header item" >YASMIN MOSTOLLER</Link>
+        
         {(deviceSize > 768) &&
         <>
         <NavLink to="/" className="item" >Home</NavLink>
         <NavLink to="/about" className="item" >About Me</NavLink>
         <NavLink to="/paintings" className="item" >Paintings</NavLink>
-        <NavLink to="/events" className="item" >Events</NavLink>
+        <NavLink to="/events" className="item" >Exhibitions</NavLink>
         <NavLink to="/contact" className="item" >Contact</NavLink>
         </> 
         }

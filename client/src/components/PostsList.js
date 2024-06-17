@@ -28,17 +28,15 @@ function PostsList ({user, isAdmin}) {
     return (
         <div className="ui container fluid">
         <h2 className="ui dividing header" style={{textAlign: "left", padding: "10px"}}>My Blog</h2>    
-        {(user && isAdmin) ?  
+        {(user && isAdmin) &&
             <div style={{paddingBottom:"25px", textAlign:"right"}} className="ui container">   
-                <Link to={`/posts/new`} className="ui circular animated fade icon button teal small" tabindex="0">
+                <Link to={`/posts/new`} className="ui circular animated fade icon button fluid teal small" tabindex="0">
                     <div className="visible content"><i className="plus icon"></i></div>
                     <div className="hidden content">
-                        New
+                        Create New Post
                     </div> 
                 </Link>
-
             </div>
-            : <div></div>
         }
             <div className="ui grid">{blog}</div> 
         </div>
